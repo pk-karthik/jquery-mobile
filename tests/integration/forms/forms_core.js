@@ -55,13 +55,16 @@ asyncTest( "Form resets correctly", function() {
 		var id = el.attr( "id" ),
 			button = el.parent(),
 			wrapper = button.parent(),
-			anonySpan = button.children().eq( 0 );
+			anonySpan = button.children( ".ui-selectmenu-button-text" );
 
 		ok( button.length === 1, prefix + id + " has a parent" );
 		ok( wrapper.length === 1, prefix + id + " has a wrapper" );
-		ok( wrapper.hasClass( "ui-selectmenu" ), prefix + id + "'s wrapper has class ui-selectmenu" );
-		ok( anonySpan.length === 1, prefix + id + "'s wrapper contains a single span element as its first child" );
-		ok( anonySpan.text() === el.children( "[value='" + el.val() + "']" ).text(), prefix + id + "'s text is identical to the text inside the selected <option> element" );
+		ok( wrapper.hasClass( "ui-selectmenu" ), prefix + id +
+			"'s wrapper has class ui-selectmenu" );
+		ok( anonySpan.length === 1, prefix + id +
+			"'s wrapper contains a single span element as its last child" );
+		strictEqual( anonySpan.text(), el.children( "[value='" + el.val() + "']" ).text(),
+			prefix + id + "'s text is identical to the selected <option> element's text" );
 	}
 
 	function verifyFlipswitch( prefix, el, value ) {
