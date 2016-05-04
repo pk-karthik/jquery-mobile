@@ -1,0 +1,40 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>jQuery Mobile Controlgroup Test Suite</title>
+
+	<script src="../../../external/requirejs/require.js"></script>
+
+	<link rel="stylesheet"  href="../../../css/themes/default/jquery.mobile.css"/>
+	<link rel="stylesheet" href="../../../external/qunit/qunit.css"/>
+	<link rel="stylesheet" href="../../jqm-tests.css"/>
+
+	<script
+		src="../../lib/bootstrap.js"
+		data-deps="page forms/textinput controlgroup"
+		data-init="true"
+		data-no-backcompat="true"
+		data-modules="controlgroup_interaction_core">
+	</script>
+</head>
+<body>
+
+	<div id="qunit"></div>
+
+	<div data-ui-role="page">
+		<div class="ui-content">
+			<div data-ui-role="controlgroup" id="group" data-ui-items='{ "textinput" : ".controlgroup-textinput" }'>
+				<input id="textinput1" type="text" class="controlgroup-textinput" data-ui-classes='{ "ui-textinput" : "ui-shadow-inset ui-button" }'>
+				<input id="textinput2" type="text" class="controlgroup-textinput" data-ui-classes='{ "ui-textinput" : "ui-shadow-inset ui-button" }'>
+			</div>
+			<div data-ui-role="controlgroup" id="disabled-group" data-ui-items='{ "textinput" : ".controlgroup-textinput" }'>
+				<input disabled="disabled" id="disabled-textinput1" type="text" class="controlgroup-textinput" data-ui-classes='{ "ui-textinput" : "ui-shadow-inset ui-button" }'>
+				<input disabled="disabled" id="disabled-textinput2" type="text" class="controlgroup-textinput" data-ui-classes='{ "ui-textinput" : "ui-shadow-inset ui-button" }'>
+				<input id="disabled-textinput3" type="text" class="controlgroup-textinput" data-ui-classes='{ "ui-textinput" : "ui-shadow-inset ui-button" }'>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -121,6 +121,32 @@ $.widget( "ui.controlgroup", $.ui.controlgroup, {
 		};
 	},
 
+// JSCS doesn't like the _abc_def notation, so we disable it here
+// jscs:disable
+	_textinput_options: function( position ) {
+// jscs:enable
+		var isVertical = ( this.options.direction === "vertical" );
+		return {
+			classes: {
+				middle: {
+					"ui-textinput-wrapper": null
+				},
+				first: {
+					"ui-textinput-wrapper":
+						"ui-corner-" + ( isVertical ? "top" : "left" )
+				},
+				last: {
+					"ui-textinput-wrapper":
+						"ui-corner-" + ( isVertical ? "bottom" : "right" )
+				},
+				single: {
+					"ui-textinput-wrapper": "ui-corner-all"
+				}
+			}[ ( position === "last" && this._hasSingleChild() ) ?
+				"single" : position ]
+		};
+	},
+
 	// Deprecated as of 1.5.0 and will be removed in 1.6.0
 	// This method is no longer necessary since controlgroup no longer has a wrapper
 	container: function() {

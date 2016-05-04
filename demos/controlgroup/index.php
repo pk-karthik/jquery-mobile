@@ -16,8 +16,11 @@
 	</style>
 	<style id="textinput-controlgroup">
 		.controlgroup-textinput {
-			padding-top:.22em;
-			padding-bottom:.22em;
+			padding-top:.35em;
+			padding-bottom:.35em;
+			cursor: text;
+			padding-left: 0;
+			padding-right: 0;
 		}
 	</style>
 </head>
@@ -406,7 +409,7 @@
 
         <div data-demo-html="true" data-demo-css="#textinput-controlgroup">
             <label for="currency-controlgroup">Value</label>
-            <div data-role="controlgroup">
+            <div data-role="controlgroup" data-type="horizontal" data-items='{ "textinput" : "#currency-controlgroup" }'>
                 <select>
                     <option>$</option>
                     <option>€</option>
@@ -419,7 +422,7 @@
                 <button>.00</button>
             </div>
             <label for="search-control-group">Search</label>
-            <div data-role="controlgroup">
+            <div data-role="controlgroup" data-type="horizontal" data-items='{ "textinput" : "#search-control-group" }'>
                 <input type="text" id="search-control-group" data-wrapper-class="controlgroup-textinput ui-button">
                 <button>Submit</button>
                 <button>Reset</button>

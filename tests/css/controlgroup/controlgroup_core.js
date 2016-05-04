@@ -57,3 +57,9 @@ defineModule( "selectmenu", function prependHiddenSelectmenu( group ) {
 		.prependTo( group )
 		.selectmenu( { classes: { "ui-selectmenu": "ui-screen-hidden" } } );
 } );
+
+defineModule( "textinput", function prependHiddenTextinput( group ) {
+	$( "<input type='text' class='controlgroup-textinput'>" )
+		.prependTo( group )
+		.textinput( { classes: { "ui-textinput": "ui-screen-hidden" } } );
+} );

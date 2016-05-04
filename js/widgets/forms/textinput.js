@@ -38,7 +38,8 @@ $.widget( "mobile.textinput", {
 
 	options: {
 		classes: {
-			"ui-textinput": "ui-corner-all ui-shadow-inset",
+			"ui-textinput": "ui-shadow-inset",
+			"ui-textinput-wrapper": "ui-corner-all",
 			"ui-textinput-search-icon": "ui-icon ui-alt-icon ui-icon-search"
 		},
 
@@ -76,7 +77,8 @@ $.widget( "mobile.textinput", {
 		}
 
 		this._addClass( this._outer,
-			"ui-textinput ui-textinput-" + ( this.isSearch ? "search" : "text" ) );
+			"ui-textinput ui-textinput-wrapper " +
+			"ui-textinput-" + ( this.isSearch ? "search" : "text" ) );
 
 		if ( this._searchIcon ) {
 			this._addClass( this._searchIcon, "ui-textinput-search-icon" );

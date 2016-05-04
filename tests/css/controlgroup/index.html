@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="../../jqm-tests.css"/>
 
 	<script src="../../lib/bootstrap.js"
-			data-deps="page forms/select forms/button forms/checkboxradio controlgroup"
+			data-deps="page forms/select forms/button forms/checkboxradio controlgroup forms/textinput"
 			data-init="true"
 			data-no-backcompat="true"
 			data-modules="controlgroup_core">
@@ -73,6 +73,18 @@
 					<option value="1">One</option>
 					<option value="2">Two</option>
 				</select>
+			</div>
+
+			<div data-ui-role="controlgroup" id="textinput-horizontal" data-ui-direction="horizontal" data-items='{ "textinput" : ".controlgroup-textinput" }'>
+				<input type="text" class="controlgroup-textinput" data-ui-classes='{ "ui-textinput" : "ui-shadow-inset ui-button" }'>
+				<input type="text" class="controlgroup-textinput" data-ui-classes='{ "ui-textinput" : "ui-shadow-inset ui-button" }'>
+			</div>
+			<div data-ui-role="controlgroup" id="textinput-vertical" data-ui-direction="vertical" data-items='{ "textinput" : ".controlgroup-textinput" }'>
+				<input type="text" class="controlgroup-textinput" data-ui-classes='{ "ui-textinput" : "ui-shadow-inset ui-button" }'>
+				<input type="text" class="controlgroup-textinput" data-ui-classes='{ "ui-textinput" : "ui-shadow-inset ui-button" }'>
+			</div>
+			<div data-ui-role="controlgroup" id="textinput-single" data-items='{ "textinput" : ".controlgroup-textinput" }'>
+				<input type="text" class="controlgroup-textinput" data-ui-classes='{ "ui-textinput" : "ui-shadow-inset ui-button" }'>
 			</div>
 		</div>
 	</div>
