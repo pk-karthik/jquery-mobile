@@ -1,92 +1,125 @@
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: Extends the table widget to reflow on narrower screens
+/*!
+ * jQuery Mobile Reflow Table @VERSION
+ * http://jquerymobile.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
 //>>label: Table: reflow
 //>>group: Widgets
+//>>description: Extends the table widget to reflow on narrower screens
+//>>docs: http://api.jquerymobile.com/table/
+//>>demos: http://demos.jquerymobile.com/@VERSION/table-reflow/
 //>>css.structure: ../css/structure/jquery.mobile.table.reflow.css
 
-define( [ "jquery", "./table" ], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, undefined ) {
+( function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
 
-$.widget( "mobile.table", $.mobile.table, {
+		// AMD. Register as an anonymous module.
+		define( [
+			"jquery",
+			"./table" ], factory );
+	} else {
+
+		// Browser globals
+		factory( jQuery );
+	}
+} )( function( $ ) {
+
+return $.widget( "mobile.table", $.mobile.table, {
 	options: {
 		mode: "reflow",
-		classes: $.extend( $.mobile.table.prototype.options.classes, {
-			reflowTable: "ui-table-reflow",
-			cellLabels: "ui-table-cell-label"
-		})
+		classes: {
+			"ui-table-reflow": "",
+			"ui-table-cell-label": "",
+			"ui-table-cell-label-top": ""
+		}
 	},
 
 	_create: function() {
-		this._super();
-
-		// If it's not reflow mode, return here.
-		if ( this.options.mode !== "reflow" ) {
-			return;
+		if ( this.options.mode === "reflow" && !this.options.enhanced ) {
+			this._addClass( "ui-table-reflow" );
 		}
 
-		if ( !this.options.enhanced ) {
-			this.element.addClass( this.options.classes.reflowTable );
-
-			this._updateReflow();
-		}
+		return this._superApply( arguments );
 	},
 
-	rebuild: function() {
-		this._super();
+	_refreshHeaderCell: function( cellIndex, element, columnCount ) {
+		element.setAttribute( "data-" + $.mobile.ns + "colstart", columnCount + 1 );
+		return this._superApply( arguments );
+	},
 
+	refresh: function() {
+		this._superApply( arguments );
 		if ( this.options.mode === "reflow" ) {
-			this._refresh( false );
+
+			// After the refresh completes, we need to iterate over the headers again, but this
+			// time in reverse order so that top-level headers are visited last. This causes <b>
+			// labels to be added in the correct order using a simple .prepend().
+			$( this.allHeaders.get().reverse() ).each( $.proxy( this, "_updateCellsFromHeader" ) );
 		}
 	},
 
-	_refresh: function( create ) {
-		this._super( create );
-		if ( !create && this.options.mode === "reflow" ) {
-			this._updateReflow( );
-		}
-	},
+	_updateCellsFromHeader: function( index, headerCell ) {
+		var iteration, cells, colstart, labelClasses,
+			header = $( headerCell ),
+			contents = header.clone().contents();
 
-	_updateReflow: function() {
-		var table = this,
-			opts = this.options;
+		if ( contents.length > 0  ) {
+			labelClasses = "ui-table-cell-label";
+			cells = header.jqmData( "cells" );
+			colstart = $.mobile.getAttribute( headerCell, "colstart" );
 
-		// get headers in reverse order so that top-level headers are appended last
-		$( table.allHeaders.get().reverse() ).each( function() {
-			var cells = $( this ).jqmData( "cells" ),
-				colstart = $.mobile.getAttribute( this, "colstart" ),
-				hierarchyClass = cells.not( this ).filter( "thead th" ).length && " ui-table-cell-label-top",
-				contents = $( this ).clone().contents(),
-				iteration, filter;
+			if ( cells.not( headerCell ).filter( "thead th" ).length > 0 ) {
+				labelClasses = labelClasses + ( " " + "ui-table-cell-label-top" );
+				iteration = parseInt( headerCell.getAttribute( "colspan" ), 10 );
 
-				if ( hierarchyClass ) {
-					iteration = parseInt( this.getAttribute( "colspan" ), 10 );
-					filter = "";
-
-					if ( iteration ) {
-						filter = "td:nth-child("+ iteration +"n + " + ( colstart ) +")";
-					}
-
-					table._addLabels( cells.filter( filter ),
-						opts.classes.cellLabels + hierarchyClass, contents );
-				} else {
-					table._addLabels( cells, opts.classes.cellLabels, contents );
+				if ( iteration ) {
+					cells = cells.filter( "td:nth-child(" + iteration + "n + " + colstart + ")" );
 				}
-		});
+			}
+
+			this._addLabels( cells, labelClasses, contents );
+		}
 	},
 
-	_addLabels: function( cells, label, contents ) {
+	_addLabels: function( cells, labelClasses, contents ) {
+		var b = $( "<b>" );
 		if ( contents.length === 1 && contents[ 0 ].nodeName.toLowerCase() === "abbr" ) {
 			contents = contents.eq( 0 ).attr( "title" );
 		}
-		// .not fixes #6006
-		cells
-			.not( ":has(b." + label + ")" )
-				.prepend( $( "<b class='" + label + "'></b>" ).append( contents ) );
-	}
-});
 
-})( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-});
-//>>excludeEnd("jqmBuildExclude");
+		// .not fixes #6006
+		this._addClass( b, labelClasses );
+		b.append( contents );
+		cells
+			.not( ":has(b." + labelClasses.split( " " ).join( "." ) + ")" )
+				.prepend( b );
+	},
+
+	_destroy: function() {
+		var colstartAttr;
+
+		if ( this.options.mode === "reflow" ) {
+			colstartAttr = "data-" + $.mobile.ns + "colstart";
+
+			if ( !this.options.enhanced ) {
+				this.element
+					.children( "thead" )
+						.find( "[" + colstartAttr + "]" )
+							.removeAttr( colstartAttr )
+						.end()
+					.end()
+					.children( "tbody" )
+						.find( "b.ui-table-cell-label"  )
+							.remove();
+			}
+		}
+
+		return this._superApply( arguments );
+	}
+} );
+
+} );

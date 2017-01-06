@@ -15,11 +15,11 @@
 <body>
 <div data-role="page" class="jqm-demos">
 
-    <div data-role="header" class="jqm-header">
-        <h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-        <a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-        <a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+    <div data-role="toolbar" data-type="header" class="jqm-header">
+        <h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+        <a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+        <a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
     </div><!-- /header -->
 
     <div role="main" class="ui-content jqm-content">
@@ -67,37 +67,37 @@
             <div data-demo-html="true">
                 <fieldset data-role="controlgroup" data-mini="true">
                     <legend class="ui-hidden-accessible">Vertical controlgroup, buttons:</legend>
-                    <button class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-right">One</button>
+                    <button class="ui-shadow ui-button ui-corner-all">One <span class="ui-icon ui-icon-home"></span></button>
                     <input type="button" data-icon="back" data-iconpos="right" value="Two">
-                    <a href="#" class="ui-shadow ui-btn ui-corner-all ui-icon-grid ui-btn-icon-right">Three</a>
+                    <a href="#" class="ui-shadow ui-button ui-corner-all">Three <span class="ui-icon ui-icon-grid"></span></a>
                 </fieldset>
             </div><!--/demo-html -->
 
             <div data-demo-html="true">
-                <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                <fieldset data-role="controlgroup" data-mini="true" data-type="horizontal">
                     <legend class="ui-hidden-accessible">Horizontal controlgroup, buttons:</legend>
-                    <button class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-right">One</button>
+                    <button class="ui-shadow ui-button ui-corner-all">One <span class="ui-icon ui-icon-home"></span></button>
                     <input type="button" data-icon="back" data-iconpos="right" value="Two">
-                    <a href="#" class="ui-shadow ui-btn ui-corner-all ui-icon-grid ui-btn-icon-right">Three</a>
+                    <a href="#" class="ui-shadow ui-button ui-corner-all">Three <span class="ui-icon ui-icon-grid"></span></a>
                 </fieldset>
             </div><!--/demo-html -->
 
             <div data-demo-html="true">
                 <fieldset data-role="controlgroup" data-mini="true">
                     <legend class="ui-hidden-accessible">Vertical controlgroup, select:</legend>
-                    <label for="select-v-4a">Select A</label>
+                    <label for="select-v-4a" class="ui-hidden-accessible">Select A</label>
                     <select name="select-v-4a" id="select-v-4a">
                         <option value="#">One</option>
                         <option value="#">Two</option>
                         <option value="#">Three</option>
                     </select>
-                    <label for="select-v-4b">Select B</label>
+                    <label for="select-v-4b" class="ui-hidden-accessible">Select B</label>
                     <select name="select-v-4b" id="select-v-4b">
                         <option value="#">One</option>
                         <option value="#">Two</option>
                         <option value="#">Three</option>
                     </select>
-                    <label for="select-v-4c">Select C</label>
+                    <label for="select-v-4c" class="ui-hidden-accessible">Select C</label>
                     <select name="select-v-4c" id="select-v-4c">
                         <option value="#">One</option>
                         <option value="#">Two</option>
@@ -107,21 +107,21 @@
             </div><!--/demo-html -->
 
             <div data-demo-html="true">
-                <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                <fieldset data-role="controlgroup" data-mini="true" data-type="horizontal">
                     <legend class="ui-hidden-accessible">Horizontal controlgroup, select:</legend>
-                    <label for="select-h-4a">Select A</label>
+                    <label for="select-h-4a" class="ui-hidden-accessible">Select A</label>
                     <select name="select-h-4a" id="select-h-4a">
                         <option value="#">One</option>
                         <option value="#">Two</option>
                         <option value="#">Three</option>
                     </select>
-                    <label for="select-h-4b">Select B</label>
+                    <label for="select-h-4b" class="ui-hidden-accessible">Select B</label>
                     <select name="select-h-4b" id="select-h-4b">
                         <option value="#">One</option>
                         <option value="#">Two</option>
                         <option value="#">Three</option>
                     </select>
-                    <label for="select-h-4c">Select C</label>
+                    <label for="select-h-4c" class="ui-hidden-accessible">Select C</label>
                     <select name="select-h-4c" id="select-h-4c">
                         <option value="#">One</option>
                         <option value="#">Two</option>
@@ -131,11 +131,11 @@
             </div><!--/demo-html -->
 
             <div data-demo-html="true">
-                <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                <fieldset data-role="controlgroup" data-mini="true" data-type="horizontal">
                     <legend class="ui-hidden-accessible">Horizontal controlgroup, mixed:</legend>
-                    <a href="#" class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-right">Link</a>
-                    <button class="ui-shadow ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext">Button</button>
-                    <label for="select-v-4e">Select</label>
+                    <a href="#" class="ui-shadow ui-button ui-corner-all">Link <span class="ui-icon ui-icon-arrow-r"></span></a>
+                    <button class="ui-shadow ui-button ui-corner-all ui-button-icon-only">Button <span class="ui-icon ui-icon-grid"></span></button>
+                    <label for="select-v-4e" class="ui-hidden-accessible">Select</label>
                     <select name="select-v-4e" id="select-v-4e">
                         <option value="#">One</option>
                         <option value="#">Two</option>
@@ -215,7 +215,7 @@
 
             <div data-demo-html="true">
                 <label for="submit-4" class="ui-hidden-accessible">Send:</label>
-                <button class="ui-shadow ui-btn ui-corner-all" type="submit" id="submit-4">Submit</button>
+                <button class="ui-shadow ui-button ui-corner-all" type="submit" id="submit-4">Submit</button>
             </div><!--/demo-html -->
 
         </form>
@@ -261,37 +261,37 @@
             <div data-demo-html="true">
                 <fieldset data-role="controlgroup" data-mini="true">
                     <legend class="ui-hidden-accessible">Vertical controlgroup, buttons:</legend>
-                    <button class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-right">One</button>
+                    <button class="ui-shadow ui-button ui-corner-all">One <span class="ui-icon ui-icon-home"></span></button>
                     <input type="button" data-icon="back" data-iconpos="right" value="Two">
-                    <a href="#" class="ui-shadow ui-btn ui-corner-all ui-icon-grid ui-btn-icon-right">Three</a>
+                    <a href="#" class="ui-shadow ui-button ui-corner-all">Three <span class="ui-icon ui-icon-grid"></span></a>
                 </fieldset>
             </div><!--/demo-html -->
 
             <div data-demo-html="true">
-                <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                <fieldset data-role="controlgroup" data-mini="true" data-type="horizontal">
                     <legend class="ui-hidden-accessible">Horizontal controlgroup, buttons:</legend>
-                    <button class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-right">One</button>
+                    <button class="ui-shadow ui-button ui-corner-all">One <span class="ui-icon ui-icon-home"></span></button>
                     <input type="button" data-icon="back" data-iconpos="right" value="Two">
-                    <a href="#" class="ui-shadow ui-btn ui-corner-all ui-icon-grid ui-btn-icon-right">Three</a>
+                    <a href="#" class="ui-shadow ui-button ui-corner-all">Three <span class="ui-icon ui-icon-grid"></span></a>
                 </fieldset>
             </div><!--/demo-html -->
 
             <div data-demo-html="true">
                 <fieldset data-role="controlgroup" data-mini="true">
                     <legend class="ui-hidden-accessible">Vertical controlgroup, select:</legend>
-                    <label for="select-v-8a">Select A</label>
+                    <label for="select-v-8a" class="ui-hidden-accessible">Select A</label>
                     <select name="select-v-8a" id="select-v-8a">
                         <option value="#">One</option>
                         <option value="#">Two</option>
                         <option value="#">Three</option>
                     </select>
-                    <label for="select-v-8b">Select B</label>
+                    <label for="select-v-8b" class="ui-hidden-accessible">Select B</label>
                     <select name="select-v-8b" id="select-v-8b">
                         <option value="#">One</option>
                         <option value="#">Two</option>
                         <option value="#">Three</option>
                     </select>
-                    <label for="select-v-8c">Select C</label>
+                    <label for="select-v-8c" class="ui-hidden-accessible">Select C</label>
                     <select name="select-v-8c" id="select-v-8c">
                         <option value="#">One</option>
                         <option value="#">Two</option>
@@ -301,21 +301,21 @@
             </div><!--/demo-html -->
 
             <div data-demo-html="true">
-                <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                <fieldset data-role="controlgroup" data-mini="true" data-type="horizontal">
                     <legend class="ui-hidden-accessible">Horizontal controlgroup, select:</legend>
-                    <label for="select-h-8a">Select A</label>
+                    <label for="select-h-8a" class="ui-hidden-accessible">Select A</label>
                     <select name="select-h-8a" id="select-h-8a">
                         <option value="#">One</option>
                         <option value="#">Two</option>
                         <option value="#">Three</option>
                     </select>
-                    <label for="select-h-8b">Select B</label>
+                    <label for="select-h-8b" class="ui-hidden-accessible">Select B</label>
                     <select name="select-h-8b" id="select-h-8b">
                         <option value="#">One</option>
                         <option value="#">Two</option>
                         <option value="#">Three</option>
                     </select>
-                    <label for="select-h-8c">Select C</label>
+                    <label for="select-h-8c" class="ui-hidden-accessible">Select C</label>
                     <select name="select-h-8c" id="select-h-8c">
                         <option value="#">One</option>
                         <option value="#">Two</option>
@@ -325,11 +325,11 @@
             </div><!--/demo-html -->
 
             <div data-demo-html="true">
-                <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                <fieldset data-role="controlgroup" data-mini="true" data-type="horizontal">
                     <legend class="ui-hidden-accessible">Horizontal controlgroup, mixed:</legend>
-                    <a href="#" class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-right">Link</a>
-                    <button class="ui-shadow ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext">Button</button>
-                    <label for="select-v-8e">Select</label>
+                    <a href="#" class="ui-shadow ui-button ui-corner-all">Link <span class="ui-icon ui-icon-arrow-r"></span></a>
+                    <button class="ui-shadow ui-button ui-corner-all ui-button-icon-only">Button <span class="ui-icon ui-icon-grid"></span></button>
+                    <label for="select-v-8e" class="ui-hidden-accessible">Select</label>
                     <select name="select-v-8e" id="select-v-8e">
                         <option value="#">One</option>
                         <option value="#">Two</option>
@@ -384,7 +384,7 @@
             </div><!--/demo-html -->
 
             <div data-demo-html="true">
-                <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                <fieldset data-role="controlgroup" data-mini="true" data-type="horizontal">
                     <legend class="ui-hidden-accessible">Horizontal controlgroup, checkbox:</legend>
                     <input type="checkbox" name="checkbox-h-8a" id="checkbox-h-8a">
                     <label for="checkbox-h-8a">One</label>
@@ -396,7 +396,7 @@
             </div><!--/demo-html -->
 
             <div data-demo-html="true">
-                <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                <fieldset data-role="controlgroup" data-mini="true" data-type="horizontal">
                     <legend class="ui-hidden-accessible">Horizontal controlgroup, radio:</legend>
                     <input type="radio" name="radio-choice-h-8" id="radio-choice-h-8a" value="on" checked="checked">
                     <label for="radio-choice-h-8a">One</label>
@@ -409,7 +409,7 @@
 
             <div data-demo-html="true">
                 <label for="submit-8" class="ui-hidden-accessible">Send:</label>
-                <button type="submit" id="submit-8" class="ui-shadow ui-btn ui-corner-all ui-mini">Submit</button>
+                <button type="submit" id="submit-8" class="ui-shadow ui-button ui-corner-all ui-mini">Submit</button>
             </div><!--/demo-html -->
 
         </form>
@@ -418,14 +418,18 @@
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 </body>
 </html>

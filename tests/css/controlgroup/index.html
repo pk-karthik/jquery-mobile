@@ -3,47 +3,76 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
-	<title>jQuery Mobile Controlgroup Test Suite</title>
+	<title>jQuery Mobile Controlgroup CSS Test Suite</title>
 
 	<script src="../../../external/requirejs/require.js"></script>
-	<script src="../../../js/requirejs.config.js"></script>
-	<script src="../../../js/jquery.tag.inserter.js"></script>
-	<script src="../../jquery.setNameSpace.js"></script>
-	<script src="../../../tests/jquery.testHelper.js"></script>
-	<script src="../../../external/qunit/qunit.js"></script>
-	<script>
-		$.testHelper.asyncLoad([
-			['widgets/page'],
-			[
-				"widgets/toolbar",
-				"widgets/controlgroup"
-			],
-			[ "init" ],
-			[ "controlgroup_core.js" ]
-		]);
-	</script>
 
 	<link rel="stylesheet"  href="../../../css/themes/default/jquery.mobile.css"/>
 	<link rel="stylesheet" href="../../../external/qunit/qunit.css"/>
 	<link rel="stylesheet" href="../../jqm-tests.css"/>
 
-	<script src="../../swarminject.js"></script>
+	<script src="../../lib/bootstrap.js"
+			data-deps="page forms/select forms/button forms/checkboxradio controlgroup"
+			data-init="true"
+			data-no-backcompat="true"
+			data-modules="controlgroup_core">
+	</script>
 </head>
 <body>
 
 	<div id="qunit"></div>
 
-	<div data-nstest-role="page">
+	<div data-ui-role="page">
 		<div class="ui-content">
-			<div data-nstest-type="horizontal" data-nstest-role="controlgroup">
-				<a href="#" id="content-notext" class="ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-inline ui-shadow ui-corner-all">Delete</a>
-				<a href="#" id="content-text" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Text</a>
+			<div data-ui-role="controlgroup" id="button-horizontal" data-ui-direction="horizontal">
+				<a href="#">Button 1</a>
+				<a href="#">Button 2</a>
 			</div>
-		</div>
-		<div data-nstest-role="footer">
-			<div data-nstest-type="horizontal" data-nstest-role="controlgroup">
-				<a href="#" id="footer-notext" class="ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-inline ui-shadow ui-corner-all">Delete</a>
-				<a href="#" id="footer-text" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Text</a>
+			<div data-ui-role="controlgroup" id="button-vertical" data-ui-direction="vertical">
+				<a href="#">Button 1</a>
+				<a href="#">Button 2</a>
+			</div>
+			<div data-ui-role="controlgroup" id="button-single">
+				<a href="#">Button 1</a>
+			</div>
+
+			<div data-ui-role="controlgroup" id="checkboxradio-horizontal" data-ui-direction="horizontal">
+				<label><input type="checkbox" data-ui-role="checkboxradio">Checkbox 1</label>
+				<label><input type="checkbox" data-ui-role="checkboxradio">Checkbox 2</label>
+			</div>
+			<div data-ui-role="controlgroup" id="checkboxradio-vertical" data-ui-direction="vertical">
+				<label><input type="checkbox" data-ui-role="checkboxradio">Checkbox 1</label>
+				<label><input type="checkbox" data-ui-role="checkboxradio">Checkbox 2</label>
+			</div>
+			<div data-ui-role="controlgroup" id="checkboxradio-single">
+				<label><input type="checkbox" data-ui-role="checkboxradio">Checkbox 1</label>
+			</div>
+
+			<div data-ui-role="controlgroup" id="selectmenu-horizontal" data-ui-direction="horizontal">
+				<select data-ui-role="selectmenu">
+					<option value="1">One</option>
+					<option value="2">Two</option>
+				</select>
+				<select data-ui-role="selectmenu">
+					<option value="1">One</option>
+					<option value="2">Two</option>
+				</select>
+			</div>
+			<div data-ui-role="controlgroup" id="selectmenu-vertical" data-ui-direction="vertical">
+				<select data-ui-role="selectmenu">
+					<option value="1">One</option>
+					<option value="2">Two</option>
+				</select>
+				<select data-ui-role="selectmenu">
+					<option value="1">One</option>
+					<option value="2">Two</option>
+				</select>
+			</div>
+			<div data-ui-role="controlgroup" id="selectmenu-single">
+				<select data-ui-role="selectmenu">
+					<option value="1">One</option>
+					<option value="2">Two</option>
+				</select>
 			</div>
 		</div>
 	</div>

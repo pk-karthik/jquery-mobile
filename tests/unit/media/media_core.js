@@ -1,22 +1,19 @@
 /*
- * mobile media unit tests
+ * Mobile media unit tests
  */
 
-(function($){
+define( [ "qunit", "jquery" ], function( QUnit, $ ) {
 
-	test( "$.mobile.media function returns same boolean result as window.matchMedia", function(){
-		deepEqual($.mobile.media("screen"), window.matchMedia("screen").matches);
-	});
+QUnit.test( "$.mobile.media function returns same boolean result as window.matchMedia", function( assert ) {
+	assert.deepEqual( $.mobile.media( "screen" ), window.matchMedia( "screen" ).matches );
+} );
 
-	test( "$.mobile.media function returns boolean result", function(){
-		deepEqual( typeof $.mobile.media("screen"), "boolean" );
-	});
+QUnit.test( "$.mobile.media function returns boolean result", function( assert ) {
+	assert.deepEqual( typeof $.mobile.media( "screen" ), "boolean" );
+} );
 
-	test( "$.mobile.media function returns false result for inapplicable media", function(){
-		deepEqual( $.mobile.media("foo"), false );
-	});
+QUnit.test( "$.mobile.media function returns false result for inapplicable media", function( assert ) {
+	assert.deepEqual( $.mobile.media( "foo" ), false );
+} );
 
-
-
-
-})(jQuery);
+} );

@@ -51,13 +51,15 @@
 <body>
 <div data-role="page" id="testpage">
 
-	<div data-role="header">
-		<h1>Default theme <a href="http://api.jquerymobile.com/theme/" class="jqm-api-docs-link ui-btn ui-btn-icon-right ui-icon-caret-r ui-nodisc-icon ui-alt-icon ui-btn-inline ui-corner-all ui-mini">API</a></h1>
-		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left ui-btn-icon-notext">Back</a>
-		<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-gear">Button</a>
+	<div data-role="toolbar" data-type="header">
+		<h1>Default theme</h1>
+
+		<a href="http://api.jquerymobile.com/theme/" class="jqm-api-docs-link ui-nodisc-icon ui-alt-icon" title="Visit the API Documentation" target="_blank">API Documentation <span class="ui-icon ui-icon-action"></span></a>
+		<a href="#" data-rel="back" class="ui-button ui-corner-all ui-shadow ui-button-icon-only">Back <span class="ui-icon ui-icon-back"></span></a>
+		<a href="#" class="ui-button ui-corner-all ui-shadow">Button <span class="ui-icon ui-icon-gear"></span></a>
 		<div data-role="navbar">
 			<ul>
-				<li><a href="#" class="ui-btn-active ui-state-persist">Menu item 1</a></li>
+				<li><a href="#" class="ui-button-active ui-state-persist">Menu item 1</a></li>
 				<li><a href="#">Menu item 2</a></li>
 				<li><a href="#">Menu item 3</a></li>
 			</ul>
@@ -68,7 +70,7 @@
 
 		<form class="ui-mini">
 			<div class="ui-field-contain" id="theme-selector">
-				<fieldset data-role="controlgroup" data-type="horizontal">
+				<fieldset data-role="controlgroup">
 					<legend>Theme:</legend>
 					<label for="a">A</label>
 					<input type="radio" name="theme" id="a" checked>
@@ -77,7 +79,7 @@
 				</fieldset>
 			</div>
 			<div class="ui-field-contain" id="opt-navbars">
-				<fieldset data-role="controlgroup" data-type="horizontal">
+				<fieldset data-role="controlgroup">
 					<legend>Navbars:</legend>
 					<label for="show">Show</label>
 					<input type="radio" name="navbars" id="show" checked>
@@ -86,7 +88,7 @@
 				</fieldset>
 			</div>
 			<div class="ui-field-contain" id="opt-shadow">
-				<fieldset data-role="controlgroup" data-type="horizontal">
+				<fieldset data-role="controlgroup">
 					<legend>Shadow:<br><small>Off: set the widget option shadow to false (data-shadow="false")</small></legend>
 					<label for="on">On</label>
 					<input type="radio" name="shadow" id="on" checked>
@@ -100,30 +102,30 @@
 		<p>I am a div with classes ui-body, ui-body-<span class="theme">a</span> and ui-corner-all.</p>
 		<p><a href="#">I am a link</a></p>
 			<h4>Panels</h4>
-			<a href="#panel-reveal" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-mini">Reveal</a>
-			<a href="#panel-overlay" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-mini">Overlay</a>
-			<a href="#panel-push" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-mini">Push</a>
+			<a href="#panel-reveal" class="ui-button ui-corner-all ui-shadow ui-button-inline ui-mini">Reveal</a>
+			<a href="#panel-overlay" class="ui-button ui-corner-all ui-shadow ui-button-inline ui-mini">Overlay</a>
+			<a href="#panel-push" class="ui-button ui-corner-all ui-shadow ui-button-inline ui-mini">Push</a>
 		</div>
 
 		<div id="ui-bar-test" class="ui-bar ui-bar-a ui-corner-all" style="margin-bottom:1em;">
 		<p>I am a div with classes ui-bar, ui-bar-<span class="theme">a</span> and ui-corner-all. <a href="#">I am a link</a></p>
 		</div>
 
-		<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-caret-r ui-btn-icon-right">We</a>
-		<button class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-caret-r ui-btn-icon-right">are</button>
+		<a href="#" class="ui-button ui-corner-all ui-shadow ui-button-inline">We <span class="ui-icon ui-icon-caret-r"></span></a>
+		<button class="ui-button ui-corner-all ui-shadow ui-button-inline">are <span class="ui-icon ui-icon-caret-r"></span></button>
 		<input type="button" value="buttons" data-inline="true" data-icon="caret-r" data-iconpos="right">
 
 		<ul data-role="listview" data-inset="true">
 			<li>I</li>
-			<li data-role="list-divider">Divider<span class="ui-li-count">3</span></li>
+			<li data-role="list-divider">Divider<span class="ui-listview-item-count-bubble">3</span></li>
 			<li>am</li>
-			<li>static<span class="ui-li-count">6</span></li>
+			<li>static<span class="ui-listview-item-count-bubble">6</span></li>
 		</ul>
 
 		<ul data-role="listview" data-inset="true">
 			<li><a href="#">We</a></li>
 			<li data-role="list-divider">Divider</li>
-			<li><a href="#">have<span class="ui-li-count">4</span></a></li>
+			<li><a href="#">have<span class="ui-listview-item-count-bubble">4</span></a></li>
 			<li><a href="#">links</a></li>
 		</ul>
 
@@ -151,7 +153,7 @@
 		<form>
 			<div class="ui-field-contain">
 				<label for="name2">Text Input:</label>
-				<input type="text" name="name2" id="name2" value="" data-clear-btn="true">
+				<input type="text" name="name2" id="name2" value="" data-clear-button="true">
 			</div>
 			<div class="ui-field-contain">
 				<label for="textarea2">Textarea:</label>
@@ -191,11 +193,11 @@
 				</fieldset>
 			</div>
 			<div class="ui-field-contain">
-				<fieldset data-role="controlgroup" data-type="horizontal">
+				<fieldset data-role="controlgroup">
 					<legend>Controlgroup:</legend>
-					<button class="ui-btn ui-corner-all ui-shadow ui-icon-home ui-btn-icon-right">One</button>
+					<button class="ui-button ui-corner-all ui-shadow">One <span class="ui-icon ui-icon-home"></span></button>
 					<input type="button" data-icon="back" data-iconpos="right" value="Two">
-					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-icon-grid ui-btn-icon-right">Three</a>
+					<a href="#" class="ui-button ui-corner-all ui-shadow">Three <span class="ui-icon ui-icon-grid"></span></a>
 				</fieldset>
 			</div>
 			<div class="ui-field-contain">
@@ -213,7 +215,7 @@
 			</div>
 		</form>
 
-		<a href="#" class="ui-btn ui-corner-all ui-shadow ui-icon-gear ui-btn-icon-left ui-btn-active">Active button</a>
+		<a href="#" class="ui-button ui-corner-all ui-shadow ui-button-active"><span class="ui-icon ui-icon-gear"></span> Active button</a>
 
 		<p>Form inside static list:</p>
 
@@ -221,7 +223,7 @@
 			<ul data-role="listview" data-inset="true">
 				<li class="ui-field-contain">
 					<label for="name3">Text Input:</label>
-					<input type="text" name="name3" id="name3" value="" data-clear-btn="true">
+					<input type="text" name="name3" id="name3" value="" data-clear-button="true">
 				</li>
 				<li class="ui-field-contain">
 					<label for="flip3">Slider flip switch:</label>
@@ -241,7 +243,7 @@
 		<p>ui-bar-<span class="theme">a</span></p>
 			<div class="ui-field-contain">
 				<label for="name4">Text Input:</label>
-				<input type="text" name="name4" id="name4" value="" data-clear-btn="true">
+				<input type="text" name="name4" id="name4" value="" data-clear-button="true">
 			</div>
 			<div class="ui-field-contain">
 				<label for="flip4">Flip switch:</label>
@@ -278,11 +280,11 @@
 
 	</div><!-- /content -->
 
-	<div data-role="footer" data-position="fixed">
+	<div data-role="toolbar" data-type="footer" data-position="fixed">
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#">Menu item 1</a></li>
-				<li><a href="#" class="ui-btn-active ui-state-persist">Menu item 2</a></li>
+				<li><a href="#" class="ui-button-active ui-state-persist">Menu item 2</a></li>
 				<li><a href="#">Menu item 3</a></li>
 			</ul>
 		</div>
@@ -297,7 +299,7 @@
 			<li><a href="#">List item</a></li>
 		</ul>
 		<br><br>
-		<button class="ui-btn ui-corner-all ui-shadow">Button</button>
+		<button class="ui-button ui-corner-all ui-shadow">Button</button>
 	</div>
 
 	<div data-role="panel" id="panel-overlay" data-display="overlay">
@@ -308,7 +310,7 @@
 			<li><a href="#">List item</a></li>
 		</ul>
 		<br><br>
-		<button class="ui-btn ui-corner-all ui-shadow">Button</button>
+		<button class="ui-button ui-corner-all ui-shadow">Button</button>
 	</div>
 
 	<div data-role="panel" id="panel-push" data-display="push">
@@ -319,7 +321,7 @@
 			<li><a href="#">List item</a></li>
 		</ul>
 		<br><br>
-		<button class="ui-btn ui-corner-all ui-shadow">Button</button>
+		<button class="ui-button ui-corner-all ui-shadow">Button</button>
 	</div>
 
 </div><!-- /page -->

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Input buttons - jQuery Mobile Demos</title>
+	<title>Buttons - jQuery Mobile Demos</title>
 	<link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
 	<link rel="stylesheet" href="../../css/themes/default/jquery.mobile.css">
@@ -15,26 +15,30 @@
 <body>
 <div data-role="page" class="jqm-demos" data-quicklinks="true">
 
-	<div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	<div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+		<a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+		<a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
 
-		<h1>Input buttons <a href="http://api.jquerymobile.com/button/" class="jqm-api-docs-link ui-btn ui-btn-icon-right ui-icon-caret-r ui-nodisc-icon ui-alt-icon ui-btn-inline ui-corner-all ui-mini">API</a></h1>
+		<h1>Buttons</h1>
 
-		<p>Examples of how to style input buttons; <code>input</code> elements with <code>type="button"</code>, <code>type="submit"</code>, or <code>type="reset"</code>. See <a href="../button-markup/">button markup</a> for examples of <code>a</code> and <code>button</code> elements.</p>
+		<a href="http://api.jquerymobile.com/button/" class="jqm-api-docs-link ui-nodisc-icon ui-alt-icon" title="Visit the API Documentation" target="_blank">API Documentation <span class="ui-icon ui-icon-action"></span></a>
 
-		<h2>Default</h2>
+		<h2>Basic markup</h2>
+
+		<p><code>button</code> elements and <code>input</code> elements with <code>type="button"</code>, <code>type="submit"</code>, or <code>type="reset"</code> are automatically enhanced by the Button widget. To have links styled as buttons you can add <code>data-role="button"</code> to the <code>a</code> element to initialize the Button widget.</p>
 
 		<div data-demo-html="true">
+			<a href="#" data-role="button">Anchor</a>
+			<button>Button</button>
 			<form>
-				<input type="button" value="Button">
-				<input type="submit" value="Submit">
-				<input type="reset" value="Reset">
+				<input type="button" value="Input type button">
+				<input type="submit" value="Input type submit">
+				<input type="reset" value="Input type reset">
 			</form>
 		</div><!--/demo-html -->
 
@@ -42,153 +46,84 @@
 
 		<div data-demo-html="true">
 			<form>
-				<div class="ui-input-btn ui-btn ui-corner-all ui-shadow">
-					Input value
-					<input type="button" data-enhanced="true" value="Input value">
-				</div>
+				<label>Input label
+					<input type="button" data-enhanced="true" value="Input value" class="ui-button ui-corner-all ui-shadow ui-widget">
+				</label>
 			</form>
+			<button data-enhanced="true" class="ui-button ui-shadow ui-corner-all ui-widget">Button text</button>
+			<a href="index.php" data-role="button" data-enhanced="true" class="ui-button ui-shadow ui-corner-all ui-widget">Link text</a>
 		</div><!--/demo-html -->
 
 		<h2>Corners</h2>
 
 		<div data-demo-html="true">
-			<form>
-				<input type="button" value="Has corners by default">
-				<input type="button" data-corners="false" value="Unset corners">
-				<div class="ui-input-btn ui-btn ui-corner-all">
-					Enhanced
-					<input type="button" data-enhanced="true" value="Enhanced">
-				</div>
-			</form>
-		</div><!--/demo-html -->
-
-		<p>Icon-only buttons are round by default. Here we show how you can set the same border-radius as other buttons.</p>
-
-		<div data-demo-html="true" data-demo-css="true">
-			<form>
-				<input type="button" data-icon="delete" data-iconpos="notext" value="Icon only">
-				<div id="custom-border-radius">
-					<div class="ui-input-btn ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all">
-						Enhanced - Icon only
-						<input type="button" data-enhanced="true" value="Enhanced - Icon only">
-					</div>
-				</div>
-			</form>
+			<button>Has corners by default</button>
+			<button data-corners="false">Unset corners</button>
+			<button data-enhanced="true" class="ui-button ui-corner-all ui-shadow ui-widget">Enhanced</button>
 		</div><!--/demo-html -->
 
 		<h2>Shadow</h2>
 
 		<div data-demo-html="true">
-			<form>
-				<input type="button" value="Has shadow by default">
-				<input type="button" data-shadow="false" value="Unset shadow">
-				<div class="ui-input-btn ui-btn ui-shadow">
-					Enhanced
-					<input type="button" data-enhanced="true" value="Enhanced">
-				</div>
-			</form>
+			<button>Has shadow by default</button>
+			<button data-shadow="false">Unset shadow</button>
+			<button data-enhanced="true" class="ui-button ui-corner-all ui-shadow ui-widget">Enhanced</button>
 		</div><!--/demo-html -->
 
 		<h2>Inline</h2>
 
 		<div data-demo-html="true">
-			<form>
-				<input type="button" data-inline="true" value="Input">
-				<div class="ui-input-btn ui-btn ui-btn-inline">
-					Enhanced
-					<input type="button" data-enhanced="true" value="Enhanced">
-				</div>
-			</form>
-		</div><!--/demo-html -->
-
-		<h2>Theme</h2>
-
-		<div data-demo-html="true">
-			<form>
-				<input type="button" value="Input - Inherit">
-				<input type="button" data-theme="a" value="Input - Theme swatch A">
-				<input type="button" data-theme="b" value="Input - Theme swatch B">
-				<div class="ui-input-btn ui-btn">
-					Enhanced - Inherit
-					<input type="button" data-enhanced="true" value="Enhanced - Inherit">
-				</div>
-				<div class="ui-input-btn ui-btn ui-btn-a">
-					Enhanced - Theme swatch A
-					<input type="button" data-enhanced="true" value="Enhanced - Theme swatch A">
-				</div>
-				<div class="ui-input-btn ui-btn ui-btn-b">
-					Enhanced - Theme swatch B
-					<input type="button" data-enhanced="true" value="Enhanced - Theme swatch B">
-				</div>
-			</form>
+			<button data-inline="true">Inline</button>
+			<button data-enhanced="true" class="ui-button ui-button-inline ui-corner-all ui-shadow ui-widget">Enhanced</button>
 		</div><!--/demo-html -->
 
 		<h2>Mini</h2>
 
 		<div data-demo-html="true">
-			<form>
-				<input type="button" data-mini="true" value="Input">
-				<div class="ui-input-btn ui-btn ui-mini">
-					Enhanced
-					<input type="button" data-enhanced="true" value="Enhanced">
-				</div>
-			</form>
+			<button data-mini="true">Mini</button>
+			<button data-enhanced="true" class="ui-button ui-mini ui-corner-all ui-shadow ui-widget">Enhanced</button>
+		</div><!--/demo-html -->
+
+		<h2>Mini inline</h2>
+
+		<div data-demo-html="true">
+			<button data-mini="true" data-inline="true">Mini</button>
+			<button data-enhanced="true" class="ui-button ui-mini ui-button-inline ui-corner-all ui-shadow ui-widget">Enhanced</button>
+		</div><!--/demo-html -->
+
+		<h2>Theme</h2>
+
+		<div data-demo-html="true">
+			<button>Inherit</button>
+			<button data-theme="a">Theme swatch A</button>
+			<button data-theme="b">Theme swatch B</button>
+
+			<button data-enhanced="true" class="ui-button ui-shadow ui-corner-all ui-widget">Enhanced - Inherit</button>
+			<button data-enhanced="true" class="ui-button ui-button-a ui-shadow ui-corner-all ui-widget">Enhanced - Theme swatch A</button>
+			<button data-enhanced="true" class="ui-button ui-button-b ui-shadow ui-corner-all ui-widget">Enhanced - Theme swatch B</button>
 		</div><!--/demo-html -->
 
 		<h2>Icons</h2>
 
+		<p>Link buttons and <code>button</code> elements can contain icons. The use of icons in <code>input</code> buttons is no longer supported.</p>
+
 		<div data-demo-html="true">
-			<form>
-				<input type="button" data-icon="delete" value="Input">
-				<div class="ui-input-btn ui-btn ui-icon-delete ui-btn-icon-left">
-					Enhanced
-					<input type="button" data-enhanced="true" value="Enhanced">
-				</div>
-			</form>
+			<button data-icon="ui-icon-delete">Button</button>
+			<button data-role="button" data-enhanced="true" class="ui-button ui-shadow ui-corner-all ui-widget"><span class="ui-button-icon ui-icon ui-icon-delete"></span><span class="ui-button-icon-space"> </span>Enhanced</button>
 		</div><!--/demo-html -->
 
 		<h2>Icon position</h2>
 
 		<div data-demo-html="true">
-			<form>
-				<input type="button" data-icon="delete" value="Left (default)">
-				<input type="button" data-icon="delete" data-iconpos="right" value="Right">
-				<input type="button" data-icon="delete" data-iconpos="top" value="Top">
-				<input type="button" data-icon="delete" data-iconpos="bottom" value="Bottom">
-				<input type="button" data-icon="delete" data-iconpos="notext" value="Icon only">
-				<div class="ui-input-btn ui-btn ui-icon-delete ui-btn-icon-left">
-					Enhanced - Left
-					<input type="button" data-enhanced="true" value="Enhanced - Left">
-				</div>
-				<div class="ui-input-btn ui-btn ui-icon-delete ui-btn-icon-right">
-					Enhanced - Right
-					<input type="button" data-enhanced="true" value="Enhanced - Right">
-				</div>
-				<div class="ui-input-btn ui-btn ui-icon-delete ui-btn-icon-top">
-					Enhanced - Top
-					<input type="button" data-enhanced="true" value="Enhanced - Top">
-				</div>
-				<div class="ui-input-btn ui-btn ui-icon-delete ui-btn-icon-bottom">
-					Enhanced - Bottom
-					<input type="button" data-enhanced="true" value="Enhanced - Bottom">
-				</div>
-				<div class="ui-input-btn ui-btn ui-icon-delete ui-btn-icon-notext">
-					Enhanced - Icon only
-					<input type="button" data-enhanced="true" value="Enhanced - Icon only">
-				</div>
-			</form>
-		</div><!--/demo-html -->
+			<button data-icon="ui-icon-arrow-l">Beginning</button>
+			<button data-icon="ui-icon-arrow-r" data-icon-position="end">End</button>
+			<button data-icon="ui-icon-arrow-u" data-icon-position="top">Top</button>
+			<button data-icon="ui-icon-arrow-d" data-icon-position="bottom">Bottom</button>
 
-		<h2>Icon shadow</h2>
-
-		<div data-demo-html="true">
-			<form>
-				<input type="button" data-theme="b" data-icon="delete" data-iconshadow="true" value="Input">
-				<div class="ui-input-btn ui-btn ui-btn-b ui-icon-delete ui-btn-icon-left ui-shadow-icon">
-					Enhanced
-					<input type="button" data-enhanced="true" value="Enhanced">
-				</div>
-			</form>
+			<button data-role="button" data-enhanced="true" class="ui-button ui-shadow ui-corner-all ui-widget"><span class="ui-button-icon ui-icon ui-icon-arrow-l"></span><span class="ui-button-icon-space"> </span>Enhanced - Beginning</button>
+			<button data-role="button" data-enhanced="true" class="ui-button ui-shadow ui-corner-all ui-widget">Enhanced - End<span class="ui-button-icon-space"> </span><span class="ui-button-icon ui-icon ui-icon-arrow-r"></span></button>
+			<button data-role="button" data-enhanced="true" class="ui-button ui-shadow ui-corner-all ui-widget"><span class="ui-button-icon ui-icon ui-icon-arrow-u ui-widget-icon-block"></span>Enhanced - Top</button>
+			<button data-role="button" data-enhanced="true" class="ui-button ui-shadow ui-corner-all ui-widget">Enhanced - Bottom<span class="ui-button-icon ui-icon ui-icon-arrow-d ui-widget-icon-block"></span></button>
 		</div><!--/demo-html -->
 
 		<h2>Disabled</h2>
@@ -196,35 +131,38 @@
 		<div data-demo-html="true">
 			<form>
 				<input type="button" disabled value="Input button with disabled attribute">
-				<div class="ui-input-btn ui-btn ui-state-disabled">
-					Enhanced
-					<input type="button" disabled data-enhanced="true" value="Enhanced">
-				</div>
+				<input type="button" disabled value="Enhanced input button with disabled attribute" class="ui-button ui-shadow ui-corner-all ui-widget ui-button-disabled ui-state-disabled">
 			</form>
 		</div><!--/demo-html -->
 
-		<h2>Native inputs</h2>
+		<h2>Native inputs and button</h2>
 
 		<div data-demo-html="true">
 			<form>
-				<input type="button" data-role="none" value="Button">
+				<input type="button" data-role="none" value="Input button">
 				<input type="submit" data-role="none" value="Submit">
 				<input type="reset" data-role="none" value="Reset">
 			</form>
+			<br>
+			<button data-role="none">Button</button>
 		</div><!--/demo-html -->
 
 	</div><!-- /content -->
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 </body>
 </html>

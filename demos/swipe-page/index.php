@@ -23,35 +23,39 @@
 
 <div data-role="page" class="jqm-demos">
 
-    <div data-role="header" class="jqm-header">
-        <h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-        <a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-        <a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+    <div data-role="toolbar" data-type="header" class="jqm-header">
+        <h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+        <a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+        <a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
     </div><!-- /header -->
 
     <div role="main" class="ui-content jqm-content">
 
         <h1>Swipe to navigate</h1>
 
-        <div data-demo-html="#city" data-demo-js="#demo-script" data-demo-css="#demo-style">
-            <p>This demo shows how you can use the swipe event to navigate between pages. We are using single HTML files for each page. Here you can see the JavaScript and CSS source. On each of the demo pages you can see the page markup as well.</p>
+		<p>This demo shows how you can use the swipe event to navigate between pages. We are using single HTML files for each page. Here you can see the JavaScript and CSS source. On each of the demo pages you can see the page markup as well.</p>
 
-            <p><a href="newyork.html" data-ajax="false" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">Open swipe page demo</a></p>
-        </div>
+		<a href="newyork.html" data-ajax="false" class="ui-button ui-corner-all ui-shadow ui-button-inline">Open swipe page demo</a>
+
+        <div data-demo-html="#city" data-demo-js="#demo-script" data-demo-css="#demo-style"></div>
 
 	</div><!-- /content -->
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 <!-- The markup below is a copy of the actual demo pages just so we can show the markup in the "view source" -->
 
@@ -59,7 +63,7 @@
 
 <!-- The ID's of the header and footer are prefixed here with "_" to prevent the external toolbars to show up on our intro page. -->
 
-<div id="_header" data-role="header" data-id="header" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+<div id="_header" data-role="toolbar" data-type="header" data-id="header" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
 	<h1>City</h1>
     <a href="./" data-direction="reverse" data-icon="delete" data-iconpos="notext" data-shadow="false" data-icon-shadow="false">Back</a>
 </div><!-- /header -->
@@ -69,7 +73,7 @@
 	<div role="main" class="ui-content">
 
 		<div id="trivia-city" class="trivia ui-content" data-role="popup" data-position-to="window" data-tolerance="50,30,30,30" data-theme="a">
-        	<a href="#" data-rel="back" class="ui-btn ui-btn-right ui-btn-b ui-btn-icon-notext ui-icon-delete ui-corner-all">Close</a>
+        	<a href="#" data-rel="back" class="ui-button ui-toolbar-header-button-right ui-button-b ui-button-icon-only ui-corner-all">Close <span class="ui-icon ui-icon-delete"></span></a>
 			<p>Here some text.</p>
         </div><!-- /popup -->
 
@@ -77,13 +81,13 @@
 
 </div><!-- /page -->
 
-<div id="_footer" data-id="footer" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
-	<div data-role="controlgroup" class="control ui-btn-left" data-type="horizontal" data-mini="true">
-    	<a href="#" class="prev ui-btn ui-btn-icon-notext ui-icon-caret-l">Previous</a>
-    	<a href="#" class="next ui-btn ui-btn-icon-notext ui-icon-caret-r">Next</a>
+<div data-role="toolbar" data-type="footer" id="_footer" data-id="footer" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+	<div data-role="controlgroup" class="control ui-toolbar-header-button-left" data-mini="true">
+    	<a href="#" class="prev ui-button ui-button-icon-only">Previous<span class="ui-icon ui-icon-caret-l"></span></a>
+    	<a href="#" class="next ui-button ui-button-icon-only">Next<span class="ui-icon ui-icon-caret-r"></span></a>
     </div>
 
-	<a href="#" data-rel="popup" class="trivia-btn ui-btn ui-btn-right ui-btn-icon-left ui-icon-info ui-mini ui-corner-all">Trivia</a>
+	<a href="#" data-rel="popup" class="trivia-button ui-button ui-toolbar-header-button-right ui-mini ui-corner-all">Trivia <span class="ui-icon ui-icon-info"></span></a>
 </div><!-- /footer -->
 
 </body>

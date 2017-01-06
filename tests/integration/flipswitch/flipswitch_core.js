@@ -1,57 +1,63 @@
 /*
- * mobile flipswitch unit tests
+ * Mobile flipswitch unit tests
  */
-(function($){
+define( [
+	"qunit",
+	"jquery"
+	], function( QUnit, $ ) {
 
-	var testFocusTransfer = function( element ) {
-		expect( 1 );
-		$.testHelper.detailedEventCascade([
-			function() {
-				element.focus();
-			},
-			{
-				focus: {
-					src: element.siblings( "a" ),
-					event: "focus.TransfersFocus1"
-				}
-			},
-			function( result ) {
-				deepEqual( result.focus.timedOut, false,
-					"'on' button received focus event" );
-				start();
-			}
-		]);
-	};
+var testFocusTransfer = function( assert, element ) {
+	assert.expect( 1 );
+	var ready = assert.async();
 
-	asyncTest( "select based flipswitch transfers focus to 'on' button",
+	$.testHelper.detailedEventCascade( [
 		function() {
-			testFocusTransfer( $( "#flip-select" ) );
-		});
-
-	asyncTest( "checkbox based flipswitch transfers focus to 'on' button",
-		function() {
-			testFocusTransfer( $( "#flip-checkbox" ) );
-		});
-
-	asyncTest( "Default is prevented on label click, but click is sent to element", function() {
-		var eventNs = ".preventDefaultAndPropagateClick",
-			label = $( "label[for='test-select-label']" ),
-			select = $( "#test-select-label" );
-
-		$.testHelper.detailedEventCascade([
-			function() {
-				var event = $.Event( "click" );
-
-				label.trigger( event );
-				deepEqual( event.isDefaultPrevented(), true, "Click-on-label default prevented" );
-			},
-			{
-				click: { src: select, event: "click" + eventNs + "1" }
-			},
-			function( result ) {
-				deepEqual( result.click.timedOut, false, "Select received a click" );
-				start();
+			element.focus();
+		},
+		{
+			focus: {
+				src: element.siblings( "span" ),
+				event: "focus.TransfersFocus1"
 			}
-		]);
-	});
-})( jQuery );
+		},
+		function( result ) {
+			assert.deepEqual( result.focus.timedOut, false,
+				"'on' button received focus event" );
+			ready();
+		}
+	] );
+};
+
+QUnit.test( "select based flipswitch transfers focus to 'on' button",
+	function( assert ) {
+		testFocusTransfer( assert, $( "#flip-select" ) );
+	} );
+
+QUnit.test( "checkbox based flipswitch transfers focus to 'on' button",
+	function( assert ) {
+		testFocusTransfer( assert, $( "#flip-checkbox" ) );
+	} );
+
+QUnit.test( "Default is prevented on label click, but click is sent to element", function( assert ) {
+	var ready = assert.async();
+	var eventNs = ".preventDefaultAndPropagateClick",
+		label = $( "label[for='test-select-label']" ),
+		select = $( "#test-select-label" );
+
+	$.testHelper.detailedEventCascade( [
+		function() {
+			var event = $.Event( "click" );
+
+			label.trigger( event );
+			assert.deepEqual( event.isDefaultPrevented(), true, "Click-on-label default prevented" );
+		},
+		{
+			click: { src: select, event: "click" + eventNs + "1" }
+		},
+		function( result ) {
+			assert.deepEqual( result.click.timedOut, false, "Select received a click" );
+			ready();
+		}
+	] );
+} );
+} );

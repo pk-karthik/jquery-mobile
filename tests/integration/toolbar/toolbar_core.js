@@ -1,20 +1,14 @@
-( function( $, undefined ) {
+define( [ "qunit", "jquery" ], function( QUnit, $ ) {
 
-module( "Toolbar" );
+QUnit.module( "Toolbar" );
 
-test( "Links are auto-enhanced, unless data-role is set to 'none'", function() {
-	var leftLink = $( "#start-page-header a:first" ),
-		rightLink = $( "#start-page-header a:last" );
+QUnit.test( "Back button appears correctly", function( assert ) {
 
-	deepEqual( leftLink.hasClass( "ui-btn" ), true, "Left link has been enhanced" );
-	deepEqual( rightLink.hasClass( "ui-btn" ), false, "Right link has not been enhanced" );
-});
+	assert.expect( 2 );
 
-asyncTest( "Back button appears correctly", function() {
+	var done = assert.async();
 
-	expect( 2 );
-
-	$.testHelper.pageSequence([
+	$.testHelper.pageSequence( [
 		function() {
 			$( "#go-to-page2" ).click();
 		},
@@ -22,13 +16,14 @@ asyncTest( "Back button appears correctly", function() {
 		function() {
 			var backBtn = $( "#header a:first" );
 
-			deepEqual( backBtn.length, 1, "A 'Back' button was added to the header." );
-			deepEqual( backBtn.attr( "role" ), "button", "The 'Back' button has the attribute " + '"' + "data-role='button'" + '"' );
+			assert.deepEqual( backBtn.length, 1, "A 'Back' button was added to the header." );
+			assert.deepEqual( backBtn.attr( "role" ), "button",
+				"The 'Back' button has the attribute " + "\"" + "data-role='button'" + "\"" );
 			$.mobile.back();
 		},
 
-		start
-	]);
-});
+		done
+	] );
+} );
 
-})( jQuery );
+} );

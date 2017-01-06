@@ -1,7 +1,7 @@
 // Turn off Ajax for local file browsing
-if ( location.protocol.substr(0,4)  === 'file' ||
-     location.protocol.substr(0,11) === '*-extension' ||
-     location.protocol.substr(0,6)  === 'widget' ) {
+if ( location.protocol.substr(0,4)  === "file" ||
+     location.protocol.substr(0,11) === "*-extension" ||
+     location.protocol.substr(0,6)  === "widget" ) {
 
 	// Start with links with only the trailing slash and that aren't external links
 	var fixLinks = function() {
@@ -20,7 +20,7 @@ if ( location.protocol.substr(0,4)  === 'file' ||
 
 	// Check to see if ajax can be used. This does a quick ajax request and blocks the page until its done
 	$.ajax({
-		url: '.',
+		url: ".",
 		async: false,
 		isLocal: true
 	}).error(function() {
@@ -28,10 +28,10 @@ if ( location.protocol.substr(0,4)  === 'file' ||
 		$( document ).on( "mobileinit", function() {
 			$.mobile.ajaxEnabled = false;
 
-			var message = $( '<div>' , {
-				'class': "jqm-content",
+			var message = $( "<div>" , {
+				"class": "jqm-content",
 				style: "border:none; padding: 10px 15px; overflow: auto;",
-				'data-ajax-warning': true
+				"data-ajax-warning": true
 			});
 
 			message
@@ -48,10 +48,9 @@ if ( location.protocol.substr(0,4)  === 'file' ||
 $( document ).on( "pagecreate", ".jqm-demos", function( event ) {
 	var search,
 		page = $( this ),
-		that = this,
 		searchUrl = ( $( this ).hasClass( "jqm-home" ) ) ? "_search/" : "../_search/",
-		searchContents = $( ".jqm-search ul.jqm-list" ).find( "li:not(.ui-collapsible)" ),
-		version = $.mobile.version || "dev",
+		searchContents = $( ".jqm-search-panel ul.jqm-search-list" ).find( "li[data-filtertext]" ),
+		version = $.mobile.version || "Dev",
 		words = version.split( "-" ),
 		ver = words[0],
 		str = words[1] || "",
@@ -61,7 +60,7 @@ $( document ).on( "pagecreate", ".jqm-demos", function( event ) {
 		href;
 
 	// Insert jqm version in header
-	if ( str.indexOf( "rc" ) == -1 ) {
+	if ( str.indexOf( "rc" ) === -1 ) {
 		str = str.charAt( 0 ).toUpperCase() + str.slice( 1 );
 	} else {
 		str = str.toUpperCase().replace( ".", "" );
@@ -71,10 +70,14 @@ $( document ).on( "pagecreate", ".jqm-demos", function( event ) {
 		text += " " + str;
 	}
 
+	if ( "@VERSION" === $.mobile.version ) {
+		text = version = "Dev";
+	}
+
 	$( ".jqm-version" ).html( text );
 
 	// Insert version in API documentation links
-	if ( version !== "dev" ) {
+	if ( version !== "Dev" ) {
 		$( ".jqm-api-docs-link" ).each(function() {
 			href = $( this ).attr( "href" ).replace( "api.jquerymobile.com/", "api.jquerymobile.com/" + apiVersion + "/" );
 
@@ -85,30 +88,82 @@ $( document ).on( "pagecreate", ".jqm-demos", function( event ) {
 	// Global navmenu panel
 	$( ".jqm-navmenu-panel ul" ).listview();
 
-	$( document ).on( "panelopen", ".jqm-search-panel", function() {
-		$( this ).find( "input" ).focus();
-	})
+	$( ".jqm-navmenu-panel ul" ).accordion({
+		"header": "> li > h3",
+		"collapsible": true,
+		"active": false,
+		"heightStyle": "content",
+		"icons": {
+			"header": "ui-icon-plus",
+			"activeHeader": "ui-icon-minus"
+		}
+	});
+
+	// Collapse nested accordions when their parent is being collapsed.
+	$( ".jqm-navmenu-panel > .ui-panel-inner > .ui-accordion" )
+	.on( "accordionbeforeactivate", function( event ) {
+		var target = $( event.target );
+
+		if ( target.is( ".jqm-navmenu-panel > .ui-panel-inner > .ui-accordion" ) ) {
+			target.find( ".ui-accordion" ).accordion( "option", "active", false );
+		}
+	});
+
+	// Keyboard accessibility of the navmenu.
+	$( ".jqm-navmenu-panel .ui-accordion-header, .jqm-navmenu-panel .ui-listview-item-button" ).on( "keydown", function( event ) {
+	    if ( event.which === 9 ) {
+	        var target = $( event.target ),
+				parent = target.parent( "li" );
+
+			parent.next( "li" )
+				.add( parent.prev( "li" ) )
+				.children( "h3" )
+				.attr( "tabIndex", 0 );
+	    }
+	});
+
+	// On panel demo pages copy the navmenu into the wrapper
+	if ( $( this ).is( ".jqm-panel-page" ) ) {
+		var wrapper = $( this ).children( ".ui-panel-wrapper" );
+
+		if ( wrapper ) {
+			$( ".jqm-navmenu-panel" ).clone( true, true ).appendTo( wrapper );
+		}
+	}
 
 	$( ".jqm-navmenu-link" ).on( "click", function() {
-		page.find( ".jqm-navmenu-panel:not(.jqm-panel-page-nav)" ).panel( "open" );
+		page.find( ".jqm-navmenu-panel" ).panel( "open" );
 	});
 
 	// Turn off autocomplete / correct for demos search
 	$( this ).find( ".jqm-search input" ).attr( "autocomplete", "off" ).attr( "autocorrect", "off" );
 
 	// Global search
-	$( ".jqm-search-link" ).on( "click", function() {
-		page.find( ".jqm-search-panel" ).panel( "open" );
+
+	// Initalize search panel
+	$( ".jqm-search-panel" ).panel({
+		position: "right",
+		display: "overlay",
+		theme: "a"
 	});
 
-	// Initalize search panel list and filter also remove collapsibles
-	$( this ).find( ".jqm-search ul.jqm-list" ).html( searchContents ).listview({
+	$( ".jqm-search-link" ).on( "click", function() {
+		$( "body" ).find( ".jqm-search-panel" ).panel( "open" );
+		$( ".ui-page-active" ).addClass( "jqm-demos-search-panel-open" );
+	});
+
+	$( document ).on( "panelopen", ".jqm-search-panel", function() {
+		$( this ).find( ".jqm-search-input" ).focus();
+	});
+
+	// Initalize search panel list and filter
+	$( ".jqm-search-panel ul.jqm-search-list" ).html( searchContents ).listview({
 		inset: false,
 		theme: null,
 		dividerTheme: null,
 		icon: false,
 		autodividers: true,
-		autodividersSelector: function ( li ) {
+		autodividersSelector: function () {
 			return "";
 		},
 		arrowKeyNav: true,
@@ -117,9 +172,9 @@ $( document ).on( "pagecreate", ".jqm-demos", function( event ) {
 		submitTo: searchUrl
 	}).filterable();
 
-	// Initalize search page list and remove collapsibles
-	$( this ).find( ".jqm-search-results-wrap ul.jqm-list" ).html( searchContents ).listview({
-		inset: true,
+	// Initalize search page list
+	$( this ).find( ".jqm-search-results-wrap ul.jqm-search-list" ).html( searchContents ).listview({
+		inset: false,
 		theme: null,
 		dividerTheme: null,
 		icon: false,
@@ -128,32 +183,33 @@ $( document ).on( "pagecreate", ".jqm-demos", function( event ) {
 		highlight: true
 	}).filterable();
 
-	// Fix links on homepage to point to sub directories
-	if ( $( event.target ).hasClass( "jqm-home") ) {
-		$( this ).find( "a" ).each( function() {
-			$( this ).attr( "href", $( this ).attr( "href" ).replace( "../", "" ) );
-		});
-	}
-
 	// Search results page get search query string and enter it into filter then trigger keyup to filter
-	if ( $( event.target ).hasClass( "jqm-demos-search-results") ) {
+	if ( $( event.target ).hasClass( "jqm-demos-search-results" ) ) {
 		search = $.mobile.path.parseUrl( window.location.href ).search.split( "=" )[ 1 ];
 		setTimeout(function() {
-			e = $.Event( "keyup" );
+			var e = $.Event( "keyup" );
 			e.which = 65;
-			$( that ).find( ".jqm-content .jqm-search-results-wrap input" ).val( search ).trigger(e).trigger( "change" );
+			$( this ).find( "#jqm-search-results-input" ).val( search ).trigger(e).trigger( "change" );
 		}, 0 );
+	}
+
+	// Fix links on homepage to point to sub directories
+	if ( $( event.target ).hasClass( "jqm-home") ) {
+		$( "body" ).find( "a" ).each( function() {
+			$( this ).attr( "href", $( this ).attr( "href" ).replace( "../", "" ) );
+		});
 	}
 });
 
 // Append keywords list to each list item
-$( document ).one( "pagecreate", ".jqm-demos", function( event ) {
-	$( this ).find( ".jqm-search-results-list li, .jqm-search li" ).each(function() {
+$( document ).one( "pagecreate", ".jqm-demos", function() {
+	$( ".jqm-search-results-list li, .jqm-search li" ).each(function() {
 		var text = $( this ).attr( "data-filtertext" );
 
 		$( this )
 			.find( "a" )
-			.append( "<span class='jqm-search-results-keywords ui-li-desc'>" + text + "</span>" );
+			.append( "<span class='jqm-search-results-keywords ui-listview-item-description'>" +
+				text + "</span>" );
 	});
 });
 
@@ -161,19 +217,18 @@ $( document ).one( "pagecreate", ".jqm-demos", function( event ) {
 jQuery.fn.highlight = function( pat ) {
 	function innerHighlight( node, pat ) {
 		var skip = 0;
-		if ( node.nodeType == 3 ) {
+		if ( node.nodeType === 3 ) {
 			var pos = node.data.toUpperCase().indexOf( pat );
 			if ( pos >= 0 ) {
 				var spannode = document.createElement( "span" );
 				spannode.className = "jqm-search-results-highlight";
 				var middlebit = node.splitText( pos );
-				var endbit = middlebit.splitText( pat.length );
 				var middleclone = middlebit.cloneNode( true );
 				spannode.appendChild( middleclone );
 				middlebit.parentNode.replaceChild( spannode, middlebit );
 				skip = 1;
 			}
-		} else if ( node.nodeType == 1 && node.childNodes && !/(script|style)/i.test( node.tagName ) ) {
+		} else if ( node.nodeType === 1 && node.childNodes && !/(script|style)/i.test( node.tagName ) ) {
 			for ( var i = 0; i < node.childNodes.length; ++i ) {
 				i += innerHighlight( node.childNodes[i], pat );
 			}
@@ -189,10 +244,8 @@ jQuery.fn.highlight = function( pat ) {
 jQuery.fn.removeHighlight = function() {
 	return this.find( "span.jqm-search-results-highlight" ).each(function() {
 		this.parentNode.firstChild.nodeName;
-		with ( this.parentNode ) {
-			replaceChild( this.firstChild, this );
-			normalize();
-		}
+		this.parentNode.replaceChild( this.firstChild, this );
+		this.parentNode.normalize();
 	}).end();
 };
 
@@ -235,9 +288,9 @@ $( document ).on( "mobileinit", function() {
 
 			form.append( "<button type='submit' data-icon='caret-r' data-inline='true' class='ui-hidden-accessible' data-iconpos='notext'>Submit</button>" )
 				.parent()
-				.trigger( "create" );
+				.enhanceWithin();
 
-			this.element.parent().find( "form" ).children( ".ui-btn" ).addClass( "ui-hidden-accessible" );
+			this.element.parent().find( "form" ).children( ".ui-button" ).addClass( "ui-hidden-accessible" );
 
 			this._on( form, {
 				"submit": "submitHandler"
@@ -257,27 +310,37 @@ $( document ).on( "mobileinit", function() {
 		},
 		handleKeyUp: function( e ) {
 			var search,
-				input = this.element.prev("form").find( "input" );
+				toBeHighlightled,
+				input = this.element.prev("form").find( "input" ),
+				isDownKeyUp = e.which === $.ui.keyCode.DOWN,
+				isUpKeyUp = e.which === $.ui.keyCode.UP;
 
-			if ( e.which === $.ui.keyCode.DOWN ) {
-				if ( this.element.find( "li.ui-btn-active" ).length === 0 ) {
-					this.element.find( "li:first" ).toggleClass( "ui-btn-active" ).find("a").toggleClass( "ui-btn-active" );
+			if ( isDownKeyUp || isUpKeyUp ) {
+				if ( this.element.find( "li.ui-listview-item-active" ).length === 0 ) {
+					toBeHighlightled = this.element.find( "li" )
+					.not( ".ui-screen-hidden" )
+					[ isDownKeyUp ? "first" : "last" ]();
 				} else {
-					this.element.find( "li.ui-btn-active a" ).toggleClass( "ui-btn-active");
-					this.element.find( "li.ui-btn-active" ).toggleClass( "ui-btn-active" ).next().toggleClass( "ui-btn-active" ).find("a").toggleClass( "ui-btn-active" );
+					this.element.find( "li.ui-listview-item-active a" )
+					.toggleClass( "ui-button-active");
+
+					toBeHighlightled = this.element.find( "li.ui-listview-item-active" )
+					.toggleClass( "ui-listview-item-active" )
+					[ isDownKeyUp ? "nextAll" : "prevAll" ]( "li" )
+					.not( ".ui-screen-hidden" )
+					.first();
 				}
 
-				this.highlightDown();
-			} else if ( e.which === $.ui.keyCode.UP ) {
-				if ( this.element.find( "li.ui-btn-active" ).length !== 0 ) {
-					this.element.find( "li.ui-btn-active a" ).toggleClass( "ui-btn-active");
-					this.element.find( "li.ui-btn-active" ).toggleClass( "ui-btn-active" ).prev().toggleClass( "ui-btn-active" ).find("a").toggleClass( "ui-btn-active" );
-				} else {
-					this.element.find( "li:last" ).toggleClass( "ui-btn-active" ).find("a").toggleClass( "ui-btn-active" );
-				}
-				this.highlightUp();
+				// Highlight the selected list item
+				toBeHighlightled
+				.toggleClass( "ui-listview-item-active" )
+				.find( "a" )
+				.toggleClass( "ui-button-active" );
+			} else if ( e.which === $.ui.keyCode.ENTER ) {
+				this.submitHandler();
 			} else if ( typeof e.which !== "undefined" ) {
-				this.element.find( "li.ui-btn-active" ).removeClass( "ui-btn-active" );
+				this.element.find( "li.ui-listview-item-active" )
+				.removeClass( "ui-listview-item-active" );
 
 				if ( this.options.highlight ) {
 					search = input.val();
@@ -290,8 +353,8 @@ $( document ).on( "mobileinit", function() {
 			}
 		},
 		submitHandler: function() {
-			if ( this.element.find( "li.ui-btn-active" ).length !== 0 ) {
-				var href = this.element.find( "li.ui-btn-active a" ).attr( "href" );
+			if ( this.element.find( "li.ui-listview-item-active" ).length !== 0 ) {
+				var href = this.element.find( "li.ui-listview-item-active a" ).attr( "href" );
 
 				$( ":mobile-pagecontainer" ).pagecontainer( "change", href );
 				return false;
@@ -300,22 +363,6 @@ $( document ).on( "mobileinit", function() {
 			if ( this.options.submitTo ) {
 				this.submitTo();
 			}
-		},
-		highlightDown: function() {
-			if ( this.element.find( "li.ui-btn-active" ).hasClass( "ui-screen-hidden" ) ) {
-				this.element.find( "li.ui-btn-active" ).find("a").toggleClass( "ui-btn-active" );
-				this.element.find( "li.ui-btn-active" ).toggleClass( "ui-btn-active" ).next().toggleClass( "ui-btn-active" ).find("a").toggleClass( "ui-btn-active" );
-				this.highlightDown();
-			}
-			return;
-		},
-		highlightUp: function() {
-			if ( this.element.find( "li.ui-btn-active" ).hasClass( "ui-screen-hidden" ) ) {
-				this.element.find( "li.ui-btn-active" ).find("a").toggleClass( "ui-btn-active" );
-				this.element.find( "li.ui-btn-active" ).toggleClass( "ui-btn-active" ).prev().toggleClass( "ui-btn-active" ).find("a").toggleClass( "ui-btn-active" );
-				this.highlightUp();
-			}
-			return;
 		}
 	});
 })( jQuery );

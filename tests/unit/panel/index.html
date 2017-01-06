@@ -6,30 +6,18 @@
 	<title>jQuery Mobile Panel Integration Test</title>
 
 	<script src="../../../external/requirejs/require.js"></script>
-	<script src="../../../js/requirejs.config.js"></script>
-	<script src="../../../js/jquery.tag.inserter.js"></script>
-	<script src="../../jquery.setNameSpace.js"></script>
-	<script src="../../jquery.testHelper.js"></script>
-	<script src="../../../external/qunit/qunit.js"></script>
-	<script type="text/javascript">
-		// redirects from push-state-tests.html
-		$( document ).bind( 'mobileinit', function(){
-			$.testHelper.setPushState();
-		});
-	</script>
-	<script>
-		$.testHelper.asyncLoad([
-			[ "widgets/panel" ],
-			[ "init" ],
-			[ "panel_core.js" ]
-		]);
-	</script>
 
 	<link rel="stylesheet"  href="../../../css/themes/default/jquery.mobile.css" />
 	<link rel="stylesheet" href="../../../external/qunit/qunit.css"/>
 	<link rel="stylesheet" href="../../jqm-tests.css"/>
 
-	<script src="../../swarminject.js"></script>
+	<script
+		src="../../lib/bootstrap.js"
+		data-deps="panel"
+		data-set-push-state="true"
+		data-init="true"
+		data-modules="panel_core">
+	</script>
 </head>
 <body>
 
@@ -40,6 +28,7 @@
 			<p>Contents of a panel.</p>
 		</div>
 		<div data-nstest-role="panel" id="panel-test-events">
+			<p>Contents of a panel.</p>
 			<p>Contents of a panel.</p>
 		</div>
 		<div data-nstest-role="panel" id="panel-test-open">
@@ -55,7 +44,7 @@
 			<p>Contents of a panel.</p>
 		</div>
 		<div data-nstest-role="panel" id="panel-test-dismiss">
-			<input id="dismiss-input"></input>
+			<input id="dismiss-input">
 			<p>Contents of a panel.</p>
 		</div>
 		<div data-nstest-role="panel" id="panel-test-destroy">
@@ -83,7 +72,7 @@
 		<div id="panel-test-get-wrapper-push">
 			<p>Contents of a panel.</p>
 		</div>
-		<div data-nstest-role="header">
+		<div data-nstest-role="toolbar" data-nstest-type="header">
 			<h1>Panel Test</h1>
 		</div>
 		<div data-nstest-role="content">
@@ -101,7 +90,7 @@
 			<a href="#panel-test-id-change">Open Panel</a>
 			<a href="#panel-test-external">Open Panel</a>
 		</div>
-			
+
 		<div data-nstest-role="panel" id="panel-panelclose-event">
 			<h1>Panel!</h1>
 		</div>
@@ -116,7 +105,7 @@
 	<div id="external-panel-getWrapper-test"></div>
 
 	<div data-nstest-role="page" id="multipage">
-		<div data-nstest-role="header">
+		<div data-nstest-role="toolbar" data-nstest-type="header">
 			<h1>Multipage</h1>
 		</div>
 		<div data-nstest-role="content">

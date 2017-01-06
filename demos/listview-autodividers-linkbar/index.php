@@ -17,11 +17,11 @@
 <body>
 <div data-role="page" class="jqm-demos">
 
-	<div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	<div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+		<a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+		<a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
@@ -30,7 +30,7 @@
 
 		<p>This demo shows the linkbar extension that adds a fixed positioned bar on the right of the screen that makes it easy to anchor down to a specific part of a listview. View the source to see how it works.</p>
 
-		<a href="autodividers-linkbar-demo.html" data-ajax="false" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-mini ui-icon-arrow-r ui-btn-icon-right">Open demo</a>
+		<a href="autodividers-linkbar-demo.html" data-ajax="false" class="ui-shadow ui-button ui-corner-all ui-button-inline ui-mini">Open demo <span class="ui-icon ui-icon-arrow-r"></span></a>
 
 		<div data-demo-html="#demo-page" data-demo-js="#demo-script" data-demo-css="#demo-style"></div><!--/demo-html -->
 
@@ -38,22 +38,22 @@
 
     <?php include( '../jqm-navmenu.php' ); ?>
 
-    <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+    <div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
         <p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-        <p>Copyright 2014 The jQuery Foundation</p>
+        <p>Copyright jQuery Foundation</p>
     </div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 <!-- The markup below is a copy of the actual demo page just so we can show the markup in the "view source" -->
 
 <div data-role="page" id="demo-page">
 
-	<div data-role="header">
+	<div data-role="toolbar" data-type="header">
 		<h1>Listview Autodivider Linkbar</h1>
-		<a href="#" class="jqm-search-link ui-shadow ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+		<a href="#" class="jqm-search-link ui-shadow ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search <span class="ui-icon ui-icon-search"></span></a>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content">
@@ -183,7 +183,7 @@
 
     </div><!-- /content -->
 
-    <div data-role="footer">
+    <div data-role="toolbar" data-type="footer">
     	<h4>Footer</h4>
     </div><!-- /footer -->
 

@@ -1,27 +1,33 @@
-(function($) {
-  var $w = $( window ), incCreated, created, expected;
+define( [ "jquery" ], function( $ ) {
 
-  created = 0;
-  expected = 0;
+var $w = $( window ), incCreated, created, expected;
 
-  incCreated = function() {
-    created += 1;
-  };
+window.createTests = $.Deferred();
 
-  $( document ).bind( "mobileinit", function() {
-    $w.bind( "controlgroupcreate", incCreated );
-    $(function() {
-      expected += $( ":jqmData(role='controlgroup')" ).length;
-    });
+created = 0;
+expected = 0;
 
-    $w.bind( "pagecreate", function() {
-      window.createTests = {};
+incCreated = function() {
+	created += 1;
+};
 
-      // If the expected count is larger than the actual count by the
-      // time we get the pagecreate event we know that not all of the widgets
-      // have been properly initialized before pagecreate, and that pagecreate
-      // isn't properly functioning as the "everything is initialized" event
-      window.createTests.pageCreateTimed = expected === created;
-    });
-  });
-})(jQuery);
+$( document ).bind( "mobileinit", function() {
+	$w.bind( "controlgroupcreate", incCreated );
+	$( function() {
+		expected += $( ":jqmData(role='controlgroup')" ).length;
+	} );
+
+	$w.bind( "pagecreate", function() {
+		var createTests = {};
+
+		// If the expected count is larger than the actual count by the
+		// time we get the pagecreate event we know that not all of the widgets
+		// have been properly initialized before pagecreate, and that pagecreate
+		// isn't properly functioning as the "everything is initialized" event
+		createTests.pageCreateTimed = expected === created;
+
+		window.createTests.resolve( createTests );
+	} );
+} );
+
+} );

@@ -15,11 +15,11 @@
 <body>
 <div data-role="page" class="jqm-demos">
 
-	<div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	<div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+		<a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+		<a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
@@ -43,11 +43,11 @@
 		<p>After enhancement, the button markup has been modified by the framework to add classes and wrap the contents for styling:</p>
 <pre class="brush: html"><code>
 // Button after enhancement
-&#60;div data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-icon="null" data-iconpos="null" data-theme="c" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-up-c" aria-disabled="false"&#62;
-	&#60;span class="ui-btn-inner ui-btn-corner-all"&#62;
-		&#60;span class="ui-btn-text"&#62;Button element&#60;/span&#62;
+&#60;div data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-icon="null" data-iconpos="null" data-theme="c" class="ui-button ui-shadow ui-button-corner-all ui-button-up-c" aria-disabled="false"&#62;
+	&#60;span class="ui-button-inner ui-button-corner-all"&#62;
+		&#60;span class="ui-button-text"&#62;Button element&#60;/span&#62;
 	&#60;/span&#62;
-	&#60;button class="ui-btn-hidden" aria-disabled="false"&#62;Button element&#60;/button&#62;
+	&#60;button class="ui-button-hidden" aria-disabled="false"&#62;Button element&#60;/button&#62;
 &#60;/div&#62;
 </code></pre>
 
@@ -57,14 +57,18 @@
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 </body>
 </html>

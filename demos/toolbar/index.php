@@ -30,16 +30,18 @@
 <body>
 <div data-role="page" class="jqm-demos" data-quicklinks="true">
 
-	<div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	<div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+		<a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+		<a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
 
-		<h1>Toolbar <a href="http://api.jquerymobile.com/toolbar/" class="jqm-api-docs-link ui-btn ui-btn-icon-right ui-icon-caret-r ui-nodisc-icon ui-alt-icon ui-btn-inline ui-corner-all ui-mini">API</a></h1>
+		<h1>Toolbar</h1>
+
+		<a href="http://api.jquerymobile.com/toolbar/" class="jqm-api-docs-link ui-nodisc-icon ui-alt-icon" title="Visit the API Documentation" target="_blank">API Documentation <span class="ui-icon ui-icon-action"></span></a>
 
 		<p>The toolbar widget is used to enhance headers and footers.</p>
 
@@ -52,7 +54,7 @@
 		<p>The title text is normally an H1 heading element but it's possible to use any heading level (H1-H6) to allow for semantic flexibility. The framework add class <code>ui-title</code> to headings that are immediate children of toolbars. All heading levels with class <code>ui-title</code> are styled identically by default to maintain visual consistency.</p>
 
 		<div data-demo-html="true">
-			<div data-role="header">
+			<div data-role="toolbar" data-type="header">
 				<h1>Page Title</h1>
 			</div>
 		</div><!-- /demo-html -->
@@ -64,7 +66,7 @@
 		<p>The footer bar has the same basic structure as the header except it uses the <code>data-role</code> attribute value of <code>footer</code>. Headings that are immediate children of the footer get class <code>ui-title</code>, just like headers.</p>
 
 		<div data-demo-html="true">
-			<div data-role="footer">
+			<div data-role="toolbar" data-type="footer">
 				<h4>Powered by jQuery Mobile</h4>
 			</div>
 		</div><!-- /demo-html -->
@@ -74,7 +76,7 @@
 		<p>The header and footer toolbar inherit the theme swatch from the page by default but you can easily set the theme swatch color. If you use external fixed toolbars you always have to set a theme, because there is no parent page from which they can inherit the theme.</p>
 
 		<div data-demo-html="true">
-			<div data-role="header" data-theme="b">
+			<div data-role="toolbar" data-type="header" data-theme="b">
 				<h1>Page Title</h1>
 			</div>
 		</div><!-- /demo-html -->
@@ -101,53 +103,51 @@
 
 		<h2>Buttons in toolbars</h2>
 
-		<p>The framework automatically enhances links in toolbars as buttons with inline and mini style, but this has been deprecated in version 1.4. The same goes for positioning the first two buttons in a header left and right if they are immediate child of the header. The demos below prepare you for the next version.</p>
-
 		<h3>Header button position classes</h3>
 
-		<p>You can use the <code>ui-btn-left</code> and <code>ui-btn-right</code> classes to position buttons in the header.</p>
+		<p>You can use the <code>ui-toolbar-header-button-left</code> and <code>ui-toolbar-header-button-right</code> classes to position buttons in the header.</p>
 
 		<div data-demo-html="true">
-			<div data-role="header">
-				<a href="#" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-delete">Cancel</a>
+			<div data-role="toolbar" data-type="header">
+				<a href="#" class="ui-toolbar-header-button-left ui-button ui-button-inline ui-mini ui-corner-all">Cancel <span class="ui-icon ui-icon-delete"></span></a>
 			<h1>My App</h1>
-				<button class="ui-btn-right ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-check">Save</button>
+				<button class="ui-toolbar-header-button-right ui-button ui-button-b ui-button-inline ui-mini ui-corner-all">Save <span class="ui-icon ui-icon-check"></span></button>
 			</div>
 		</div><!-- /demo-html -->
 
 		<div data-demo-html="true">
-			<div data-role="header">
+			<div data-role="toolbar" data-type="header">
 			<h1>Page Title</h1>
-				<a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-gear">Options</a>
+				<a href="#" class="ui-toolbar-header-button-right ui-button ui-button-inline ui-mini ui-corner-all">Options <span class="ui-icon ui-icon-gear"></span></a>
 			</div>
 		</div><!-- /demo-html -->
 
 		<h3>Buttons in headers without a heading</h3>
 
-		<p>The heading in the header bar has some margin that will give the bar its height. If you choose not to use a heading, you will need to add an element with <code>class="ui-title"</code> so that the bar can get the height and display correctly.</p>
+		<p>The heading in the header bar has some margin that will give the bar its height. If you choose not to use a heading, you will need to add an element with <code>class="ui-toolbar-title"</code> so that the bar can get the height and display correctly.</p>
 
 		<div data-demo-html="true">
-			<div data-role="header">
-				<a href="#" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-grid">View</a>
-				<span class="ui-title"></span>
+			<div data-role="toolbar" data-type="header">
+				<a href="#" class="ui-toolbar-header-button-left ui-button ui-button-inline ui-mini ui-corner-all">View <span class="ui-icon ui-icon-grid"></span></a>
+				<span class="ui-toolbar-title"></span>
 			</div>
 		</div><!-- /demo-html -->
 
 		<h3>Buttons in footers</h3>
 
-		<p>The classes <code>ui-btn-left</code> and <code>ui-btn-right</code> were not meant to be used in footers, because they do not account for the possible presence of text, navbars, and and other elements often present in footers. You can nevertheless achieve a similar effect when you add a bit of custom CSS.</p>
+		<p>The classes <code>ui-toolbar-header-button-left</code> and <code>ui-toolbar-header-button-right</code> were not meant to be used in footers, because they do not account for the possible presence of text, navbars, and and other elements often present in footers. You can nevertheless achieve a similar effect when you add a bit of custom CSS.</p>
 
 		<div data-demo-html="true" data-demo-css="#footer-abs-buttons">
-			<div data-role="footer">
+			<div data-role="toolbar" data-type="footer">
 				<h2>Footer</h2>
-				<a href="#" class="ui-btn ui-corner-all ui-btn-inline ui-mini footer-button-left ui-btn-icon-left ui-icon-power">Quit</a>
-				<a href="#" class="ui-btn ui-corner-all ui-btn-inline ui-mini footer-button-right ui-btn-icon-right ui-icon-caret-r">Next</a>
+				<a href="#" class="ui-button ui-corner-all ui-button-inline ui-mini footer-button-left">Quit <span class="ui-icon ui-icon-power"></span></a>
+				<a href="#" class="ui-button ui-corner-all ui-button-inline ui-mini footer-button-right">Next <span class="ui-icon ui-icon-caret-r"></span></a>
 			</div>
 		</div>
 
 		<h2>Adding back button to header</h2>
 
-		<p>jQuery Mobile has a feature to automatically create and append "back" buttons to any header, though it is disabled by default. This is primarily useful in chromeless installed applications, such as those running in a native app webview. The framework automatically generates a "back" button on a header when the page plugin's <code>addBackBtn</code> option is true. This can also be set via markup if the header has a <code>data-add-back-btn="true"</code> attribute.</p>
+		<p>jQuery Mobile has a feature to automatically create and append "back" buttons to any header, though it is disabled by default. This is primarily useful in chromeless installed applications, such as those running in a native app webview. The framework automatically generates a "back" button on a header when the page plugin's <code>addBackBtn</code> option is true. This can also be set via markup if the header has a <code>data-add-back-button="true"</code> attribute.</p>
 
 		<p>If you use the attribute <code>data-rel="back"</code> on an anchor, any clicks on that anchor will mimic the back button, going back one history entry and ignoring the anchor's default href. This is particularly useful when linking back to a named page, such as a link that says "home", or when generating "back" buttons with JavaScript, such as a button to close a dialog. When using this feature in your source markup, <strong>be sure to provide a meaningful href that actually points to the URL of the referring page. This will allow the feature to work for users in C-Grade browsers.</strong></p>
 
@@ -155,7 +155,7 @@
 
 		<h3>Customizing the back button text</h3>
 
-		<p>If you'd like to configure the back button text, you can either use the <code>data-back-btn-text="previous"</code> attribute on your header element, or set it programmatically via the toolbar plugin's options:<br><code>$.mobile.toolbar.prototype.options.backBtnText = "previous";</code></p>
+		<p>If you'd like to configure the back button text, you can either use the <code>data-back-button-text="previous"</code> attribute on your header element, or set it programmatically via the toolbar plugin's options:<br><code>$.mobile.toolbar.prototype.options.backBtnText = "previous";</code></p>
 
 		<h3>Default back button style</h3>
 
@@ -172,11 +172,11 @@
 		<p>To group buttons into a button set, wrap the links in an element with <code> data-role=&quot;controlgroup&quot;</code> and <code>data-type=&quot;horizontal&quot;</code> attributes.</p>
 
 		<div data-demo-html="true">
-			<div data-role="header">
-				<div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-left">
-					<a href="#" class="ui-btn ui-btn-icon-right ui-icon-plus">Add</a>
-					<a href="#" class="ui-btn ui-btn-icon-right ui-icon-arrow-u">Up</a>
-					<a href="#" class="ui-btn ui-btn-icon-right ui-icon-arrow-d">Down</a>
+			<div data-role="toolbar" data-type="header">
+				<div data-role="controlgroup" class="ui-mini ui-toolbar-header-button-left">
+					<a href="#" class="ui-button">Add <span class="ui-icon ui-icon-plus"></span></a>
+					<a href="#" class="ui-button">Up <span class="ui-icon ui-icon-arrow-u"></span></a>
+					<a href="#" class="ui-button">Down <span class="ui-icon ui-icon-arrow-d"></span></a>
 				</div>
 				<h6>My header</h6>
 			</div>
@@ -187,7 +187,7 @@
 		<p>By default, toolbars don't have any padding to accommodate nav bars and other widgets. To add padding inside of a full-width toolbar, wrap the toolbar's contents in an element and add class <code>ui-bar</code> to that element or apply your own padding rule in your custom CSS.</p>
 
 		<div data-demo-html="true">
-			<div data-role="footer">
+			<div data-role="toolbar" data-type="footer">
 				<div class="ui-bar">
 					<label for="select-choice-1" class="ui-hidden-accessible">Shipping:</label>
 					<select name="select-choice-1" id="select-choice-1" data-mini="true" data-inline="true">
@@ -204,14 +204,18 @@
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 </body>
 </html>

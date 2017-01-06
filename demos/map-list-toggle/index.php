@@ -19,7 +19,7 @@
 		width: 100%;
 		height: 100%;
 	}
-	
+
 	#map-canvas {
 		width: 100%;
 		height: 100%;
@@ -41,7 +41,7 @@
 		display: none;
 	}
 
-	#show-more .ui-li-heading {
+	#show-more .ui-listview-item-heading {
 		text-align: center;
 	}
 
@@ -49,7 +49,7 @@
 		visibility: hidden;
 	}
 
-	.ui-li-has-count .ui-li-count {
+	.ui-listview-item-has-count .ui-listview-item-count-bubble {
 		border-color: transparent;
 	}
 
@@ -128,11 +128,11 @@
 <body>
 <div data-role="page" class="jqm-demos">
 
-	<div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	<div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+		<a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+		<a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
 	</div><!-- /header -->
 
     <div role="main" class="ui-content jqm-content">
@@ -147,7 +147,7 @@
             <li>How to display an info box on the map when a push pin is tapped.</li>
         </ul>
 
-        <a href="#map-page" data-ajax="false" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-mini ui-icon-arrow-r ui-btn-icon-right">Open demo</a>
+        <a href="#map-page" data-ajax="false" class="ui-shadow ui-button ui-corner-all ui-button-inline ui-mini">Open demo <span class="ui-icon ui-icon-arrow-r"></span></a>
 
         <div data-demo-html="#map-page" data-demo-js="true" data-demo-css="true"></div><!--/demo-html -->
 
@@ -155,19 +155,23 @@
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
-
-<?php include( '../jqm-search.php' ); ?>
 
 </div><!-- /page -->
 
+<?php include( '../jqm-search.php' ); ?>
+
 	<div data-role="page" id="map-page">
-		<div data-role="header" data-position="fixed">
+		<div data-role="toolbar" data-type="header" data-position="fixed">
 			<div class="segmented-control ui-bar-d">
-		 	<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+		 	<fieldset data-role="controlgroup" data-mini="true">
 	  			<input type="radio" name="switch" id="list-switch" checked="true">
 				<label for="list-switch">List</label>
 	         	<input type="radio" name="switch" id="map-switch">
@@ -187,7 +191,7 @@
 					  </div>
 	            	  <a href="#">
 	            	  	<h1 class="ui-gmap-marker-title wrap">Fast Clinic</h1>
-	            	  	<div class="ui-li-count">
+						<div class="ui-listview-item-count-bubble">
 	            	  		<span>0.71 miles</span>
 	            	  	</div>
 	            	  </a>
@@ -201,7 +205,7 @@
 					  </div>
 	            	  <a href="#">
 	            	  	<h1 class="ui-gmap-marker-title wrap">North Memorial Care</h1>
-	            	  	<div class="ui-li-count">
+						<div class="ui-listview-item-count-bubble">
 	            	  		<span>0.71 miles</span>
 	            	  	</div>
 	            	  </a>
@@ -215,7 +219,7 @@
 					  </div>
 	            	  <a href="#">
 	            	  	<h1 class="ui-gmap-marker-title wrap">Fast Clinic-Newtown</h1>
-	            	  	<div class="ui-li-count">
+						<div class="ui-listview-item-count-bubble">
 	            	  		<span>4.15 miles</span>
 	            	  	</div>
 	            	  </a>
@@ -229,7 +233,7 @@
 					  </div>
 	            	  <a href="#">
 	            	  	<h1 class="ui-gmap-marker-title wrap">Brad's Medical Clinic</h1>
-	            	  	<div class="ui-li-count">
+						<div class="ui-listview-item-count-bubble">
 	            	  		<span>5.09 miles</span>
 	            	  	</div>
 	            	  </a>
@@ -243,7 +247,7 @@
 					  </div>
 	            	  <a href="#">
 	            	  	<h1 class="ui-gmap-marker-title wrap">Super Clinics</h1>
-	            	  	<div class="ui-li-count">
+						<div class="ui-listview-item-count-bubble">
 	            	  		<span>5.58 miles</span>
 	            	  	</div>
 	            	  </a>
@@ -256,7 +260,7 @@
 	<!-- Load map assets at bottom for performance -->
 	<script type="text/javascript" src="jquery.gmap.js"></script>
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-	<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/infobox/1.0/src/infobox_packed.js"></script>
+	<script type="text/javascript" src="https://cdn.rawgit.com/googlemaps/v3-utility-library/infobox/1.0/src/infobox_packed.js"></script>
 	</div>
 
 </body>

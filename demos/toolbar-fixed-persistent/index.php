@@ -14,7 +14,7 @@
 	<script>
 		$(function() {
 			$( "[data-role='navbar']" ).navbar();
-			$( "[data-role='header'], [data-role='footer']" ).toolbar();
+			$( "[data-role='toolbar']" ).toolbar();
 		});
 		// Update the contents of the toolbars
 		$( document ).on( "pagecontainerchange", function() {
@@ -23,21 +23,21 @@
 			// For example, on first page: <div data-role="page" data-title="Info">
 			var current = $( ".ui-page-active" ).jqmData( "title" );
 			// Change the heading
-			$( "[data-role='header'] h1" ).text( current );
+			$( "[data-type='header'] h1" ).text( current );
 			// Remove active class from nav buttons
-			$( "[data-role='navbar'] a.ui-btn-active" ).removeClass( "ui-btn-active" );
+			$( "[data-role='navbar'] a.ui-button-active" ).removeClass( "ui-button-active" );
 			// Add active class to current nav button
 			$( "[data-role='navbar'] a" ).each(function() {
 				if ( $( this ).text() === current ) {
-					$( this ).addClass( "ui-btn-active" );
+					$( this ).addClass( "ui-button-active" );
 				}
 			});
 		});
 	</script>
 </head>
 <body>
-    <div data-role="header" data-position="fixed" data-theme="a">
-		<a href="../toolbar/" data-rel="back" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-caret-l">Back</a>
+    <div data-role="toolbar" data-type="header" data-position="fixed" data-theme="a">
+		<a href="../toolbar/" data-rel="back" class="ui-button ui-toolbar-header-button-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-button-icon-only">Back <span class="ui-icon ui-icon-caret-l"></span></a>
         <h1>Info</h1>
     </div><!-- /header -->
 
@@ -61,7 +61,7 @@
 
 			<h2>Improving page load with persistent toolbars</h2>
 
-			<p>By combining this technique with a little bit of server side logic you can reduce the file size for each page load significantly by not sending anything except the actual page container back when the request is from ajax. this not only reduces file size but makes the actual processing of the page quicker also. To see an example of this technique see <a href="../external-widgets/" data-ajax="false">External Widgets</a></p>
+			<p>By combining this technique with a little bit of server side logic you can reduce the file size for each page load significantly by not sending anything except the actual page container back when the request is from ajax. this not only reduces file size but makes the actual processing of the page quicker also. To see an example of this technique see <a href="../external-widgets/" data-ajax="false">Ajax optimized persistent toolbars</a></p>
 
 			<h3>A note about transitions</h3>
 
@@ -71,7 +71,7 @@
 
 	</div><!-- /page -->
 
-	<div data-role="footer" data-position="fixed" data-theme="a">
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-theme="a">
 		<div data-role="navbar">
 			<ul>
 				<li><a href="index.php" data-prefetch="true" data-transition="fade">Info</a></li>

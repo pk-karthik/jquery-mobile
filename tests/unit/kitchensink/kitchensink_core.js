@@ -1,20 +1,27 @@
 /*
  * Kitchen Sink Tests
  */
-(function($){
-	module("Kitchen Sink");
+define( [ "jquery", "qunit" ], function( $, QUnit ) {
 
-	test( "Nothing on the page has a class that contains `undefined`.", function(){
-    var undefClass = $(".ui-page").find("[class*='undefined']");
+QUnit.module( "Kitchen Sink" );
 
-		ok( undefClass.length == 0 );
-	});
+QUnit.test( "Nothing on the page has a class that contains `undefined`.", function( assert ) {
+	var undefClass = $( ".ui-page" ).find( "[class*='undefined']" );
 
-  module("Widget Create");
+	assert.ok( undefClass.length === 0 );
+} );
 
-  // required as part of the deprecation of init for #3602
-  test( "all widget create events fire before page create", function() {
-    // see preinit.js
-    ok( window.createTests.pageCreateTimed );
-  });
-})(jQuery);
+QUnit.module( "Widget Create" );
+
+// Required as part of the deprecation of init for #3602
+QUnit.test( "all widget create events fire before page create", function( assert ) {
+	var done = assert.async();
+
+	// See preinit.js
+	window.createTests.then( function( createTests ) {
+		assert.ok( createTests.pageCreateTimed );
+		done();
+	} );
+} );
+
+} );

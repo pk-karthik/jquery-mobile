@@ -14,7 +14,7 @@
 	<style id="custom-label-flipswitch">
 /* Custom indentations are needed because the length of custom labels differs from
    the length of the standard labels */
-.custom-label-flipswitch.ui-flipswitch .ui-btn.ui-flipswitch-on {
+.custom-label-flipswitch.ui-flipswitch .ui-button.ui-flipswitch-on {
 	text-indent: -3.4em;
 }
 .custom-label-flipswitch.ui-flipswitch .ui-flipswitch-off {
@@ -24,7 +24,7 @@
 	<style id="custom-size-flipswitch">
 /* Custom indentations are needed because the length of custom labels differs from
    the length of the standard labels */
-.custom-size-flipswitch.ui-flipswitch .ui-btn.ui-flipswitch-on {
+.custom-size-flipswitch.ui-flipswitch .ui-button.ui-flipswitch-on {
 	text-indent: -5.9em;
 }
 .custom-size-flipswitch.ui-flipswitch .ui-flipswitch-off {
@@ -50,16 +50,18 @@
 <body>
 <div data-role="page" class="jqm-demos" data-quicklinks="true">
 
-	<div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	<div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+		<a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+		<a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
 
-		<h1>Flip switch <a href="http://api.jquerymobile.com/flipswitch/" class="jqm-api-docs-link ui-btn ui-btn-icon-right ui-icon-caret-r ui-nodisc-icon ui-alt-icon ui-btn-inline ui-corner-all ui-mini">API</a></h1>
+		<h1>Flip switch</h1>
+
+		<a href="http://api.jquerymobile.com/flipswitch/" class="jqm-api-docs-link ui-nodisc-icon ui-alt-icon" title="Visit the API Documentation" target="_blank">API Documentation <span class="ui-icon ui-icon-action"></span></a>
 
 		<p>Flip switches are used for boolean style inputs like true/false or on/off in a compact UI element.
 			</p>
@@ -214,14 +216,18 @@
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 </body>
 </html>

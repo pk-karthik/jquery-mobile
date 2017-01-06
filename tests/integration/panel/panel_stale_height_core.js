@@ -1,10 +1,13 @@
-asyncTest( "Closing a panel removes the modal's height from its inline CSS", function() {
+define( [ "qunit", "jquery" ], function( QUnit, $ ) {
+
+QUnit.test( "Closing a panel removes the modal's height from its inline CSS", function( assert ) {
+	var ready = assert.async();
 	var eventNs = ".closingAPanelRemovesModalsHeightFromItsInlineCSS",
 		panel = $( "#stale-height-panel" ),
 		link = $( "#stale-height-panel-link" ),
 		modal = $( ".ui-panel-dismiss" );
 
-	$.testHelper.detailedEventCascade([
+	$.testHelper.detailedEventCascade( [
 		function() {
 			link.click();
 		},
@@ -18,9 +21,11 @@ asyncTest( "Closing a panel removes the modal's height from its inline CSS", fun
 			panelclose: { src: panel, event: "panelclose" + eventNs + "2" }
 		},
 		function() {
-			deepEqual( ( modal.attr( "style" ) || "" ).match( /height:\s*[0-9]/ ), null,
+			assert.deepEqual( ( modal.attr( "style" ) || "" ).match( /height:\s*[0-9]/ ), null,
 				"style attribute does not include a height field" );
-			start();
+			ready();
 		}
-	]);
-});
+	] );
+} );
+
+} );

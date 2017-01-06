@@ -12,7 +12,7 @@
 	<script src="../_assets/js/"></script>
 	<script src="../../js/"></script>
 	<style id="custom-icon">
-        .ui-icon-custom:after {
+        .ui-icon.ui-icon-custom {
 			background-image: url("../_assets/img/glyphish-icons/21-skull.png");
 			background-position: 3px 3px;
 			background-size: 70%;
@@ -22,16 +22,18 @@
 <body>
 <div data-role="page" class="jqm-demos" data-quicklinks="true">
 
-	<div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	<div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+		<a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+		<a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
 
-		<h1>Listview <a href="http://api.jquerymobile.com/listview/" class="jqm-api-docs-link ui-btn ui-btn-icon-right ui-icon-caret-r ui-nodisc-icon ui-alt-icon ui-btn-inline ui-corner-all ui-mini">API</a></h1>
+		<h1>Listview</h1>
+
+		<a href="http://api.jquerymobile.com/listview/" class="jqm-api-docs-link ui-nodisc-icon ui-alt-icon" title="Visit the API Documentation" target="_blank">API Documentation <span class="ui-icon ui-icon-action"></span></a>
 
 		<p>A listview is coded as a simple unordered list (ul) or ordered list (ol) with a <code> data-role="listview"</code> attribute and has a wide range of features.
 			</p>
@@ -85,9 +87,12 @@
 			</div><!--/demo-html -->
 
 		<h2>Filter</h2>
-		<p>To make a list filterable, simply add the <code>data-filter="true"</code> attribute to the list. The framework will then append a search box above the list and add the behavior to filter out list items that don't contain the current search string as the user types. The input's placeholder text defaults to "Filter items...". To configure the placeholder text in the search input, use the <code>data-filter-placeholder</code> attribute. By default the search box will inherit its theme from its parent. The search box theme can be configured using the data attribute <code>data-filter-theme</code> on your listview.</p>
+		<p>The listview can be used in conjunction with the <a href="../filterable/" data-ajax="false">filterable</a> widget.</p>
 			<div data-demo-html="true">
-				<ul data-role="listview" data-filter="true" data-filter-placeholder="Search fruits..." data-inset="true">
+				<form class="ui-filterable">
+					<input id="filterable-input" data-type="search" placeholder="Search fruits...">
+				</form>
+				<ul data-role="listview" data-filter="true" data-inset="true" data-input="#filterable-input">
 					<li><a href="#">Apple</a></li>
 					<li><a href="#">Banana</a></li>
 					<li><a href="#">Cherry</a></li>
@@ -98,7 +103,7 @@
 			</div><!--/demo-html -->
 
 		<h2>Filter reveal</h2>
-		<p>The filter reveal feature of the <a href="../filterable/" data-ajax="false">Filterable widget</a> makes it easy to build a simple autocomplete with local data. When the Filterable widget is used on a list that has the <code>data-filter-reveal="true"</code> attribute, it will auto-hide all the list items when the search field is blank. If you need to search against a long list of values, we provide a way to create a filter with a <a href="../listview-autocomplete-remote/" data-ajax="false">remote data source</a>.</p>
+		<p>The filter reveal feature of the <a href="../filterable/" data-ajax="false">Filterable widget</a> makes it easy to build a simple autocomplete with local data. When the Filterable widget is instantiated on a list that has the <code>data-filter-reveal="true"</code> attribute, it will auto-hide all the list items when the search field is blank. If you need to search against a long list of values, we provide a way to create a filter with a <a href="../listview-autocomplete-remote/" data-ajax="false">remote data source</a>.</p>
 			<div data-demo-html="true">
 
 				<form class="ui-filterable">
@@ -143,15 +148,15 @@
 			</div><!--/demo-html -->
 
 		<h2>Count bubbles</h2>
-		<p>To add a count indicator to the right of the list item, wrap the number in an element with a class of <code>ui-li-count</code>. The theme for <strong>count bubbles</strong> can be set by adding the <code>data-count-theme</code> to the list and specifying a swatch letter. </p>
+		<p>To add a count indicator to the right of the list item, wrap the number in an element with a class of <code>ui-listview-item-count-bubble</code>. The theme for <strong>count bubbles</strong> is inherited from the parent list item.</p>
 
 			<div data-demo-html="true">
-				<ul data-role="listview" data-count-theme="b" data-inset="true">
-					<li><a href="#">Inbox <span class="ui-li-count">12</span></a></li>
-					<li><a href="#">Outbox <span class="ui-li-count">0</span></a></li>
-					<li><a href="#">Drafts <span class="ui-li-count">4</span></a></li>
-					<li><a href="#">Sent <span class="ui-li-count">328</span></a></li>
-					<li><a href="#">Trash <span class="ui-li-count">62</span></a></li>
+				<ul data-role="listview" data-inset="true">
+					<li><a href="#">Inbox <span class="ui-listview-item-count-bubble">12</span></a></li>
+					<li><a href="#">Outbox <span class="ui-listview-item-count-bubble">0</span></a></li>
+					<li><a href="#">Drafts <span class="ui-listview-item-count-bubble">4</span></a></li>
+					<li><a href="#">Sent <span class="ui-listview-item-count-bubble">32811</span></a></li>
+					<li><a href="#">Trash <span class="ui-listview-item-count-bubble">62</span></a></li>
 				</ul>
 			</div><!--/demo-html -->
 
@@ -170,14 +175,14 @@
 			</div><!--/demo-html -->
 
 		<h2>Icons: 16x16</h2>
-		<p>To use standard 16x16 pixel icons in list items, add the class of <code>ui-li-icon</code> to the image element and insert 16x16 icons as <code>img</code> tags inside the list items.</p>
+		<p>To use standard 16x16 pixel icons in list items, add the class of <code>ui-listview-item-icon</code> to the image element and insert 16x16 icons as <code>img</code> tags inside the list items.</p>
 			<div data-demo-html="true">
 				<ul data-role="listview" data-inset="true">
-					<li><a href="#"><img src="../_assets/img/gf.png" alt="France" class="ui-li-icon ui-corner-none">France</a></li>
-					<li><a href="#"><img src="../_assets/img/de.png" alt="Germany" class="ui-li-icon">Germany</a></li>
-					<li><a href="#"><img src="../_assets/img/gb.png" alt="Great Britain" class="ui-li-icon">Great Britain</a></li>
-					<li><a href="#"><img src="../_assets/img/fi.png" alt="Finland" class="ui-li-icon">Finland</a></li>
-					<li><a href="#"><img src="../_assets/img/us.png" alt="United States" class="ui-li-icon ui-corner-none">United States</a></li>
+					<li><a href="#"><img src="../_assets/img/gf.png" alt="France" class="ui-listview-item-icon ui-corner-none">France</a></li>
+					<li><a href="#"><img src="../_assets/img/de.png" alt="Germany" class="ui-listview-item-icon">Germany</a></li>
+					<li><a href="#"><img src="../_assets/img/gb.png" alt="Great Britain" class="ui-listview-item-icon">Great Britain</a></li>
+					<li><a href="#"><img src="../_assets/img/fi.png" alt="Finland" class="ui-listview-item-icon">Finland</a></li>
+					<li><a href="#"><img src="../_assets/img/us.png" alt="United States" class="ui-listview-item-icon ui-corner-none">United States</a></li>
 				</ul>
 			</div><!--/demo-html -->
 
@@ -230,51 +235,51 @@
 				<div data-role="popup" id="purchase" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
 					<h3>Purchase Album?</h3>
 				<p>Your download will begin immediately on your mobile device when you purchase.</p>
-					<a href="index.php" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-btn-inline ui-mini">Buy: $10.99</a>
-					<a href="index.php" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-mini">Cancel</a>
+					<a href="index.php" data-rel="back" class="ui-shadow ui-button ui-corner-all ui-button-b ui-button-inline ui-mini">Buy: $10.99 <span class="ui-icon ui-icon-check"></span></a>
+					<a href="index.php" data-rel="back" class="ui-shadow ui-button ui-corner-all ui-button-inline ui-mini">Cancel</a>
 				</div>
 			</div><!--/demo-html -->
 
 		<h2>Formatted content</h2>
 
-		<p>To add text hierarchy, use headings to increase font emphasis and use paragraphs to reduce emphasis. Supplemental information can be added to the right of each list item by wrapping content in an element with a class of <code>ui-li-aside</code></p>
+		<p>To add text hierarchy, use headings to increase font emphasis and use paragraphs to reduce emphasis. Supplemental information can be added to the right of each list item by wrapping content in an element with a class of <code>ui-listview-item-aside</code></p>
 
 			<div data-demo-html="true">
 				<ul data-role="listview" data-inset="true">
-					<li data-role="list-divider">Friday, October 8, 2010 <span class="ui-li-count">2</span></li>
+					<li data-role="list-divider">Friday, October 8, 2010 <span class="ui-listview-item-count-bubble">2</span></li>
 					<li><a href="index.php">
 					<h2>Stephen Weber</h2>
 					<p><strong>You've been invited to a meeting at Filament Group in Boston, MA</strong></p>
 					<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
-						<p class="ui-li-aside"><strong>6:24</strong>PM</p>
+						<p class="ui-listview-item-aside"><strong>6:24</strong>PM</p>
 					</a></li>
 					<li><a href="index.php">
 					<h2>jQuery Team</h2>
 					<p><strong>Boston Conference Planning</strong></p>
 					<p>In preparation for the upcoming conference in Boston, we need to start gathering a list of sponsors and speakers.</p>
-						<p class="ui-li-aside"><strong>9:18</strong>AM</p>
+						<p class="ui-listview-item-aside"><strong>9:18</strong>AM</p>
 					</a></li>
-					<li data-role="list-divider">Thursday, October 7, 2010 <span class="ui-li-count">1</span></li>
+					<li data-role="list-divider">Thursday, October 7, 2010 <span class="ui-listview-item-count-bubble">1</span></li>
 					<li><a href="index.php">
 					<h2>Avery Walker</h2>
 					<p><strong>Re: Dinner Tonight</strong></p>
 					<p>Sure, let's plan on meeting at Highland Kitchen at 8:00 tonight. Can't wait!</p>
-						<p class="ui-li-aside"><strong>4:48</strong>PM</p>
+						<p class="ui-listview-item-aside"><strong>4:48</strong>PM</p>
 					</a></li>
 				</ul>
 			</div><!--/demo-html -->
 
 		<h2>Theme</h2>
 
-		<p>The list item color scheme can be changed to any button color theme swatch by adding the <code> data-theme</code> attribute to the listview or to individual list items. The theme for <strong>list dividers</strong> can be set by adding the <code>data-divider-theme</code> to the list. The theme for <strong>count bubbles</strong> can be set by adding the <code>data-count-theme</code> to the list.</p>
+		<p>The list item color scheme can be changed to any button color theme swatch by adding the <code> data-theme</code> attribute to the listview or to individual list items. The theme for <strong>list dividers</strong> can be set by adding the <code>data-divider-theme</code> to the list. The theme for <strong>count bubbles</strong> is inherited from the parent list item.</p>
 
 			<div data-demo-html="true">
 
-				<ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" data-count-theme="a">
+				<ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a">
 					<li data-role="list-divider">Divider</li>
-					<li><a href="index.php" data-theme="a">Inbox <span class="ui-li-count">12</span></a></li>
-					<li><a href="index.php">Outbox <span class="ui-li-count">0</span></a></li>
-					<li><a href="index.php">Sent <span class="ui-li-count">328</span></a></li>
+					<li data-theme="a"><a href="index.php">Inbox <span class="ui-listview-item-count-bubble">12</span></a></li>
+					<li><a href="index.php">Outbox <span class="ui-listview-item-count-bubble">0</span></a></li>
+					<li><a href="index.php">Sent <span class="ui-listview-item-count-bubble">328</span></a></li>
 				</ul>
 			</div><!--/demo-html -->
 
@@ -313,7 +318,7 @@
 					<ul data-role="listview" data-inset="true">
                         <li class="ui-field-contain">
                             <label for="name2">Text Input:</label>
-                            <input type="text" name="name2" id="name2" value="" data-clear-btn="true">
+                            <input type="text" name="name2" id="name2" value="" data-clear-button="true">
                         </li>
                         <li class="ui-field-contain">
                             <label for="textarea2">Textarea:</label>
@@ -342,8 +347,8 @@
                         </li>
                         <li class="ui-body ui-body-b">
                             <fieldset class="ui-grid-a">
-                                    <div class="ui-block-a"><button type="submit" class="ui-btn ui-corner-all ui-btn-a">Cancel</button></div>
-                                    <div class="ui-block-b"><button type="submit" class="ui-btn ui-corner-all ui-btn-a">Submit</button></div>
+                                    <div class="ui-block-a"><button type="submit" class="ui-button ui-corner-all ui-button-a">Cancel</button></div>
+                                    <div class="ui-block-b"><button type="submit" class="ui-button ui-corner-all ui-button-a">Submit</button></div>
                             </fieldset>
                         </li>
 					</ul>
@@ -391,18 +396,18 @@
 					<div data-role="collapsible">
 					<h2>Formatted text</h2>
 						<ul data-role="listview" data-theme="a" data-divider-theme="b">
-							<li data-role="list-divider">Friday, October 8, 2010 <span class="ui-li-count">2</span></li>
+							<li data-role="list-divider">Friday, October 8, 2010 <span class="ui-listview-item-count-bubble">2</span></li>
 							<li><a href="index.php">
 								<h3>Stephen Weber</h3>
 							<p><strong>You've been invited to a meeting at Filament Group in Boston, MA</strong></p>
 							<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
-								<p class="ui-li-aside"><strong>6:24</strong>PM</p>
+								<p class="ui-listview-item-aside"><strong>6:24</strong>PM</p>
 							</a></li>
 							<li><a href="index.php">
 								<h3>jQuery Team</h3>
 							<p><strong>Boston Conference Planning</strong></p>
 							<p>In preparation for the upcoming conference in Boston, we need to start gathering a list of sponsors and speakers.</p>
-								<p class="ui-li-aside"><strong>9:18</strong>AM</p>
+								<p class="ui-listview-item-aside"><strong>9:18</strong>AM</p>
 							</a></li>
 						</ul>
 					</div>
@@ -441,42 +446,42 @@
 					<div data-role="collapsible">
 					<h2>Mailbox</h2>
 						<ul data-role="listview">
-							<li><a href="index.php">Inbox <span class="ui-li-count">12</span></a></li>
-							<li><a href="index.php">Outbox <span class="ui-li-count">0</span></a></li>
-							<li><a href="index.php">Drafts <span class="ui-li-count">4</span></a></li>
-							<li><a href="index.php">Sent <span class="ui-li-count">328</span></a></li>
-							<li><a href="index.php">Trash <span class="ui-li-count">62</span></a></li>
+							<li><a href="index.php">Inbox <span class="ui-listview-item-count-bubble">12</span></a></li>
+							<li><a href="index.php">Outbox <span class="ui-listview-item-count-bubble">0</span></a></li>
+							<li><a href="index.php">Drafts <span class="ui-listview-item-count-bubble">4</span></a></li>
+							<li><a href="index.php">Sent <span class="ui-listview-item-count-bubble">328</span></a></li>
+							<li><a href="index.php">Trash <span class="ui-listview-item-count-bubble">62</span></a></li>
 						</ul>
 					</div>
 					<div data-role="collapsible">
 					<h2>Calendar</h2>
 						<ul data-role="listview" data-theme="a" data-divider-theme="b">
-							<li data-role="list-divider">Friday, October 8, 2010 <span class="ui-li-count">2</span></li>
+							<li data-role="list-divider">Friday, October 8, 2010 <span class="ui-listview-item-count-bubble">2</span></li>
 							<li><a href="index.php">
 									<h3>Stephen Weber</h3>
 								<p><strong>You've been invited to a meeting at Filament Group in Boston, MA</strong></p>
 								<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
-									<p class="ui-li-aside"><strong>6:24</strong>PM</p>
+									<p class="ui-listview-item-aside"><strong>6:24</strong>PM</p>
 							</a></li>
 							<li><a href="index.php">
 								<h3>jQuery Team</h3>
 							<p><strong>Boston Conference Planning</strong></p>
 							<p>In preparation for the upcoming conference in Boston, we need to start gathering a list of sponsors and speakers.</p>
-								<p class="ui-li-aside"><strong>9:18</strong>AM</p>
+								<p class="ui-listview-item-aside"><strong>9:18</strong>AM</p>
 							</a></li>
-							<li data-role="list-divider">Thursday, October 7, 2010 <span class="ui-li-count">1</span></li>
+							<li data-role="list-divider">Thursday, October 7, 2010 <span class="ui-listview-item-count-bubble">1</span></li>
 							<li><a href="index.php">
 								<h3>Avery Walker</h3>
 							<p><strong>Re: Dinner Tonight</strong></p>
 							<p>Sure, let's plan on meeting at Highland Kitchen at 8:00 tonight. Can't wait! </p>
-								<p class="ui-li-aside"><strong>4:48</strong>PM</p>
+								<p class="ui-listview-item-aside"><strong>4:48</strong>PM</p>
 							</a></li>
-							<li data-role="list-divider">Wednesday, October 6, 2010 <span class="ui-li-count">3</span></li>
+							<li data-role="list-divider">Wednesday, October 6, 2010 <span class="ui-listview-item-count-bubble">3</span></li>
 							<li><a href="index.php">
 								<h3>Amazon.com</h3>
 							<p><strong>4-for-3 Books for Kids</strong></p>
 							<p>As someone who has purchased children's books from our 4-for-3 Store, you may be interested in these featured books.</p>
-								<p class="ui-li-aside"><strong>12:47</strong>PM</p>
+								<p class="ui-listview-item-aside"><strong>12:47</strong>PM</p>
 							</a></li>
 						</ul>
 					</div>
@@ -499,14 +504,18 @@
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 </body>
 </html>

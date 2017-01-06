@@ -1,42 +1,51 @@
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: Enhances and consistently styles text inputs.
+/*!
+ * jQuery Mobile Textinput @VERSION
+ * http://jquerymobile.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
 //>>label: Text Inputs & Textareas
 //>>group: Forms
+//>>description: Enhances and consistently styles text inputs.
+//>>docs: http://api.jquerymobile.com/textinput/
+//>>demos: http://demos.jquerymobile.com/@VERSION/textinput/
 //>>css.structure: ../css/structure/jquery.mobile.forms.textinput.css
 //>>css.theme: ../css/themes/default/jquery.mobile.theme.css
 
-define( [ "jquery", "../../core", "../../widget", "../../degradeInputs", "../../zoom" ], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, undefined ) {
+( function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
+
+		// AMD. Register as an anonymous module.
+		define( [
+			"jquery",
+			"../../core",
+			"../../widget",
+			"../../degradeInputs",
+			"../widget.theme",
+			"../../zoom" ], factory );
+	} else {
+
+		// Browser globals
+		factory( jQuery );
+	}
+} )( function( $ ) {
 
 $.widget( "mobile.textinput", {
-	initSelector: "input[type='text']," +
-		"input[type='search']," +
-		":jqmData(type='search')," +
-		"input[type='number']," +
-		":jqmData(type='number')," +
-		"input[type='password']," +
-		"input[type='email']," +
-		"input[type='url']," +
-		"input[type='tel']," +
-		"textarea," +
-		"input[type='time']," +
-		"input[type='date']," +
-		"input[type='month']," +
-		"input[type='week']," +
-		"input[type='datetime']," +
-		"input[type='datetime-local']," +
-		"input[type='color']," +
-		"input:not([type])," +
-		"input[type='file']",
+	version: "@VERSION",
 
 	options: {
-		theme: null,
-		corners: true,
-		mini: false,
+		classes: {
+			"ui-textinput": "ui-corner-all ui-shadow-inset",
+			"ui-textinput-search-icon": "ui-icon ui-alt-icon ui-icon-search"
+		},
+
+		theme: "inherit",
+
 		// This option defaults to true on iOS devices.
 		preventFocusZoom: /iPhone|iPad|iPod/.test( navigator.platform ) && navigator.userAgent.indexOf( "AppleWebKit" ) > -1,
-		wrapperClass: "",
 		enhanced: false
 	},
 
@@ -44,97 +53,88 @@ $.widget( "mobile.textinput", {
 
 		var options = this.options,
 			isSearch = this.element.is( "[type='search'], :jqmData(type='search')" ),
-			isTextarea = this.element[ 0 ].nodeName.toLowerCase() === "textarea",
-			isRange = this.element.is( "[data-" + ( $.mobile.ns || "" ) + "type='range']" ),
-			inputNeedsWrap = ( (this.element.is( "input" ) ||
-				this.element.is( "[data-" + ( $.mobile.ns || "" ) + "type='search']" ) ) &&
-					!isRange );
+			isTextarea = this.element[ 0 ].nodeName.toLowerCase() === "textarea";
 
 		if ( this.element.prop( "disabled" ) ) {
 			options.disabled = true;
 		}
 
 		$.extend( this, {
-			classes: this._classesFromOptions(),
 			isSearch: isSearch,
-			isTextarea: isTextarea,
-			isRange: isRange,
-			inputNeedsWrap: inputNeedsWrap
-		});
+			isTextarea: isTextarea
+		} );
 
 		this._autoCorrect();
 
 		if ( !options.enhanced ) {
 			this._enhance();
+		} else {
+			this._outer = ( isTextarea ? this.element : this.element.parent() );
+			if ( isSearch ) {
+				this._searchIcon = this._outer.children( ".ui-textinput-search-icon" );
+			}
+		}
+
+		this._addClass( this._outer,
+			"ui-textinput ui-textinput-" + ( this.isSearch ? "search" : "text" ) );
+
+		if ( this._searchIcon ) {
+			this._addClass( this._searchIcon, "ui-textinput-search-icon" );
 		}
 
 		this._on( {
 			"focus": "_handleFocus",
 			"blur": "_handleBlur"
-		});
+		} );
+
+		if ( options.disabled !== undefined ) {
+			this.element.prop( "disabled", !!options.disabled );
+			this._toggleClass( this._outer, null, "ui-state-disabled", !!options.disabled );
+		}
 
 	},
 
 	refresh: function() {
-		this.setOptions({
-			"disabled" : this.element.is( ":disabled" )
-		});
+		this._setOptions( {
+			"disabled": this.element.is( ":disabled" )
+		} );
+	},
+
+	_themeElements: function() {
+		return [
+			{
+				element: this._outer,
+				prefix: "ui-body-"
+			}
+		];
 	},
 
 	_enhance: function() {
-		var elementClasses = [];
+		var outer;
 
-		if ( this.isTextarea ) {
-			elementClasses.push( "ui-input-text" );
-		}
-
-		if ( this.isTextarea || this.isRange ) {
-			elementClasses.push( "ui-shadow-inset" );
-		}
-
-		//"search" and "text" input widgets
-		if ( this.inputNeedsWrap ) {
-			this.element.wrap( this._wrap() );
+		if ( !this.isTextarea ) {
+			outer = $( "<div>" );
+			if ( this.isSearch ) {
+				this._searchIcon = $( "<span>" ).prependTo( outer );
+			}
 		} else {
-			elementClasses = elementClasses.concat( this.classes );
+			outer = this.element;
 		}
 
-		this.element.addClass( elementClasses.join( " " ) );
+		this._outer = outer;
+
+		// Now that we're done building up the wrapper, wrap the input in it
+		if ( !this.isTextarea ) {
+			outer.insertBefore( this.element ).append( this.element );
+		}
 	},
 
 	widget: function() {
-		return ( this.inputNeedsWrap ) ? this.element.parent() : this.element;
-	},
-
-	_classesFromOptions: function() {
-		var options = this.options,
-			classes = [];
-
-		classes.push( "ui-body-" + ( ( options.theme === null ) ? "inherit" : options.theme ) );
-		if ( options.corners ) {
-			classes.push( "ui-corner-all" );
-		}
-		if ( options.mini ) {
-			classes.push( "ui-mini" );
-		}
-		if ( options.disabled ) {
-			classes.push( "ui-state-disabled" );
-		}
-		if ( options.wrapperClass ) {
-			classes.push( options.wrapperClass );
-		}
-
-		return classes;
-	},
-
-	_wrap: function() {
-		return $( "<div class='" +
-			( this.isSearch ? "ui-input-search " : "ui-input-text " ) +
-			this.classes.join( " " ) + " " +
-			"ui-shadow-inset'></div>" );
+		return this._outer;
 	},
 
 	_autoCorrect: function() {
+
 		// XXX: Temporary workaround for issue 785 (Apple bug 8910589).
 		//      Turn off autocorrect and autocomplete on non-iOS 5 devices
 		//      since the popup they use can't be dismissed by the user. Note
@@ -143,65 +143,55 @@ $.widget( "mobile.textinput", {
 		//      have no test for iOS 5 or newer so we're temporarily using
 		//      the touchOverflow support flag for jQM 1.0. Yes, I feel dirty.
 		//      - jblas
-		if ( typeof this.element[0].autocorrect !== "undefined" &&
-			!$.support.touchOverflow ) {
+		if ( typeof this.element[ 0 ].autocorrect !== "undefined" &&
+				!$.support.touchOverflow ) {
 
 			// Set the attribute instead of the property just in case there
 			// is code that attempts to make modifications via HTML.
-			this.element[0].setAttribute( "autocorrect", "off" );
-			this.element[0].setAttribute( "autocomplete", "off" );
+			this.element[ 0 ].setAttribute( "autocorrect", "off" );
+			this.element[ 0 ].setAttribute( "autocomplete", "off" );
 		}
 	},
 
 	_handleBlur: function() {
-		this.widget().removeClass( $.mobile.focusClass );
+		this._removeClass( this._outer, null, "ui-focus" );
 		if ( this.options.preventFocusZoom ) {
 			$.mobile.zoom.enable( true );
 		}
 	},
 
 	_handleFocus: function() {
+
 		// In many situations, iOS will zoom into the input upon tap, this
 		// prevents that from happening
 		if ( this.options.preventFocusZoom ) {
 			$.mobile.zoom.disable( true );
 		}
-		this.widget().addClass( $.mobile.focusClass );
+		this._addClass( this._outer, null, "ui-focus" );
 	},
 
-	_setOptions: function ( options ) {
-		var outer = this.widget();
-
-		this._super( options );
-
-		if ( !( options.disabled === undefined &&
-			options.mini === undefined &&
-			options.corners === undefined &&
-			options.theme === undefined &&
-			options.wrapperClass === undefined ) ) {
-
-			outer.removeClass( this.classes.join( " " ) );
-			this.classes = this._classesFromOptions();
-			outer.addClass( this.classes.join( " " ) );
-		}
-
+	_setOptions: function( options ) {
 		if ( options.disabled !== undefined ) {
 			this.element.prop( "disabled", !!options.disabled );
+			this._toggleClass( this._outer, null, "ui-state-disabled", !!options.disabled );
 		}
+		return this._superApply( arguments );
 	},
 
 	_destroy: function() {
 		if ( this.options.enhanced ) {
+			this.classesElementLookup = {};
 			return;
 		}
-		if ( this.inputNeedsWrap ) {
+		if ( this._searchIcon ) {
+			this._searchIcon.remove();
+		}
+		if ( !this.isTextarea ) {
 			this.element.unwrap();
 		}
-		this.element.removeClass( "ui-input-text " + this.classes.join( " " ) );
 	}
-});
+} );
 
-})( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-});
-//>>excludeEnd("jqmBuildExclude");
+return $.widget( "mobile.textinput", $.mobile.textinput, $.mobile.widget.theme );
+
+} );

@@ -1,54 +1,52 @@
 /*
- * mobile page unit tests
+ * Mobile page unit tests
  */
-(function($){
-	var libName = 'jquery.mobile.page.sections';
+define( [
+	"qunit",
+	"jquery"
+	], function( QUnit, $ ) {
 
-	module(libName);
+var libName = "jquery.mobile.page.sections";
 
-	test( "nested header anchors aren't altered", function(){
-		ok(!$('.ui-header > div > a').hasClass('ui-btn'));
-	});
+QUnit.module( libName );
 
-	test( "nested footer anchors aren't altered", function(){
-		ok(!$('.ui-footer > div > a').hasClass('ui-btn'));
-	});
+QUnit.test( "nested header anchors aren't altered", function( assert ) {
+	assert.ok( !$( ".ui-header > div > a" ).hasClass( "ui-button" ) );
+} );
 
-	test( "nested bar anchors aren't styled", function(){
-		ok(!$('.ui-bar > div > a').hasClass('ui-btn'));
-	});
+QUnit.test( "nested footer anchors aren't altered", function( assert ) {
+	assert.ok( !$( ".ui-footer > div > a" ).hasClass( "ui-button" ) );
+} );
 
-	test( "unnested footer anchors are styled", function(){
-		ok($('.ui-footer > a').hasClass('ui-btn'));
-	});
+QUnit.test( "nested bar anchors aren't styled", function( assert ) {
+	assert.ok( !$( ".ui-bar > div > a" ).hasClass( "ui-button" ) );
+} );
 
-	test( "unnested bar anchors are styled", function(){
-		ok($('.ui-bar > a').hasClass('ui-btn'));
-	});
+QUnit.test( "no auto-generated back button exists on first page", function( assert ) {
+	assert.ok( !$( ".ui-header > :jqmData(rel='back')" ).length );
+} );
 
-	test( "no auto-generated back button exists on first page", function(){
-		ok( !$(".ui-header > :jqmData(rel='back')").length );
-	});
+QUnit.test( "sections inside an ignored container do not enhance", function( assert ) {
+	var $ignored = $( "#ignored-header" ),
+		$enhanced = $( "#enhanced-header" );
 
-	test( "sections inside an ignored container do not enhance", function() {
-		var $ignored = $( "#ignored-header" ),  $enhanced = $( "#enhanced-header" );
+	$.mobile.ignoreContentEnabled = true;
 
-		$.mobile.ignoreContentEnabled = true;
-
-		$ignored
-			.parent()
+	$ignored
+		.parent()
 			.attr( "data-" + $.mobile.ns + "role", "page" )
-			.page()
-			.trigger( "pagecreate" );
-		ok( !$ignored.hasClass( "ui-header" ), "ignored header has no class" );
+			.page();
 
-		$enhanced
-			.parent()
+	assert.ok( !$ignored.hasClass( "ui-toolbar-header" ), "ignored header has no class" );
+
+	$enhanced
+		.parent()
 			.attr( "data-" + $.mobile.ns + "role", "page" )
-			.page()
-			.trigger( "pagecreate" );
-		ok( $enhanced.hasClass( "ui-header" ), "enhanced header has classes" );
+			.page();
 
-		$.mobile.ignoreContentEnabled = false;
-	});
-})(jQuery);
+	assert.ok( $enhanced.hasClass( "ui-toolbar-header" ), "enhanced header has classes" );
+
+	$.mobile.ignoreContentEnabled = false;
+} );
+
+} );

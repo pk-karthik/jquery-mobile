@@ -1,148 +1,69 @@
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: Custom-styled native input/buttons
-//>>label: Buttons: Input or button-based
+/*!
+ * jQuery Mobile Button @VERSION
+ * http://jquerymobile.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
+//>>label: Mobile Button
 //>>group: Forms
-//>>css.structure: ../css/structure/jquery.mobile.forms.button.css
+//>>description: Consistent styling for native butttons.
+//>>docs: http://api.jquerymobile.com/button/
+//>>demos: http://demos.jquerymobile.com/@VERSION/button/
+//>>css.structure: ../css/structure/jquery.mobile.forms.slider.tooltip.css
 //>>css.theme: ../css/themes/default/jquery.mobile.theme.css
 
-define( [ "jquery", "../../widget" ], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, undefined ) {
+( function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
 
-$.widget( "mobile.button", {
+		// AMD. Register as an anonymous module.
+		define( [
+			"jquery",
+			"../../core",
+			"../../widget",
+			"../widget.theme",
+			"jquery-ui/widgets/button" ], factory );
+	} else {
 
-	initSelector: "input[type='button'], input[type='submit'], input[type='reset']",
+		// Browser globals
+		factory( jQuery );
+	}
+} )( function( $ ) {
 
+$.widget( "ui.button", $.ui.button, {
 	options: {
-		theme: null,
-		icon: null,
-		iconpos: "left",
-		iconshadow: false, /* TODO: Deprecated in 1.4, remove in 1.5. */
-		corners: true,
-		shadow: true,
-		inline: null,
-		mini: null,
-		wrapperClass: null,
-		enhanced: false
-	},
-
-	_create: function() {
-
-		if ( this.element.is( ":disabled" ) ) {
-			this.options.disabled = true;
-		}
-
-		if ( !this.options.enhanced ) {
-			this._enhance();
-		}
-
-		$.extend( this, {
-			wrapper: this.element.parent()
-		});
-
-		this._on( {
-			focus: function() {
-				this.widget().addClass( $.mobile.focusClass );
-			},
-
-			blur: function() {
-				this.widget().removeClass( $.mobile.focusClass );
-			}
-		});
-
-		this.refresh( true );
+		enhanced: false,
+		theme: null
 	},
 
 	_enhance: function() {
-		this.element.wrap( this._button() );
+		if ( !this.options.enhanced ) {
+			this._super();
+		} else if ( this.options.icon ) {
+			this.icon = this.element.find( "ui-button-icon" );
+		}
 	},
 
-	_button: function() {
-		var options = this.options,
-			iconClasses = this._getIconClasses( this.options );
+	_themeElements: function() {
+		this.options.theme = this.options.theme ? this.options.theme : "inherit";
 
-		return $("<div class='ui-btn ui-input-btn" +
-			( options.wrapperClass ? " " + options.wrapperClass : "" ) +
-			( options.theme ? " ui-btn-" + options.theme : "" ) +
-			( options.corners ? " ui-corner-all" : "" ) +
-			( options.shadow ? " ui-shadow" : "" ) +
-			( options.inline ? " ui-btn-inline" : "" ) +
-			( options.mini ? " ui-mini" : "" ) +
-			( options.disabled ? " ui-state-disabled" : "" ) +
-			( iconClasses ? ( " " + iconClasses ) : "" ) +
-			"' >" + this.element.val() + "</div>" );
-	},
-
-	widget: function() {
-		return this.wrapper;
-	},
-
-	_destroy: function() {
-			this.element.insertBefore( this.wrapper );
-			this.wrapper.remove();
-	},
-
-	_getIconClasses: function( options ) {
-		return ( options.icon ? ( "ui-icon-" + options.icon +
-			( options.iconshadow ? " ui-shadow-icon" : "" ) + /* TODO: Deprecated in 1.4, remove in 1.5. */
-			" ui-btn-icon-" + options.iconpos ) : "" );
-	},
-
-	_setOptions: function( options ) {
-		var outer = this.widget();
-
-		if ( options.theme !== undefined ) {
-			outer
-				.removeClass( this.options.theme )
-				.addClass( "ui-btn-" + options.theme );
-		}
-		if ( options.corners !== undefined ) {
-			outer.toggleClass( "ui-corner-all", options.corners );
-		}
-		if ( options.shadow !== undefined ) {
-			outer.toggleClass( "ui-shadow", options.shadow );
-		}
-		if ( options.inline !== undefined ) {
-			outer.toggleClass( "ui-btn-inline", options.inline );
-		}
-		if ( options.mini !== undefined ) {
-			outer.toggleClass( "ui-mini", options.mini );
-		}
-		if ( options.disabled !== undefined ) {
-			this.element.prop( "disabled", options.disabled );
-			outer.toggleClass( "ui-state-disabled", options.disabled );
-		}
-
-		if ( options.icon !== undefined ||
-				options.iconshadow !== undefined || /* TODO: Deprecated in 1.4, remove in 1.5. */
-				options.iconpos !== undefined ) {
-			outer
-				.removeClass( this._getIconClasses( this.options ) )
-				.addClass( this._getIconClasses(
-					$.extend( {}, this.options, options ) ) );
-		}
-
-		this._super( options );
-	},
-
-	refresh: function( create ) {
-		var originalElement,
-			isDisabled = this.element.prop( "disabled" );
-
-		if ( this.options.icon && this.options.iconpos === "notext" && this.element.attr( "title" ) ) {
-			this.element.attr( "title", this.element.val() );
-		}
-		if ( !create ) {
-			originalElement = this.element.detach();
-			$( this.wrapper ).text( this.element.val() ).append( originalElement );
-		}
-		if ( this.options.disabled !== isDisabled ) {
-			this._setOptions({ disabled: isDisabled });
-		}
+		return [
+			{
+				element: this.widget(),
+				prefix: "ui-button-"
+			}
+		];
 	}
-});
+} );
 
-})( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-});
-//>>excludeEnd("jqmBuildExclude");
+$.widget( "ui.button", $.ui.button, $.mobile.widget.theme );
+
+$.ui.button.prototype.options.classes = {
+	"ui-button": "ui-shadow ui-corner-all"
+};
+
+return $.ui.button;
+
+} );

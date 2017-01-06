@@ -1,47 +1,63 @@
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: Fires a resize event with a slight delay to prevent excessive callback invocation
+/*!
+ * jQuery Mobile Throttled Resize @VERSION
+ * http://jquerymobile.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
 //>>label: Throttled Resize
 //>>group: Events
+//>>description: Fires a resize event with a slight delay to prevent excessive callback invocation
+//>>docs: http://api.jquerymobile.com/throttledresize/
 
-define( [ "jquery" ], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
+( function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
 
-	// throttled resize event
-	(function( $ ) {
-		$.event.special.throttledresize = {
-			setup: function() {
-				$( this ).bind( "resize", handler );
-			},
-			teardown: function() {
-				$( this ).unbind( "resize", handler );
+		// AMD. Register as an anonymous module.
+		define( [ "jquery" ], factory );
+	} else {
+
+		// Browser globals
+		factory( jQuery );
+	}
+} )( function( $ ) {
+
+var throttle = 250,
+	lastCall = 0,
+	heldCall,
+	curr,
+	diff,
+	handler = function() {
+		curr = ( new Date() ).getTime();
+		diff = curr - lastCall;
+
+		if ( diff >= throttle ) {
+
+			lastCall = curr;
+			$( this ).trigger( "throttledresize" );
+
+		} else {
+
+			if ( heldCall ) {
+				clearTimeout( heldCall );
 			}
-		};
 
-		var throttle = 250,
-			handler = function() {
-				curr = ( new Date() ).getTime();
-				diff = curr - lastCall;
+			// Promise a held call will still execute
+			heldCall = setTimeout( handler, throttle - diff );
+		}
+	};
 
-				if ( diff >= throttle ) {
+// throttled resize event
+$.event.special.throttledresize = {
+	setup: function() {
+		$( this ).bind( "resize", handler );
+	},
+	teardown: function() {
+		$( this ).unbind( "resize", handler );
+	}
+};
 
-					lastCall = curr;
-					$( this ).trigger( "throttledresize" );
-
-				} else {
-
-					if ( heldCall ) {
-						clearTimeout( heldCall );
-					}
-
-					// Promise a held call will still execute
-					heldCall = setTimeout( handler, throttle - diff );
-				}
-			},
-			lastCall = 0,
-			heldCall,
-			curr,
-			diff;
-	})( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-});
-//>>excludeEnd("jqmBuildExclude");
+return $.event.special.throttledresize;
+} );

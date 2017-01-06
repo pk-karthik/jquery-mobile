@@ -1,10 +1,13 @@
+define( [ "qunit", "jquery" ], function( QUnit, $ ) {
+
 function defineTest( testName, clickAction, expectChange ) {
-	asyncTest( testName, function() {
+	QUnit.test( testName, function( assert ) {
+		var ready = assert.async();
 		var eventNs = "." + $.camelCase( testName.replace( / /g, "-" ) );
 
-		expect( expectChange ? 6 : 5 );
+		assert.expect( expectChange ? 6 : 5 );
 
-		$.testHelper.detailedEventCascade([
+		$.testHelper.detailedEventCascade( [
 			function() {
 				$( "#button-focus-test-button" ).click();
 			},
@@ -15,13 +18,13 @@ function defineTest( testName, clickAction, expectChange ) {
 				}
 			},
 			function( result ) {
-				var activePage = $.mobile.pageContainer.pagecontainer( "getActivePage" );
+				var activePage = $( ".ui-pagecontainer" ).pagecontainer( "getActivePage" );
 
-				deepEqual( result.pagecontainerchange.timedOut, false, "Page change has occurred" );
-				deepEqual( activePage.attr( "id" ), "button-focus-test-dialog", "Dialog is active" );
+				assert.deepEqual( result.pagecontainerchange.timedOut, false, "Page change has occurred" );
+				assert.deepEqual( activePage.attr( "id" ), "button-focus-test-dialog", "Dialog is active" );
 				clickAction( activePage );
 			},
-			$.extend({
+			$.extend( {
 				pagecontainerchange: {
 					src: $( document ),
 					event: "pagecontainerchange" + eventNs + "2"
@@ -37,24 +40,26 @@ function defineTest( testName, clickAction, expectChange ) {
 				}
 			} : {} ) ),
 			function( result ) {
-				var activePage = $.mobile.pageContainer.pagecontainer( "getActivePage" );
+				var activePage = $( ".ui-pagecontainer" ).pagecontainer( "getActivePage" );
 
-				deepEqual( result.pagecontainerchange.timedOut, false, "Page change has occurred" );
-				deepEqual( activePage.attr( "id" ), "default", "Default page is active" );
-				deepEqual( result.focus.timedOut, false, "Button has received focus" );
+				assert.deepEqual( result.pagecontainerchange.timedOut, false, "Page change has occurred" );
+				assert.deepEqual( activePage.attr( "id" ), "default", "Default page is active" );
+				assert.deepEqual( result.focus.timedOut, false, "Button has received focus" );
 				if ( expectChange ) {
-					deepEqual( result.change.timedOut, false, "Element has emitted 'change'" );
+					assert.deepEqual( result.change.timedOut, false, "Element has emitted 'change'" );
 				}
-				start();
+				ready();
 			}
-		]);
-	});
+		] );
+	} );
 }
 
 defineTest( "Selectmenu regains focus when dialog closes without changes", function( dialogPage ) {
-	dialogPage.find( "a" ).first().click();
-});
+dialogPage.find( "a" ).first().click();
+} );
 
 defineTest( "Selectmenu regains focus when dialog closes due to change", function( dialogPage ) {
-	dialogPage.find( "#button-focus-test-menu li" ).eq( 11 ).click();
+dialogPage.find( "#button-focus-test-menu li" ).eq( 11 ).click();
 }, true );
+
+} );

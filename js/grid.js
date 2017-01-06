@@ -1,40 +1,58 @@
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: Applies classes for creating grid or column styling.
+/*!
+ * jQuery Mobile Grid @VERSION
+ * http://jquerymobile.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
 //>>label: Grid Layouts (Columns)
 //>>group: Widgets
+//>>description: Applies classes for creating grid or column styling.
+//>>docs: http://api.jquerymobile.com/grid-layout/
+//>>demos: http://demos.jquerymobile.com/@VERSION/grids/
 //>>css.structure:../css/structure/jquery.mobile.grid.css
 //>>css.theme: ../css/themes/default/jquery.mobile.theme.css
 
-define( [ "jquery" ], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, undefined ) {
+( function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
+
+		// AMD. Register as an anonymous module.
+		define( [ "jquery" ], factory );
+	} else {
+
+		// Browser globals
+		factory( jQuery );
+	}
+} )( function( $ ) {
 
 $.fn.grid = function( options ) {
-	return this.each(function() {
+	return this.each( function() {
 
 		var $this = $( this ),
-			o = $.extend({
+			o = $.extend( {
 				grid: null
 			}, options ),
 			$kids = $this.children(),
-			gridCols = { solo:1, a:2, b:3, c:4, d:5 },
+			gridCols = { solo: 1, a: 2, b: 3, c: 4, d: 5 },
 			grid = o.grid,
 			iterator,
 			letter;
 
-			if ( !grid ) {
-				if ( $kids.length <= 5 ) {
-					for ( letter in gridCols ) {
-						if ( gridCols[ letter ] === $kids.length ) {
-							grid = letter;
-						}
+		if ( !grid ) {
+			if ( $kids.length <= 5 ) {
+				for ( letter in gridCols ) {
+					if ( gridCols[ letter ] === $kids.length ) {
+						grid = letter;
 					}
-				} else {
-					grid = "a";
-					$this.addClass( "ui-grid-duo" );
 				}
+			} else {
+				grid = "a";
+				$this.addClass( "ui-grid-duo" );
 			}
-			iterator = gridCols[grid];
+		}
+		iterator = gridCols[ grid ];
 
 		$this.addClass( "ui-grid-" + grid );
 
@@ -52,9 +70,9 @@ $.fn.grid = function( options ) {
 		if ( iterator > 4 ) {
 			$kids.filter( ":nth-child(" + iterator + "n+5)" ).addClass( "ui-block-e" );
 		}
-	});
+	} );
 };
-})( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-});
-//>>excludeEnd("jqmBuildExclude");
+
+return $.fn.grid;
+
+} );

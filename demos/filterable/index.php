@@ -15,16 +15,18 @@
 <body>
 <div data-role="page" class="jqm-demos" data-quicklinks="true">
 
-	<div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	<div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+		<a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+		<a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
 
-		<h1>Filterable <a href="http://api.jquerymobile.com/filterable/" class="jqm-api-docs-link ui-btn ui-btn-icon-right ui-icon-caret-r ui-nodisc-icon ui-alt-icon ui-btn-inline ui-corner-all ui-mini">API</a></h1>
+		<h1>Filterable</h1>
+
+		<a href="http://api.jquerymobile.com/filterable/" class="jqm-api-docs-link ui-nodisc-icon ui-alt-icon" title="Visit the API Documentation" target="_blank">API Documentation <span class="ui-icon ui-icon-action"></span></a>
 
 		<p>
 			The children of any element can be filtered by setting the attribute <code>data-filter="true"</code> on the element. By default, the text contained in each child is used for filtering, however, you also have the option of setting the attribute <code>data-filtertext</code> to a string value on any child that will be considered for filtering to associate custom filter text instead.</p>
@@ -70,21 +72,21 @@
 						<tbody>
 							<tr>
 								<th>1</th>
-								<td><a href="http://en.wikipedia.org/wiki/Citizen_Kane" data-rel="external">Citizen Kane</a></td>
+								<td><a href="https://en.wikipedia.org/wiki/Citizen_Kane" data-rel="external">Citizen Kane</a></td>
 								<td>1941</td>
 								<td>100%</td>
 								<td>74</td>
 							</tr>
 							<tr>
 								<th>2</th>
-								<td><a href="http://en.wikipedia.org/wiki/Casablanca_(film)" data-rel="external">Casablanca</a></td>
+								<td><a href="https://en.wikipedia.org/wiki/Casablanca_(film)" data-rel="external">Casablanca</a></td>
 								<td>1942</td>
 								<td>97%</td>
 								<td>64</td>
 							</tr>
 							<tr>
 								<th>3</th>
-								<td><a href="http://en.wikipedia.org/wiki/The_Godfather" data-rel="external">The Godfather</a></td>
+								<td><a href="https://en.wikipedia.org/wiki/The_Godfather" data-rel="external">The Godfather</a></td>
 								<td>1972</td>
 								<td>97%</td>
 								<td>87</td>
@@ -102,11 +104,11 @@
 					<input data-type="search" id="filterControlgroup-input">
 				</form>
 				<div data-role="controlgroup" data-filter="true" data-input="#filterControlgroup-input">
-					<a href="#" class="ui-btn ui-shadow ui-corner-all">Button 1</a>
-					<a href="#" class="ui-btn ui-shadow ui-corner-all">Button 2</a>
-					<a href="#" class="ui-btn ui-shadow ui-corner-all" data-filtertext="some text">Button 3</a>
-					<a href="#" class="ui-btn ui-shadow ui-corner-all">Button 4</a>
-					<a href="#" class="ui-btn ui-shadow ui-corner-all">Button 5</a>
+					<a href="#" class="ui-button ui-shadow ui-corner-all">Button 1</a>
+					<a href="#" class="ui-button ui-shadow ui-corner-all">Button 2</a>
+					<a href="#" class="ui-button ui-shadow ui-corner-all" data-filtertext="some text">Button 3</a>
+					<a href="#" class="ui-button ui-shadow ui-corner-all">Button 4</a>
+					<a href="#" class="ui-button ui-shadow ui-corner-all">Button 5</a>
 				</div>
 			</div>
 
@@ -203,7 +205,10 @@
 			</p>
 
 			<div data-demo-html="true">
-				<ul data-role="listview" data-filter="true" data-filter-placeholder="Find cars..." data-filter-theme="a" data-inset="true">
+				<form>
+					<input data-type="search" id="searchFilterStyling">
+				</form>
+				<ul data-role="listview" data-filter="true" data-input="#searchFilterStyling" data-filter-placeholder="Find cars..." data-filter-theme="a" data-inset="true">
 					<li>Acura</li>
 					<li>Audi</li>
 					<li>BMW</li>
@@ -225,7 +230,10 @@
 			</p>
 
 			<div data-demo-html="true">
-				<ul data-role="listview" data-filter="true" data-filter-reveal="true" data-filter-placeholder="Search fruits..." data-inset="true">
+				<form>
+					<input data-type="search" id="searchFilterReveal">
+				</form>
+				<ul data-role="listview" data-filter="true" data-input="#searchFilterReveal" data-filter-reveal="true" data-filter-placeholder="Search fruits..." data-inset="true">
 					<li><a href="#">Apple</a></li>
 					<li><a href="#">Banana</a></li>
 					<li><a href="#">Cherry</a></li>
@@ -285,14 +293,14 @@
 	<p>The filterable widget is able to use the search input whether or not the search input is itself pre-rendered. In the example below, both the search input and the filterable are pre-rendered.</p>
 	<div data-demo-html="true">
 		<form>
-			<div class="ui-input-search ui-body-inherit ui-corner-all ui-shadow-inset ui-input-has-clear">
+			<div class="ui-textinput-search ui-body-inherit ui-corner-all ui-shadow-inset ui-textinput-has-clear-button">
 				<input data-type="search" data-enhanced="true" data-inset="false" id="pre-rendered-example-input" placeholder="Filter items..." value="au">
 			</div>
 			<div data-role="controlgroup" data-enhanced="true" data-filter="true" data-filter-reveal="true" data-input="#pre-rendered-example-input" class="ui-controlgroup ui-controlgroup-vertical ui-corner-all">
 				<div class="ui-controlgroup-controls">
-					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-shadow ui-screen-hidden">Acura</a>
-					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-first-child ui-shadow ui-last-child">Renault</a>
-					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-shadow ui-screen-hidden">Hyundai</a>
+					<a href="#" class="ui-button ui-corner-all ui-shadow ui-shadow ui-screen-hidden">Acura</a>
+					<a href="#" class="ui-button ui-corner-all ui-shadow ui-first-child ui-shadow ui-last-child">Renault</a>
+					<a href="#" class="ui-button ui-corner-all ui-shadow ui-shadow ui-screen-hidden">Hyundai</a>
 				</div>
 			</div>
 		</form>
@@ -302,14 +310,18 @@
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 </body>
 </html>

@@ -1,13 +1,33 @@
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: Slider tooltip extension
+/*!
+ * jQuery Mobile Slider Tooltip @VERSION
+ * http://jquerymobile.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
 //>>label: Slidertooltip
 //>>group: Forms
-//>>css.theme: ../css/themes/default/jquery.mobile.theme.css
+//>>description: Slider tooltip extension
+//>>docs: http://api.jquerymobile.com/slider/
+//>>demos: http://demos.jquerymobile.com/@VERSION/slider-tooltip/
 //>>css.structure: ../css/structure/jquery.mobile.forms.slider.tooltip.css
+//>>css.theme: ../css/themes/default/jquery.mobile.theme.css
 
-define( [ "jquery", "./slider" ], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, undefined ) {
+( function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
+
+		// AMD. Register as an anonymous module.
+		define( [
+			"jquery",
+			"./slider" ], factory );
+	} else {
+
+		// Browser globals
+		factory( jQuery );
+	}
+} )( function( $ ) {
 
 var popup;
 
@@ -15,12 +35,12 @@ function getPopup() {
 	if ( !popup ) {
 		popup = $( "<div></div>", {
 			"class": "ui-slider-popup ui-shadow ui-corner-all"
-		});
+		} );
 	}
 	return popup.clone();
 }
 
-$.widget( "mobile.slider", $.mobile.slider, {
+return $.widget( "mobile.slider", $.mobile.slider, {
 	options: {
 		popupEnabled: false,
 		showValue: false
@@ -33,12 +53,12 @@ $.widget( "mobile.slider", $.mobile.slider, {
 			_currentValue: null,
 			_popup: null,
 			_popupVisible: false
-		});
+		} );
 
 		this._setOption( "popupEnabled", this.options.popupEnabled );
 
-		this._on( this.handle.add( this.slider ), { "vmousedown" : "_showPopup" } );
-		this._on( this.slider.add( this.document ), { "vmouseup" : "_hidePopup" } );
+		this._on( this.handle.add( this.slider ), { "vmousedown": "_showPopup" } );
+		this._on( this.slider.add( this.document ), { "vmouseup": "_hidePopup" } );
 		this._refresh();
 	},
 
@@ -49,7 +69,7 @@ $.widget( "mobile.slider", $.mobile.slider, {
 		this._popup.offset( {
 			left: dstOffset.left + ( this.handle.width() - this._popup.width() ) / 2,
 			top: dstOffset.top - this._popup.outerHeight() - 5
-		});
+		} );
 	},
 
 	_setOption: function( key, value ) {
@@ -119,9 +139,6 @@ $.widget( "mobile.slider", $.mobile.slider, {
 			this._popupVisible = false;
 		}
 	}
-});
+} );
 
-})( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-});
-//>>excludeEnd("jqmBuildExclude");
+} );

@@ -1,35 +1,40 @@
-asyncTest( "resetActivePageHeight() will be called when page is initialized late", function() {
-	var resetActivePageHeightCallCount = 0;
+define( [ "qunit", "jquery" ], function( QUnit, $ ) {
 
-	expect( 1 );
+QUnit.asyncTest( "resetActivePageHeight() will be called when page is initialized late", function( assert ) {
+var resetActivePageHeightCallCount = 0;
 
-	$( document ).on( "mobileinit", function() {
-		$.mobile.autoInitializePage = false;
+assert.expect( 1 );
 
-		$.mobile.resetActivePageHeight = ( function( original ) {
-			return function resetActivePageHeight() {
-				resetActivePageHeightCallCount++;
-				return original.apply( this, arguments );
-			};
-		})( $.mobile.resetActivePageHeight );
-	});
+$( document ).on( "mobileinit", function() {
+	$.mobile.autoInitializePage = false;
 
-	require([ "jquery", "./init" ]
-		.concat( ( window.location.search.indexOf( "transitions" ) > -1 ) ?
-			[ "./widgets/pagecontainer.transitions" ] : [] ), function() {
-		$.testHelper.detailedEventCascade([
-			function() {
+	$.mobile.resetActivePageHeight = ( function( original ) {
+		return function resetActivePageHeight() {
+			resetActivePageHeightCallCount++;
+			return original.apply( this, arguments );
+		};
+	} )( $.mobile.resetActivePageHeight );
+} );
+
+require( [ "jquery", "./init" ]
+	.concat( ( window.location.search.indexOf( "transitions" ) > -1 ) ?
+		[ "./widgets/pagecontainer.transitions" ] : [] ), function() {
+	$.testHelper.detailedEventCascade( [
+		function() {
+			$( function() {
 				$.mobile.initializePage();
-			},
-			{
-				pagecontainershow: { src: $( "body" ), event: "pagecontainershow.noAutoinit1" }
-			},
-			function() {
-				deepEqual( resetActivePageHeightCallCount, 1,
-					"$.mobile.resetActivePageHeight() was called from delayed initializePage()" );
-				start();
-			}
-		]);
-	});
+			} );
+		},
+		{
+			pagecontainershow: { src: $( "body" ), event: "pagecontainershow.noAutoinit1" }
+		},
+		function() {
+			assert.deepEqual( resetActivePageHeightCallCount, 1,
+				"$.mobile.resetActivePageHeight() was called from delayed initializePage()" );
+			QUnit.start();
+		}
+	] );
+} );
+} );
 
-});
+} );

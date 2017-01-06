@@ -13,11 +13,11 @@
 	<script src="../../js/"></script>
 	<script>
     	$( document ).on( "click", "#inject-toolbars", function() {
-    		$( "<div data-role='header'><h1>Dynamic header</h1></div>")
+    		$( "<div data-role='toolbar' data-type='header'><h1>Dynamic header</h1></div>")
     			.prependTo( "#page-with-dynamic-toolbars" )
     			.toolbar({ position: "fixed" });
 
-    		$( "<div data-role='footer'><h4>Dynamic footer</h4></div>")
+    		$( "<div data-role='toolbar' data-type='footer'><h4>Dynamic footer</h4></div>")
     			.appendTo( "#page-with-dynamic-toolbars" )
     			.toolbar({ position: "fixed" });
     		// Update the page height and padding
@@ -35,7 +35,7 @@
 			<p>click on the button to dynamically inject toolbars. Note that we have to update the page height and padding by calling <code>$.mobile.resetActivePageHeight();</code>.</p>
 
 			<div data-demo-html="#page-with-dynamic-toolbars" data-demo-js="true">
-				<button id="inject-toolbars" class="ui-btn ui-btn-inline ui-corner-all">Inject toolbars</button>
+				<button id="inject-toolbars" class="ui-button ui-button-inline ui-corner-all">Inject toolbars</button>
 			</div>
 
 		</div><!-- /content -->

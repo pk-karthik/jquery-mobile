@@ -1,363 +1,310 @@
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: Helper functions and references
+/*!
+ * jQuery Mobile Helpers @VERSION
+ * http://jquerymobile.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
 //>>label: Helpers
 //>>group: Core
+//>>description: Helper functions and references
 //>>css.structure: ../css/structure/jquery.mobile.core.css
 //>>css.theme: ../css/themes/default/jquery.mobile.theme.css
 
-define( [
-	"jquery",
-	"./ns",
-	"./navigation/base",
-	"jquery-ui/jquery.ui.core" ], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, window, undefined ) {
+( function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
 
-	// Subtract the height of external toolbars from the page height, if the page does not have
-	// internal toolbars of the same type. We take care to use the widget options if we find a
-	// widget instance and the element's data-attributes otherwise.
-	var compensateToolbars = function( page, desiredHeight ) {
-		var pageParent = page.parent(),
-			toolbarsAffectingHeight = [],
+		// AMD. Register as an anonymous module.
+		define( [
+			"jquery",
+			"./ns",
+			"jquery-ui/keycode" ], factory );
+	} else {
 
-			// We use this function to filter fixed toolbars with option updatePagePadding set to
-			// true (which is the default) from our height subtraction, because fixed toolbars with
-			// option updatePagePadding set to true compensate for their presence by adding padding
-			// to the active page. We want to avoid double-counting by also subtracting their
-			// height from the desired page height.
-			noPadders = function() {
-				var theElement = $( this ),
-					widgetOptions = $.mobile.toolbar && theElement.data( "mobile-toolbar" ) ?
-						theElement.toolbar( "option" ) : {
-							position: theElement.attr( "data-" + $.mobile.ns + "position" ),
-							updatePagePadding: ( theElement.attr( "data-" + $.mobile.ns +
+		// Browser globals
+		factory( jQuery );
+	}
+} )( function( $ ) {
+
+// Subtract the height of external toolbars from the page height, if the page does not have
+// internal toolbars of the same type. We take care to use the widget options if we find a
+// widget instance and the element's data-attributes otherwise.
+var compensateToolbars = function( page, desiredHeight ) {
+	var pageParent = page.parent(),
+		toolbarsAffectingHeight = [],
+
+		// We use this function to filter fixed toolbars with option updatePagePadding set to
+		// true (which is the default) from our height subtraction, because fixed toolbars with
+		// option updatePagePadding set to true compensate for their presence by adding padding
+		// to the active page. We want to avoid double-counting by also subtracting their
+		// height from the desired page height.
+		noPadders = function() {
+			var theElement = $( this ),
+				widgetOptions = $.mobile.toolbar && theElement.data( "mobile-toolbar" ) ?
+					theElement.toolbar( "option" ) : {
+						position: theElement.attr( "data-" + $.mobile.ns + "position" ),
+						updatePagePadding: ( theElement.attr( "data-" + $.mobile.ns +
 								"update-page-padding" ) !== false )
-						};
+					};
 
-				return !( widgetOptions.position === "fixed" &&
-					widgetOptions.updatePagePadding === true );
-			},
-			externalHeaders = pageParent.children( ":jqmData(role='header')" ).filter( noPadders ),
-			internalHeaders = page.children( ":jqmData(role='header')" ),
-			externalFooters = pageParent.children( ":jqmData(role='footer')" ).filter( noPadders ),
-			internalFooters = page.children( ":jqmData(role='footer')" );
+			return !( widgetOptions.position === "fixed" &&
+				widgetOptions.updatePagePadding === true );
+		},
+		externalHeaders = pageParent.children( ":jqmData(type='header')" ).filter( noPadders ),
+		internalHeaders = page.children( ":jqmData(type='header')" ),
+		externalFooters = pageParent.children( ":jqmData(type='footer')" ).filter( noPadders ),
+		internalFooters = page.children( ":jqmData(type='footer')" );
 
-		// If we have no internal headers, but we do have external headers, then their height
-		// reduces the page height
-		if ( internalHeaders.length === 0 && externalHeaders.length > 0 ) {
-			toolbarsAffectingHeight = toolbarsAffectingHeight.concat( externalHeaders.toArray() );
+	// If we have no internal headers, but we do have external headers, then their height
+	// reduces the page height
+	if ( internalHeaders.length === 0 && externalHeaders.length > 0 ) {
+		toolbarsAffectingHeight = toolbarsAffectingHeight.concat( externalHeaders.toArray() );
+	}
+
+	// If we have no internal footers, but we do have external footers, then their height
+	// reduces the page height
+	if ( internalFooters.length === 0 && externalFooters.length > 0 ) {
+		toolbarsAffectingHeight = toolbarsAffectingHeight.concat( externalFooters.toArray() );
+	}
+
+	$.each( toolbarsAffectingHeight, function( index, value ) {
+		desiredHeight -= $( value ).outerHeight();
+	} );
+
+	// Height must be at least zero
+	return Math.max( 0, desiredHeight );
+};
+
+$.extend( $.mobile, {
+	// define the window and the document objects
+	window: $( window ),
+	document: $( document ),
+
+	// TODO: Remove and use $.ui.keyCode directly
+	keyCode: $.ui.keyCode,
+
+	// Place to store various widget extensions
+	behaviors: {},
+
+	// Custom logic for giving focus to a page
+	focusPage: function( page ) {
+
+		// First, look for an element explicitly marked for page focus
+		var focusElement = page.find( "[autofocus]" );
+
+		// If we do not find an element with the "autofocus" attribute, look for the page title
+		if ( !focusElement.length ) {
+			focusElement = page.find( ".ui-title" ).eq( 0 );
 		}
 
-		// If we have no internal footers, but we do have external footers, then their height
-		// reduces the page height
-		if ( internalFooters.length === 0 && externalFooters.length > 0 ) {
-			toolbarsAffectingHeight = toolbarsAffectingHeight.concat( externalFooters.toArray() );
+		// Finally, fall back to focusing the page itself
+		if ( !focusElement.length ) {
+			focusElement = page;
 		}
 
-		$.each( toolbarsAffectingHeight, function( index, value ) {
-			desiredHeight -= $( value ).outerHeight();
-		});
+		focusElement.focus();
+	},
 
-		// Height must be at least zero
-		return Math.max( 0, desiredHeight );
-	};
+	// Scroll page vertically: scroll to 0 to hide iOS address bar, or pass a Y value
+	silentScroll: function( ypos ) {
 
-	$.extend( $.mobile, {
-		// define the window and the document objects
-		window: $( window ),
-		document: $( document ),
+		// If user has already scrolled then do nothing
+		if ( $.mobile.window.scrollTop() > 0 ) {
+			return;
+		}
 
-		// TODO: Remove and use $.ui.keyCode directly
-		keyCode: $.ui.keyCode,
+		if ( $.type( ypos ) !== "number" ) {
+			ypos = $.mobile.defaultHomeScroll;
+		}
 
-		// Place to store various widget extensions
-		behaviors: {},
+		// prevent scrollstart and scrollstop events
+		$.event.special.scrollstart.enabled = false;
 
-		// Custom logic for giving focus to a page
-		focusPage: function( page ) {
+		setTimeout( function() {
+			window.scrollTo( 0, ypos );
+			$.mobile.document.trigger( "silentscroll", { x: 0, y: ypos } );
+		}, 20 );
 
-			// First, look for an element explicitly marked for page focus
-			var focusElement = page.find( "[autofocus]" );
+		setTimeout( function() {
+			$.event.special.scrollstart.enabled = true;
+		}, 150 );
+	},
 
-			// If we do not find an element with the "autofocus" attribute, look for the page title
-			if ( !focusElement.length ) {
-				focusElement = page.find( ".ui-title" ).eq( 0 );
-			}
+	getClosestBaseUrl: function( ele ) {
+		// Find the closest page and extract out its url.
+		var url = $( ele ).closest( ".ui-page" ).jqmData( "url" ),
+			base = $.mobile.path.documentBase.hrefNoHash;
 
-			// Finally, fall back to focusing the page itself
-			if ( !focusElement.length ) {
-				focusElement = page;
-			}
+		if ( !$.mobile.base.dynamicBaseEnabled || !url || !$.mobile.path.isPath( url ) ) {
+			url = base;
+		}
 
-			focusElement.focus();
-		},
+		return $.mobile.path.makeUrlAbsolute( url, base );
+	},
+	removeActiveLinkClass: function( forceRemoval ) {
+		if ( !!$.mobile.activeClickedLink &&
+				( !$.mobile.activeClickedLink.closest( ".ui-page-active" ).length ||
+				forceRemoval ) ) {
 
-		// Scroll page vertically: scroll to 0 to hide iOS address bar, or pass a Y value
-		silentScroll: function( ypos ) {
-			if ( $.type( ypos ) !== "number" ) {
-				ypos = $.mobile.defaultHomeScroll;
-			}
+			$.mobile.activeClickedLink.removeClass( "ui-button-active" );
+		}
+		$.mobile.activeClickedLink = null;
+	},
 
-			// prevent scrollstart and scrollstop events
-			$.event.special.scrollstart.enabled = false;
+	enhanceable: function( elements ) {
+		return this.haveParents( elements, "enhance" );
+	},
 
-			setTimeout(function() {
-				window.scrollTo( 0, ypos );
-				$.mobile.document.trigger( "silentscroll", { x: 0, y: ypos });
-			}, 20 );
+	hijackable: function( elements ) {
+		return this.haveParents( elements, "ajax" );
+	},
 
-			setTimeout(function() {
-				$.event.special.scrollstart.enabled = true;
-			}, 150 );
-		},
+	haveParents: function( elements, attr ) {
+		if ( !$.mobile.ignoreContentEnabled ) {
+			return elements;
+		}
 
-		getClosestBaseUrl: function( ele )	{
-			// Find the closest page and extract out its url.
-			var url = $( ele ).closest( ".ui-page" ).jqmData( "url" ),
-				base = $.mobile.path.documentBase.hrefNoHash;
+		var count = elements.length,
+			$newSet = $(),
+			e, $element, excluded,
+			i, c;
 
-			if ( !$.mobile.base.dynamicBaseEnabled || !url || !$.mobile.path.isPath( url ) ) {
-				url = base;
-			}
+		for ( i = 0; i < count; i++ ) {
+			$element = elements.eq( i );
+			excluded = false;
+			e = elements[ i ];
 
-			return $.mobile.path.makeUrlAbsolute( url, base );
-		},
-		removeActiveLinkClass: function( forceRemoval ) {
-			if ( !!$.mobile.activeClickedLink &&
-				( !$.mobile.activeClickedLink.closest( "." + $.mobile.activePageClass ).length ||
-					forceRemoval ) ) {
-
-				$.mobile.activeClickedLink.removeClass( $.mobile.activeBtnClass );
-			}
-			$.mobile.activeClickedLink = null;
-		},
-
-		// DEPRECATED in 1.4
-		// Find the closest parent with a theme class on it. Note that
-		// we are not using $.fn.closest() on purpose here because this
-		// method gets called quite a bit and we need it to be as fast
-		// as possible.
-		getInheritedTheme: function( el, defaultTheme ) {
-			var e = el[ 0 ],
-				ltr = "",
-				re = /ui-(bar|body|overlay)-([a-z])\b/,
-				c, m;
 			while ( e ) {
-				c = e.className || "";
-				if ( c && ( m = re.exec( c ) ) && ( ltr = m[ 2 ] ) ) {
-					// We found a parent with a theme class
-					// on it so bail from this loop.
+				c = e.getAttribute ? e.getAttribute( "data-" + $.mobile.ns + attr ) : "";
+
+				if ( c === "false" ) {
+					excluded = true;
 					break;
 				}
 
 				e = e.parentNode;
 			}
-			// Return the theme letter we found, if none, return the
-			// specified default.
-			return ltr || defaultTheme || "a";
-		},
 
-		enhanceable: function( elements ) {
-			return this.haveParents( elements, "enhance" );
-		},
-
-		hijackable: function( elements ) {
-			return this.haveParents( elements, "ajax" );
-		},
-
-		haveParents: function( elements, attr ) {
-			if ( !$.mobile.ignoreContentEnabled ) {
-				return elements;
+			if ( !excluded ) {
+				$newSet = $newSet.add( $element );
 			}
-
-			var count = elements.length,
-				$newSet = $(),
-				e, $element, excluded,
-				i, c;
-
-			for ( i = 0; i < count; i++ ) {
-				$element = elements.eq( i );
-				excluded = false;
-				e = elements[ i ];
-
-				while ( e ) {
-					c = e.getAttribute ? e.getAttribute( "data-" + $.mobile.ns + attr ) : "";
-
-					if ( c === "false" ) {
-						excluded = true;
-						break;
-					}
-
-					e = e.parentNode;
-				}
-
-				if ( !excluded ) {
-					$newSet = $newSet.add( $element );
-				}
-			}
-
-			return $newSet;
-		},
-
-		getScreenHeight: function() {
-			// Native innerHeight returns more accurate value for this across platforms,
-			// jQuery version is here as a normalized fallback for platforms like Symbian
-			return window.innerHeight || $.mobile.window.height();
-		},
-
-		//simply set the active page's minimum height to screen height, depending on orientation
-		resetActivePageHeight: function( height ) {
-			var page = $( "." + $.mobile.activePageClass ),
-				pageHeight = page.height(),
-				pageOuterHeight = page.outerHeight( true );
-
-			height = compensateToolbars( page,
-				( typeof height === "number" ) ? height : $.mobile.getScreenHeight() );
-
-			// Remove any previous min-height setting
-			page.css( "min-height", "" );
-
-			// Set the minimum height only if the height as determined by CSS is insufficient
-			if ( page.height() < height ) {
-				page.css( "min-height", height - ( pageOuterHeight - pageHeight ) );
-			}
-		},
-
-		loading: function() {
-			// If this is the first call to this function, instantiate a loader widget
-			var loader = this.loading._widget || $( $.mobile.loader.prototype.defaultHtml ).loader(),
-
-				// Call the appropriate method on the loader
-				returnValue = loader.loader.apply( loader, arguments );
-
-			// Make sure the loader is retained for future calls to this function.
-			this.loading._widget = loader;
-
-			return returnValue;
 		}
-	});
 
-	$.addDependents = function( elem, newDependents ) {
-		var $elem = $( elem ),
-			dependents = $elem.jqmData( "dependents" ) || $();
+		return $newSet;
+	},
 
-		$elem.jqmData( "dependents", $( dependents ).add( newDependents ) );
-	};
+	getScreenHeight: function() {
+		// Native innerHeight returns more accurate value for this across platforms,
+		// jQuery version is here as a normalized fallback for platforms like Symbian
+		return window.innerHeight || $.mobile.window.height();
+	},
 
-	// plugins
-	$.fn.extend({
-		removeWithDependents: function() {
-			$.removeWithDependents( this );
-		},
+	//simply set the active page's minimum height to screen height, depending on orientation
+	resetActivePageHeight: function( height ) {
+		var page = $( ".ui-page-active" ),
+			pageHeight = page.height(),
+			pageOuterHeight = page.outerHeight( true );
 
-		// Enhance child elements
-		enhanceWithin: function() {
-			var index,
-				widgetElements = {},
-				keepNative = $.mobile.page.prototype.keepNativeSelector(),
-				that = this;
+		height = compensateToolbars( page,
+			( typeof height === "number" ) ? height : $( window ).height() );
 
-			// Add no js class to elements
-			if ( $.mobile.nojs ) {
-				$.mobile.nojs( this );
-			}
+		// Remove any previous min-height setting
+		page.css( "min-height", "" );
 
-			// Bind links for ajax nav
-			if ( $.mobile.links ) {
-				$.mobile.links( this );
-			}
-
-			// Degrade inputs for styleing
-			if ( $.mobile.degradeInputsWithin ) {
-				$.mobile.degradeInputsWithin( this );
-			}
-
-			// Run buttonmarkup
-			if ( $.fn.buttonMarkup ) {
-				this.find( $.fn.buttonMarkup.initSelector ).not( keepNative )
-				.jqmEnhanceable().buttonMarkup();
-			}
-
-			// Add classes for fieldContain
-			if ( $.fn.fieldcontain ) {
-				this.find( ":jqmData(role='fieldcontain')" ).not( keepNative )
-				.jqmEnhanceable().fieldcontain();
-			}
-
-			// Enhance widgets
-			$.each( $.mobile.widgets, function( name, constructor ) {
-
-				// If initSelector not false find elements
-				if ( constructor.initSelector ) {
-
-					// Filter elements that should not be enhanced based on parents
-					var elements = $.mobile.enhanceable( that.find( constructor.initSelector ) );
-
-					// If any matching elements remain filter ones with keepNativeSelector
-					if ( elements.length > 0 ) {
-
-						// $.mobile.page.prototype.keepNativeSelector is deprecated this is just for backcompat
-						// Switch to $.mobile.keepNative in 1.5 which is just a value not a function
-						elements = elements.not( keepNative );
-					}
-
-					// Enhance whatever is left
-					if ( elements.length > 0 ) {
-						widgetElements[ constructor.prototype.widgetName ] = elements;
-					}
-				}
-			});
-
-			for ( index in widgetElements ) {
-				widgetElements[ index ][ index ]();
-			}
-
-			return this;
-		},
-
-		addDependents: function( newDependents ) {
-			$.addDependents( this, newDependents );
-		},
-
-		// note that this helper doesn't attempt to handle the callback
-		// or setting of an html element's text, its only purpose is
-		// to return the html encoded version of the text in all cases. (thus the name)
-		getEncodedText: function() {
-			return $( "<a>" ).text( this.text() ).html();
-		},
-
-		// fluent helper function for the mobile namespaced equivalent
-		jqmEnhanceable: function() {
-			return $.mobile.enhanceable( this );
-		},
-
-		jqmHijackable: function() {
-			return $.mobile.hijackable( this );
+		// Set the minimum height only if the height as determined by CSS is insufficient
+		if ( page.height() < height ) {
+			page.css( "min-height", height - ( pageOuterHeight - pageHeight ) );
 		}
-	});
+	},
 
-	$.removeWithDependents = function( nativeElement ) {
-		var element = $( nativeElement );
+	loading: function() {
+		// If this is the first call to this function, instantiate a loader widget
+		var loader = this.loading._widget || $.mobile.loader().element,
 
-		( element.jqmData( "dependents" ) || $() ).remove();
-		element.remove();
-	};
-	$.addDependents = function( nativeElement, newDependents ) {
-		var element = $( nativeElement ),
-			dependents = element.jqmData( "dependents" ) || $();
+			// Call the appropriate method on the loader
+			returnValue = loader.loader.apply( loader, arguments );
 
-		element.jqmData( "dependents", $( dependents ).add( newDependents ) );
-	};
+		// Make sure the loader is retained for future calls to this function.
+		this.loading._widget = loader;
 
-	$.find.matches = function( expr, set ) {
-		return $.find( expr, null, null, set );
-	};
+		return returnValue;
+	},
 
-	$.find.matchesSelector = function( node, expr ) {
-		return $.find( expr, null, null, [ node ] ).length > 0;
-	};
+	isElementCurrentlyVisible: function( el ) {
+		el = typeof el === "string" ? $( el )[ 0 ] : el[ 0 ];
 
-})( jQuery, this );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-});
-//>>excludeEnd("jqmBuildExclude");
+		if( !el ) {
+			return true;
+		}
+
+		var rect = el.getBoundingClientRect();
+
+		return (
+			rect.bottom > 0 &&
+			rect.right > 0 &&
+			rect.top <
+			( window.innerHeight || document.documentElement.clientHeight ) &&
+			rect.left <
+			( window.innerWidth || document.documentElement.clientWidth ) );
+	}
+} );
+
+$.addDependents = function( elem, newDependents ) {
+	var $elem = $( elem ),
+		dependents = $elem.jqmData( "dependents" ) || $();
+
+	$elem.jqmData( "dependents", $( dependents ).add( newDependents ) );
+};
+
+// plugins
+$.fn.extend( {
+	removeWithDependents: function() {
+		$.removeWithDependents( this );
+	},
+
+	addDependents: function( newDependents ) {
+		$.addDependents( this, newDependents );
+	},
+
+	// note that this helper doesn't attempt to handle the callback
+	// or setting of an html element's text, its only purpose is
+	// to return the html encoded version of the text in all cases. (thus the name)
+	getEncodedText: function() {
+		return $( "<a>" ).text( this.text() ).html();
+	},
+
+	// fluent helper function for the mobile namespaced equivalent
+	jqmEnhanceable: function() {
+		return $.mobile.enhanceable( this );
+	},
+
+	jqmHijackable: function() {
+		return $.mobile.hijackable( this );
+	}
+} );
+
+$.removeWithDependents = function( nativeElement ) {
+	var element = $( nativeElement );
+
+	( element.jqmData( "dependents" ) || $() ).remove();
+	element.remove();
+};
+$.addDependents = function( nativeElement, newDependents ) {
+	var element = $( nativeElement ),
+		dependents = element.jqmData( "dependents" ) || $();
+
+	element.jqmData( "dependents", $( dependents ).add( newDependents ) );
+};
+
+$.find.matches = function( expr, set ) {
+	return $.find( expr, null, null, set );
+};
+
+$.find.matchesSelector = function( node, expr ) {
+	return $.find( expr, null, null, [ node ] ).length > 0;
+};
+
+return $.mobile;
+} );

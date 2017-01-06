@@ -76,61 +76,65 @@ $.mobile.document
 	</script>
 </head>
 <body>
-	<div id="main-page" data-role="page" class="jqm-demos" data-quicklinks="true">
+<div id="main-page" data-role="page" class="jqm-demos" data-quicklinks="true">
 
-		<div data-role="header" class="jqm-header">
-			<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-			<p><span class="jqm-version"></span> Demos</p>
-			<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-			<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
-		</div><!-- /header -->
+	<div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+		<a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+		<a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
+	</div><!-- /header -->
 
-		<div role="main" class="ui-content jqm-content">
-			<h1>Hash Processing</h1>
-			<p>If you wish to perform processing on the hash values as a user clicks the links to the various internal pages in your application, you can do so by handling the events <code>pagebeforechange</code> and <code>pagecontainerbeforetransition</code>.</p>
-			<div data-demo-html="#demo-page,#secondary-page" data-demo-js="#demo-script">
-				<a href="#demo-page" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">Open Demo</a>
-			</div>
-		</div><!-- /content -->
+	<div role="main" class="ui-content jqm-content">
+		<h1>Hash Processing</h1>
+		<p>If you wish to perform processing on the hash values as a user clicks the links to the various internal pages in your application, you can do so by handling the events <code>pagebeforechange</code> and <code>pagecontainerbeforetransition</code>.</p>
+		<div data-demo-html="#demo-page,#secondary-page" data-demo-js="#demo-script">
+			<a href="#demo-page" class="ui-button ui-corner-all ui-shadow ui-button-inline">Open Demo</a>
+		</div>
+	</div><!-- /content -->
 
-		<?php include( '../jqm-navmenu.php' ); ?>
+	<?php include( '../jqm-navmenu.php' ); ?>
 
-		<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-			<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-			<p>Copyright 2014 The jQuery Foundation</p>
-		</div><!-- /footer -->
-
-		<?php include( '../jqm-search.php' ); ?>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
+	</div><!-- /footer -->
 
 	</div><!-- /page -->
 
-	<div id="demo-page" data-role="page">
-		<div data-role="header">
-			<a href="#main-page" class="ui-btn ui-icon-back ui-btn-icon-left">Back To Demos</a>
-			<h1>Demo Main Page</h1>
-		</div>
-		<div role="main" class="ui-content">
-			<p>The following three buttons all take you to the same page. However, when you get there, you will notice that the title of the page is different depending on which button you have clicked.</p>
-			<a href="#secondary-page?section=My Area" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">My Area</a>
-			<a href="#secondary-page?section=My Friends" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">My Friends</a>
-			<a href="#secondary-page?section=My Items" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">My Items</a>
-		</div>
-	</div>
+<?php include( '../jqm-search.php' ); ?>
 
-	<div id="secondary-page" data-role="page">
-		<div data-role="header">
-			<a href="#demo-page" class="ui-btn ui-icon-back ui-btn-icon-left">Back To Main Page</a>
-			<a href="#main-page" class="ui-btn ui-icon-arrow-u ui-btn-icon-left">Back To Demos</a>
-			<h1 id="section"></h1>
-		</div>
-		<div role="main" class="ui-content">
-			<p>This is the second page in the demo. Notice that, as you navigate to this page from the main page, the title of this page changes depending on which button on the main page you clicked.</p>
-			<p>You can also navigate to this same page with different parameters using the links below:</p>
-			<a href="#secondary-page?section=My Area" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">My Area</a>
-			<a href="#secondary-page?section=My Friends" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">My Friends</a>
-			<a href="#secondary-page?section=My Items" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">My Items</a>
-		</div>
+<div id="demo-page" data-role="page">
+	<div data-role="toolbar" data-type="header">
+		<a href="#main-page" class="ui-button">Back To Demos <span class="ui-icon ui-icon-back"></span></a>
+		<h1>Demo Main Page</h1>
 	</div>
+	<div role="main" class="ui-content">
+		<p>The following three buttons all take you to the same page. However, when you get there, you will notice that the title of the page is different depending on which button you have clicked.</p>
+		<a href="#secondary-page?section=My Area" class="ui-button ui-corner-all ui-shadow ui-button-inline">My Area</a>
+		<a href="#secondary-page?section=My Friends" class="ui-button ui-corner-all ui-shadow ui-button-inline">My Friends</a>
+		<a href="#secondary-page?section=My Items" class="ui-button ui-corner-all ui-shadow ui-button-inline">My Items</a>
+	</div>
+</div>
+
+<div id="secondary-page" data-role="page">
+	<div data-role="toolbar" data-type="header">
+		<a href="#demo-page" class="ui-button">Back To Main Page <span class="ui-icon ui-icon-back"></span></a>
+		<a href="#main-page" class="ui-button">Back To Demos <span class="ui-icon ui-icon-arrow-u"></span></a>
+		<h1 id="section"></h1>
+	</div>
+	<div role="main" class="ui-content">
+		<p>This is the second page in the demo. Notice that, as you navigate to this page from the main page, the title of this page changes depending on which button on the main page you clicked.</p>
+		<p>You can also navigate to this same page with different parameters using the links below:</p>
+		<a href="#secondary-page?section=My Area" class="ui-button ui-corner-all ui-shadow ui-button-inline">My Area</a>
+		<a href="#secondary-page?section=My Friends" class="ui-button ui-corner-all ui-shadow ui-button-inline">My Friends</a>
+		<a href="#secondary-page?section=My Items" class="ui-button ui-corner-all ui-shadow ui-button-inline">My Items</a>
+	</div>
+</div>
 
 </body>
 </html>

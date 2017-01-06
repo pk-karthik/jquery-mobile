@@ -32,11 +32,11 @@ $(function(){
 </div>
 <div data-role="page" id="demo-intro" class="jqm-demos">
 
-	<div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	<div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+		<a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+		<a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
@@ -47,7 +47,7 @@ $(function(){
 		<p>If you define the popup outside of any page, then you must take care to instantiate the popup widget yourself. You can do this as early as DOMReady, because the popup is not on any page.</p>
 		<p>The example below illustrates the setup with two pages.</p>
 		<div data-demo-html="#popup-outside-page,#other-page,#third-page" data-demo-js="#popup-outside-page-script">
-			<a href="#popup-outside-page" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all">Menu</a>
+			<a href="#popup-outside-page" data-rel="popup" class="ui-button ui-button-inline ui-corner-all">Menu</a>
 		</div>
 
 		<h2>Pages loaded via Ajax</h2>
@@ -57,17 +57,21 @@ $(function(){
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
-
-<?php include( '../jqm-search.php' ); ?>
 
 </div><!-- /page -->
 
+<?php include( '../jqm-search.php' ); ?>
+
 <div id="other-page" data-role="page">
-	<div data-role="header">
+	<div data-role="toolbar" data-type="header">
 		<a href="#popup-outside-page" data-rel="popup">Menu</a>
 		<h1>Another Page</h1>
 	</div>
@@ -76,7 +80,7 @@ $(function(){
 	</div>
 </div>
 <div id="third-page" data-role="page">
-	<div data-role="header">
+	<div data-role="toolbar" data-type="header">
 		<a href="#popup-outside-page" data-rel="popup">Menu</a>
 		<h1>Third Page</h1>
 	</div>

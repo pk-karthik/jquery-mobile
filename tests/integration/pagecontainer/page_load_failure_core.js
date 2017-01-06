@@ -1,34 +1,39 @@
-module( "Pagecontainer" );
+define( [ "qunit", "jquery" ], function( QUnit, $ ) {
 
-asyncTest( "hides loader and clears transition lock when page load fails", function() {
-	expect( 3 );
+QUnit.module( "Pagecontainer" );
+
+QUnit.test( "hides loader and clears transition lock when page load fails", function( assert ) {
+	var ready = assert.async();
+	assert.expect( 3 );
 
 	$( document ).on( "pagecontainerloadfailed", function( event ) {
 
 		// Prevent error message shown by default
 		event.preventDefault();
 		setTimeout( function() {
-			deepEqual( $.mobile.loading().is( ":visible" ), false, "Loader is hidden" );
+			assert.deepEqual( $.mobile.loading().is( ":visible" ), false, "Loader is hidden" );
 
-			$.testHelper.pageSequence([
+			$.testHelper.pageSequence( [
 				function() {
 					$( "#go-to-other-page" ).click();
 				},
 				function() {
-					deepEqual( $.mobile.pageContainer.pagecontainer( "getActivePage" )
+					assert.deepEqual( $( ".ui-pagecontainer" ).pagecontainer( "getActivePage" )
 						.attr( "id" ), "other-page",
 						"The other page is the active page" );
 					$.mobile.back();
 				},
 				function() {
-					deepEqual( $.mobile.pageContainer.pagecontainer( "getActivePage" )
+					assert.deepEqual( $( ".ui-pagecontainer" ).pagecontainer( "getActivePage" )
 						.attr( "id" ), "start-page",
 						"Returned to start page" );
-					start();
+					ready();
 				}
-			]);
+			] );
 		}, 500 );
-	});
+	} );
 
 	$( "#go-to-nonexistent-page" ).click();
-});
+} );
+
+} );

@@ -1,9 +1,14 @@
 /*
- * mobile popup unit tests
+ * Mobile popup unit tests
  */
-(function($){
+define( [
+	"qunit",
+	"jquery"
+	], function( QUnit, $ ) {
 
-asyncTest( "Form resets correctly", function() {
+QUnit.test( "Form resets correctly", function( assert ) {
+	var ready = assert.async(),
+		arIdx, idx;
 
 	// Grab values from native inputs
 	function grabNativeValues( widgets ) {
@@ -20,7 +25,7 @@ asyncTest( "Form resets correctly", function() {
 			};
 
 		for ( arIdx in arrays ) {
-			for (idx in widgets[ arrays[ arIdx ] ] ) {
+			for ( idx in widgets[ arrays[ arIdx ] ] ) {
 				ret[ arrays[ arIdx ] ].push( widgets[ arrays[ arIdx ] ][ idx ].is( ":checked" ) );
 			}
 		}
@@ -28,11 +33,12 @@ asyncTest( "Form resets correctly", function() {
 		return ret;
 	}
 
-	function verifyRange( prefix, el, value ) {
+	function verifyRange( assert, prefix, el, value ) {
 		var id = el.attr( "id" ),
 			slider = el.next(),
 			buttonStyle = slider.children().attr( "style" ).split( ";" ),
-			styleItem, style = {};
+			styleItem, idx, idx1,
+			style = {};
 
 		// Reconstruct the inline style of the object. The result will be stored in the variable "style"
 		for ( idx in buttonStyle ) {
@@ -45,69 +51,47 @@ asyncTest( "Form resets correctly", function() {
 			}
 		}
 
-		ok( slider.hasClass( "ui-slider-track" ), prefix + id + "'s immediate succeeding sibling has class ui-slider-track" );
+		assert.ok( slider.hasClass( "ui-slider-track" ), prefix + id + "'s immediate succeeding sibling has class ui-slider-track" );
+
 		// This assumes an input range of 0-100
-		ok( style.left === value + "%", prefix + id + "'s button is located appropriately" );
+		assert.ok( style.left === value + "%", prefix + id + "'s button is located appropriately" );
 	}
 
-	function verifySelect( prefix, el, value ) {
+	function verifySelect( assert, prefix, el ) {
 		var id = el.attr( "id" ),
 			button = el.parent(),
 			wrapper = button.parent(),
-			anonySpan = button.children().eq( 0 );
+			anonySpan = button.children( ".ui-selectmenu-button-text" );
 
-		ok( button.length === 1, prefix + id + " has a parent" );
-		ok( wrapper.length === 1, prefix + id + " has a wrapper" );
-		ok( wrapper.hasClass( "ui-select" ), prefix + id + "'s wrapper has class ui-select" );
-		ok( anonySpan.length === 1, prefix + id + "'s wrapper contains a single span element as its first child" );
-		ok( anonySpan.text() === el.children("[value='" + el.val() + "']").text(), prefix + id + "'s text is identical to the text inside the selected <option> element" );
+		assert.ok( button.length === 1, prefix + id + " has a parent" );
+		assert.ok( wrapper.length === 1, prefix + id + " has a wrapper" );
+		assert.ok( wrapper.hasClass( "ui-selectmenu" ), prefix + id +
+			"'s wrapper has class ui-selectmenu" );
+		assert.ok( anonySpan.length === 1, prefix + id +
+			"'s wrapper contains a single span element as its last child" );
+		assert.strictEqual( anonySpan.text(), el.children( "[value='" + el.val() + "']" ).text(),
+			prefix + id + "'s text is identical to the selected <option> element's text" );
 	}
 
-	function verifyCheckboxRadio( prefix, el, isRadio, isHoriz, value ) {
-		var id = el.attr( "id" ),
-			label = el.parent().children( "label" ),
-			ctype = ( isRadio ? "radio" : "checkbox" ),
-			iconVisible = ( label.hasClass( "ui-btn-icon-left" ) || label.hasClass( "ui-btn-icon-right" ) ),
-			iconValue = ( ctype + "-" + ( value ? "on" : "off" ) );
-
-		ok( label.is( "label[for='" + id + "']" ), prefix + id + "'s label is a label for it" );
-		ok( label.parent().is( ".ui-" + ctype ), prefix + id + "'s parent's label is a div with the correct class" );
-		ok( label.hasClass( "ui-" + iconValue ), prefix + id + "'s icon has the right state class" );
-		ok( iconVisible === ( !isHoriz ), prefix + id + "'s icon is visible exactly when it's not part of a horizontal controlgroup" );
-		ok( label.hasClass( "ui-btn-active" ) === ( isHoriz && value ), prefix + id + "'s label has class ui-btn-active exactly when it's set and part of a horizontal controlgroup" );
-	}
-
-	function verifyFlipswitch( prefix, el, value ) {
+	function verifyFlipswitch( assert, prefix, el, value ) {
 		var id = el.attr( "id" );
 
-		deepEqual( el.parent().hasClass( "ui-flipswitch-active" ), !!value, prefix + "class 'ui-flipswitch-active' presence/absence on parent of " + id + " is correct" );
+		assert.deepEqual( el.parent().hasClass( "ui-flipswitch-active" ), !!value, prefix + "class 'ui-flipswitch-active' presence/absence on parent of " + id + " is correct" );
 	}
 
 	// Verify that the enhanced widgets reflect the expected values - the helpers
 	// make assumptions about where the enhanced widget is wrt. the native widget
 	// and will cause a test failure if that relationship changes.
-	function verifyValues( prefix, widgets, values ) {
-		for ( idx in values.vcheckbox ) {
-			verifyCheckboxRadio( prefix, widgets.vcheckbox[ idx ], false, false, values.vcheckbox[ idx ] );
-		}
-		for ( idx in values.hcheckbox ) {
-			verifyCheckboxRadio( prefix, widgets.hcheckbox[ idx ], false, true, values.hcheckbox[ idx ] );
-		}
-		for ( idx in values.vradio ) {
-			verifyCheckboxRadio( prefix, widgets.vradio[ idx ], true, false, values.vradio[ idx ] );
-		}
-		for ( idx in values.hradio ) {
-			verifyCheckboxRadio( prefix, widgets.hradio[ idx ], true, true, values.hradio[ idx ] );
-		}
+	function verifyValues( assert, prefix, widgets, values ) {
+		verifySelect( assert, prefix, widgets.selectTest, values.selectTest );
+		verifyRange( assert, prefix, widgets.range, values.range );
 
-		verifySelect( prefix, widgets.selectTest, values.selectTest );
-		verifyRange( prefix, widgets.range, values.range );
-
-		verifyFlipswitch( prefix, widgets.checkboxFlipswitch, values.checkboxFlipswitch );
-		verifyFlipswitch( prefix, widgets.selectFlipswitch, values.selectFlipswitch );
+		verifyFlipswitch( assert, prefix, widgets.checkboxFlipswitch, values.checkboxFlipswitch );
+		verifyFlipswitch( assert, prefix, widgets.selectFlipswitch, values.selectFlipswitch );
 	}
 
 	function runTest( page, doneCb ) {
+
 		// First, record default values
 		var widgets = {
 				reset: $( "#reset" ),
@@ -133,10 +117,10 @@ asyncTest( "Form resets correctly", function() {
 				selectFlipswitch: $( "#select-based-flipswitch" )
 			},
 			checkboxKeys = [ "vcheckbox", "hcheckbox" ],
-			defaults = grabNativeValues( widgets );
+			defaults = grabNativeValues( widgets ), keyIdx, wIdx;
 
 		// Make sure the widgets actually reflect the defaults
-		verifyValues( "Initially: ", widgets, defaults );
+		verifyValues( assert, "Initially: ", widgets, defaults );
 
 		// Change values:
 		// Invert checkboxes
@@ -145,11 +129,14 @@ asyncTest( "Form resets correctly", function() {
 				widgets[ checkboxKeys[ keyIdx ] ][ wIdx ].prop( "checked", !widgets[ checkboxKeys[ keyIdx ] ][ wIdx ].is( ":checked" ) ).checkboxradio( "refresh" );
 			}
 		}
+
 		// Pick other values for radios
 		widgets.vradio[ 0 ].prop( "checked", true ).checkboxradio( "refresh" );
 		widgets.hradio[ 1 ].prop( "checked", true ).checkboxradio( "refresh" );
+
 		// Modify select
 		widgets.selectTest.val( "option2" ).selectmenu( "refresh" );
+
 		// Modify slider
 		widgets.range.val( 19 ).slider( "refresh" );
 
@@ -159,12 +146,12 @@ asyncTest( "Form resets correctly", function() {
 		widgets.selectFlipswitch.flipswitch( "refresh" );
 
 		// Verify values after modification
-		verifyValues( "After modification: ", widgets, grabNativeValues( widgets ) );
+		verifyValues( assert, "After modification: ", widgets, grabNativeValues( widgets ) );
 
 		widgets.reset.click();
 
 		setTimeout( function() {
-			verifyValues( "After reset: ", widgets, defaults );
+			verifyValues( assert, "After reset: ", widgets, defaults );
 			doneCb();
 		}, 2000 );
 	}
@@ -182,60 +169,64 @@ asyncTest( "Form resets correctly", function() {
 				setTimeout( function() {
 					runTest( e.target, function() {
 						testComplete = true;
-						setTimeout( function() { $( "#goToStartPage" ).click(); } );
-					});
-				});
+						setTimeout( function() {
+							$( "#goToStartPage" ).click();
+						} );
+					} );
+				} );
 			} else if ( e.target.id === "startPage" ) {
 				if ( wentToTestPage ) {
 					if ( testComplete ) {
 						$( document ).unbind( "pageshow", handlePageShow );
-						start();
+						ready();
 					}
 				} else {
 					setTimeout( maybeGoToTestPage );
 				}
 			}
-		}
+	};
 
 	$( document ).bind( "pageshow", handlePageShow );
 
 	setTimeout( maybeGoToTestPage );
-});
+} );
 
-asyncTest( "form action is honored", function() {
+QUnit.test( "form action is honored", function( assert ) {
 
-	expect( 1 );
+	var ready = assert.async();
+	assert.expect( 1 );
 
-	$.testHelper.pageSequence([
+	$.testHelper.pageSequence( [
 		function() {
 			$( "#default-submit" ).click();
 		},
 
 		function() {
-			deepEqual( $.mobile.activePage.attr( "id" ), "landing1", "Clicking the default submit button lands you on landing1.html" );
+			assert.deepEqual( $.mobile.activePage.attr( "id" ), "landing1", "Clicking the default submit button lands you on landing1.html" );
 			$.mobile.back();
 		},
 
-		start
-	]);
-});
+		ready
+	] );
+} );
 
-asyncTest( "button's formaction attribute is honored", function() {
+QUnit.test( "button's formaction attribute is honored", function( assert ) {
 
-	expect( 1 );
+	assert.expect( 1 );
+	var ready = assert.async();
 
-	$.testHelper.pageSequence([
+	$.testHelper.pageSequence( [
 		function() {
 			$( "#formaction-submit" ).click();
 		},
 
 		function() {
-			deepEqual( $.mobile.activePage.attr( "id" ), "landing2", "Clicking the default submit button lands you on landing2.html" );
+			assert.deepEqual( $.mobile.activePage.attr( "id" ), "landing2", "Clicking the default submit button lands you on landing2.html" );
 			$.mobile.back();
 		},
 
-		start
-	]);
-});
+		ready
+	] );
+} );
 
-})( jQuery );
+} );

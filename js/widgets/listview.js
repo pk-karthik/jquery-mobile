@@ -1,68 +1,115 @@
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: Applies listview styling of various types (standard, numbered, split button, etc.)
+/*!
+ * jQuery Mobile Listview @VERSION
+ * http://jquerymobile.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
 //>>label: Listview
 //>>group: Widgets
+//>>description: Applies listview styling of various types (standard, numbered, split button, etc.)
+//>>docs: http://api.jquerymobile.com/listview/
+//>>demos: http://demos.jquerymobile.com/@VERSION/listview/
 //>>css.structure: ../css/structure/jquery.mobile.listview.css
 //>>css.theme: ../css/themes/default/jquery.mobile.theme.css
 
-define( [ "jquery", "../widget", "./addFirstLastClasses" ], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, undefined ) {
+( function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
 
-var getAttr = $.mobile.getAttribute;
+		// AMD. Register as an anonymous module.
+		define( [
+			"jquery",
+			"../widget",
+			"./addFirstLastClasses" ], factory );
+	} else {
 
-$.widget( "mobile.listview", $.extend( {
+		// Browser globals
+		factory( jQuery );
+	}
+} )( function( $ ) {
+
+function addItemToDictionary( itemClassDict, element, key, extra ) {
+
+	// Construct the dictionary key from the key class and the extra class
+	var dictionaryKey = [ key ].concat( extra ? [ extra ] : [] ).join( "|" );
+
+	if ( !itemClassDict[ dictionaryKey ] ) {
+		itemClassDict[ dictionaryKey ] = [];
+	}
+
+	itemClassDict[ dictionaryKey ].push( element );
+}
+
+var getAttribute = $.mobile.getAttribute,
+	countBubbleClassRegex = /\bui-listview-item-count-bubble\b/;
+
+function filterBubbleSpan() {
+	var child, parentNode,
+		anchorHash = { "a": true, "A": true };
+
+	for ( child = this.firstChild ; !!child ; child = child.nextSibling ) {
+
+		// Accept list item when we've found an element with class
+		// ui-listview-item-count-bubble
+		if ( child.className && child.className.match( countBubbleClassRegex ) ) {
+			return true;
+		}
+
+		// Descend into anchor, remembering where we've been
+		if ( anchorHash[ child.nodeName ] ) {
+			parentNode = child;
+			child = child.firstChild;
+		}
+
+		// When done with anchor, resume checking children of list item
+		if ( !child && parentNode ) {
+			child = parentNode;
+			parentNode = null;
+		}
+	}
+}
+
+return $.widget( "mobile.listview", $.extend( {
+	version: "@VERSION",
 
 	options: {
-		theme: null,
-		countTheme: null, /* Deprecated in 1.4 */
-		dividerTheme: null,
+		classes: {
+			"ui-listview-inset": "ui-corner-all ui-shadow"
+		},
+		theme: "inherit",
+		dividerTheme: "inherit",
 		icon: "caret-r",
 		splitIcon: "caret-r",
-		splitTheme: null,
-		corners: true,
-		shadow: true,
-		inset: false
+		splitTheme: "inherit",
+		inset: false,
+		enhanced: false
 	},
 
 	_create: function() {
-		var t = this,
-			listviewClasses = "";
-
-		listviewClasses += t.options.inset ? " ui-listview-inset" : "";
-
-		if ( !!t.options.inset ) {
-			listviewClasses += t.options.corners ? " ui-corner-all" : "";
-			listviewClasses += t.options.shadow ? " ui-shadow" : "";
+		this._addClass( "ui-listview" );
+		if ( this.options.inset ) {
+			this._addClass( "ui-listview-inset" );
 		}
-
-		// create listview markup
-		t.element.addClass( " ui-listview" + listviewClasses );
-
-		t.refresh( true );
+		this._refresh( true );
 	},
 
-	// TODO: Remove in 1.5
-	_findFirstElementByTagName: function( ele, nextProp, lcName, ucName ) {
-		var dict = {};
-		dict[ lcName ] = dict[ ucName ] = true;
-		while ( ele ) {
-			if ( dict[ ele.nodeName ] ) {
-				return ele;
-			}
-			ele = ele[ nextProp ];
-		}
-		return null;
+	// We only handle the theme option through the theme extension. Theme options concerning list
+	// items such as splitTheme and dividerTheme have to be handled in refresh().
+	_themeElements: function() {
+		return [ {
+			element: this.element,
+			prefix: "ui-group-theme-"
+		} ];
 	},
-	// TODO: Remove in 1.5
-	_addThumbClasses: function( containers ) {
-		var i, img, len = containers.length;
-		for ( i = 0; i < len; i++ ) {
-			img = $( this._findFirstElementByTagName( containers[ i ].firstChild, "nextSibling", "img", "IMG" ) );
-			if ( img.length ) {
-				$( this._findFirstElementByTagName( img[ 0 ].parentNode, "parentNode", "li", "LI" ) ).addClass( img.hasClass( "ui-li-icon" ) ? "ui-li-has-icon" : "ui-li-has-thumb" );
-			}
+
+	_setOption: function( key, value ) {
+		if ( key === "inset" ) {
+			this._toggleClass( this.element, "ui-listview-inset", null, !!value );
 		}
+
+		return this._superApply( arguments );
 	},
 
 	_getChildrenByTagName: function( ele, lcName, ucName ) {
@@ -82,91 +129,127 @@ $.widget( "mobile.listview", $.extend( {
 	_beforeListviewRefresh: $.noop,
 	_afterListviewRefresh: $.noop,
 
-	refresh: function( create ) {
-		var buttonClass, pos, numli, item, itemClass, itemTheme, itemIcon, icon, a,
-			isDivider, startCount, newStartCount, value, last, splittheme, splitThemeClass, spliticon,
-			altButtonClass, dividerTheme, li,
-			o = this.options,
-			$list = this.element,
-			ol = !!$.nodeName( $list[ 0 ], "ol" ),
-			start = $list.attr( "start" ),
-			itemClassDict = {},
-			countBubbles = $list.find( ".ui-li-count" ),
-			countTheme = getAttr( $list[ 0 ], "counttheme" ) || this.options.countTheme,
-			countThemeClass = countTheme ? "ui-body-" + countTheme : "ui-body-inherit";
+	updateItems: function( items ) {
+		this._refresh( false, items );
+	},
 
-		if ( o.theme ) {
-			$list.addClass( "ui-group-theme-" + o.theme );
-		}
+	refresh: function() {
+		this._refresh();
+	},
+
+	_processListItem: function( /* item */ ) {
+		return true;
+	},
+
+	_processListItemAnchor: function( /* a */ ) {
+		return true;
+	},
+
+	_refresh: function( create, items ) {
+		var buttonClass, pos, numli, item, itemClass, itemExtraClass, itemTheme, itemIcon, icon, a,
+			isDivider, value, last, splittheme, li, dictionaryKey, span, allItems, newSpan,
+			currentOptions = this.options,
+			list = this.element,
+			ol = !!$.nodeName( list[ 0 ], "ol" ),
+			start = list.attr( "start" ),
+			itemClassDict = {};
 
 		// Check if a start attribute has been set while taking a value of 0 into account
 		if ( ol && ( start || start === 0 ) ) {
-			startCount = parseInt( start, 10 ) - 1;
-			$list.css( "counter-reset", "listnumbering " + startCount );
+			list.css( "counter-reset", "listnumbering " + ( parseInt( start, 10 ) - 1 ) );
 		}
 
 		this._beforeListviewRefresh();
 
-		li = this._getChildrenByTagName( $list[ 0 ], "li", "LI" );
+		// We need all items even if a set was passed in - we just won't iterate over them in the
+		// main refresh loop.
+		allItems = this._getChildrenByTagName( list[ 0 ], "li", "LI" );
+		li = items || allItems;
 
 		for ( pos = 0, numli = li.length; pos < numli; pos++ ) {
 			item = li.eq( pos );
-			itemClass = "";
+			itemClass = "ui-listview-item";
+			itemExtraClass = undefined;
 
-			if ( create || item[ 0 ].className.search( /\bui-li-static\b|\bui-li-divider\b/ ) < 0 ) {
+			if ( create || this._processListItem( item ) ) {
 				a = this._getChildrenByTagName( item[ 0 ], "a", "A" );
-				isDivider = ( getAttr( item[ 0 ], "role" ) === "list-divider" );
+				isDivider = ( getAttribute( item[ 0 ], "role" ) === "list-divider" );
 				value = item.attr( "value" );
-				itemTheme = getAttr( item[ 0 ], "theme" );
+				itemTheme = getAttribute( item[ 0 ], "theme" );
 
-				if ( a.length && a[ 0 ].className.search( /\bui-btn\b/ ) < 0 && !isDivider ) {
-					itemIcon = getAttr( item[ 0 ], "icon" );
-					icon = ( itemIcon === false ) ? false : ( itemIcon || o.icon );
+				if ( a.length && ( ( this._processListItemAnchor( a ) && !isDivider ) ||
+						create ) ) {
+					itemIcon = getAttribute( item[ 0 ], "icon" );
+					icon = ( itemIcon === false ) ? false : ( itemIcon || currentOptions.icon );
 
-					// TODO: Remove in 1.5 together with links.js (links.js / .ui-link deprecated in 1.4)
-					a.removeClass( "ui-link" );
-
-					buttonClass = "ui-btn";
+					buttonClass = "ui-button";
 
 					if ( itemTheme ) {
-						buttonClass += " ui-btn-" + itemTheme;
+						buttonClass += " ui-button-" + itemTheme;
 					}
 
 					if ( a.length > 1 ) {
-						itemClass = "ui-li-has-alt";
+						itemClass += " ui-listview-item-has-alternate";
 
 						last = a.last();
-						splittheme = getAttr( last[ 0 ], "theme" ) || o.splitTheme || getAttr( item[ 0 ], "theme", true );
-						splitThemeClass = splittheme ? " ui-btn-" + splittheme : "";
-						spliticon = getAttr( last[ 0 ], "icon" ) || getAttr( item[ 0 ], "icon" ) || o.splitIcon;
-						altButtonClass = "ui-btn ui-btn-icon-notext ui-icon-" + spliticon + splitThemeClass;
+						splittheme = getAttribute( last[ 0 ], "theme" ) ||
+							currentOptions.splitTheme || itemTheme;
 
-						last
-							.attr( "title", $.trim( last.getEncodedText() ) )
-							.addClass( altButtonClass )
-							.empty();
+						newSpan = false;
+						span = last.children( ".ui-listview-item-split-icon" );
+						if ( !span.length ) {
+							span = $( "<span>" );
+							newSpan = true;
+						}
+
+						addItemToDictionary( itemClassDict, span[ 0 ],
+							"ui-listview-item-split-icon", "ui-icon ui-icon-" +
+								( getAttribute( last[ 0 ], "icon" ) || itemIcon ||
+									currentOptions.splitIcon ) );
+						addItemToDictionary( itemClassDict, last[ 0 ],
+							"ui-listview-item-split-button",
+							"ui-button ui-button-icon-only" +
+								( splittheme ? " ui-button-" + splittheme : "" ) );
+						last.attr( "title", $.trim( last.getEncodedText() ) );
+
+						if ( newSpan ) {
+							last.empty().prepend( span );
+						}
 
 						// Reduce to the first anchor, because only the first gets the buttonClass
 						a = a.first();
 					} else if ( icon ) {
-						buttonClass += " ui-btn-icon-right ui-icon-" + icon;
+
+						newSpan = false;
+						span = a.children( ".ui-listview-item-icon" );
+						if ( !span.length ) {
+							span = $( "<span>" );
+							newSpan = true;
+						}
+
+						addItemToDictionary( itemClassDict, span[ 0 ], "ui-listview-item-icon",
+							"ui-icon ui-icon-" + icon + " ui-widget-icon-floatend" );
+
+						if ( newSpan ) {
+							a.prepend( span );
+						}
 					}
 
 					// Apply buttonClass to the (first) anchor
-					a.addClass( buttonClass );
+					addItemToDictionary( itemClassDict, a[ 0 ], "ui-listview-item-button",
+						buttonClass );
 				} else if ( isDivider ) {
-					dividerTheme = ( getAttr( item[ 0 ], "theme" ) || o.dividerTheme || o.theme );
-
-					itemClass = "ui-li-divider ui-bar-" + ( dividerTheme ? dividerTheme : "inherit" );
+					itemClass += " ui-listview-item-divider";
+					itemExtraClass = "ui-bar-" + ( itemTheme || currentOptions.dividerTheme ||
+						currentOptions.theme || "inherit" );
 
 					item.attr( "role", "heading" );
 				} else if ( a.length <= 0 ) {
-					itemClass = "ui-li-static ui-body-" + ( itemTheme ? itemTheme : "inherit" );
+					itemClass += " ui-listview-item-static";
+					itemExtraClass = "ui-body-" + ( itemTheme ? itemTheme : "inherit" );
 				}
 				if ( ol && value ) {
-					newStartCount = parseInt( value , 10 ) - 1;
-
-					item.css( "counter-reset", "listnumbering " + newStartCount );
+					item.css( "counter-reset", "listnumbering " + ( parseInt( value, 10 ) - 1 ) );
 				}
 			}
 
@@ -174,12 +257,7 @@ $.widget( "mobile.listview", $.extend( {
 			// at this point in time, push the item into a dictionary
 			// that tells us what class to set on it so we can do this after this
 			// processing loop is finished.
-
-			if ( !itemClassDict[ itemClass ] ) {
-				itemClassDict[ itemClass ] = [];
-			}
-
-			itemClassDict[ itemClass ].push( item[ 0 ] );
+			addItemToDictionary( itemClassDict, item[ 0 ], itemClass, itemExtraClass );
 		}
 
 		// Set the appropriate listview item classes on each list item.
@@ -188,28 +266,25 @@ $.widget( "mobile.listview", $.extend( {
 		// by calling addClass() and children() once or twice afterwards. This
 		// can give us a significant boost on platforms like WP7.5.
 
-		for ( itemClass in itemClassDict ) {
-			$( itemClassDict[ itemClass ] ).addClass( itemClass );
+		for ( dictionaryKey in itemClassDict ) {
+
+			// Split the dictionary key back into key classes and extra classes and construct the
+			// _addClass() parameter list
+			this._addClass.apply( this,
+				[ $( itemClassDict[ dictionaryKey ] ) ]
+					.concat( dictionaryKey.split( "|" ) ) );
 		}
 
-		countBubbles.each( function() {
-			$( this ).closest( "li" ).addClass( "ui-li-has-count" );
-		});
-		if ( countThemeClass ) {
-			countBubbles.not( "[class*='ui-body-']" ).addClass( countThemeClass );
-		}
-
-		// Deprecated in 1.4. From 1.5 you have to add class ui-li-has-thumb or ui-li-has-icon to the LI.
-		this._addThumbClasses( li );
-		this._addThumbClasses( li.find( ".ui-btn" ) );
+		this._addClass(
+			li.filter( filterBubbleSpan ),
+			"ui-listview-item-has-count" );
 
 		this._afterListviewRefresh();
 
-		this._addFirstLastClasses( li, this._getVisibles( li, create ), create );
+		// NOTE: Using the extension addFirstLastClasses is deprecated as of 1.5.0 and this and the
+		// extension itself will be removed in 1.6.0.
+		this._addFirstLastClasses( allItems, this._getVisibles( allItems, create ), create );
 	}
 }, $.mobile.behaviors.addFirstLastClasses ) );
 
-})( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-});
-//>>excludeEnd("jqmBuildExclude");
+} );

@@ -13,13 +13,13 @@
 	<script src="../../js/"></script>
 	<script>
 		$(function(){
-			$( "[data-role='header'], [data-role='footer']" ).toolbar();
+			$( "[data-role='toolbar']" ).toolbar();
 		});
 	</script>
 </head>
 <body>
-	<div data-role="header" data-position="fixed" data-theme="a">
-			<a href="../toolbar/" data-rel="back" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-caret-l">Back</a>
+	<div data-role="toolbar" data-type="header" data-position="fixed" data-theme="a">
+			<a href="../toolbar/" data-rel="back" class="ui-button ui-toolbar-header-button-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-button-icon-only">Back <span class="ui-icon ui-icon-caret-l"></span></a>
 		<h1>External fixed header</h1>
 	</div><!-- /header -->
 
@@ -37,7 +37,7 @@
 
 <pre><code>
 $(function(){
-	$( "[data-role='header'], [data-role='footer']" ).toolbar();
+	$( "[data-role='toolbar']" ).toolbar();
 });
 </code></pre>
 
@@ -47,7 +47,7 @@ $(function(){
 
 <pre><code>
 $(function(){
-	$( "[data-role='header'], [data-role='footer']" ).toolbar({ theme: "a" });
+	$( "[data-role='toolbar']").toolbar({ theme: "a" });
 });
 </code></pre>
 
@@ -55,13 +55,13 @@ $(function(){
 
 			<p>Because External toolbars are outside of the page they are not effected by transition and make truly persistent toolbars possible.</p>
 
-			<p><a href="../toolbar-fixed-persistent/" data-ajax="false">Persistent toolbar demo</a></p>
+			<p><a href="../toolbar-fixed-persistent/" data-ajax="false">Persistant toolbar demo</a></p>
 
 		</div><!-- /content -->
 
 	</div><!-- /page -->
 
-	<div data-role="footer" data-position="fixed" data-theme="a">
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-theme="a">
 		<h1>External fixed footer</h1>
 	</div><!-- /footer -->
 

@@ -12,22 +12,24 @@
     <script src="../_assets/js/"></script>
     <script src="../../js/"></script>
     <style id="negateDoubleBorder">
-        #demo-borders .ui-collapsible-heading .ui-btn { border-top-width: 1px !important; }
+        #demo-borders .ui-collapsible-heading .ui-button { border-top-width: 1px !important; }
     </style>
 </head>
 <body>
 <div data-role="page" class="jqm-demos" data-quicklinks="true">
 
-    <div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-        <a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-        <a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+    <div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+        <a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+        <a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
     </div><!-- /header -->
 
     <div role="main" class="ui-content jqm-content">
 
-        <h1>Collapsible <a href="http://api.jquerymobile.com/collapsible/" class="jqm-api-docs-link ui-btn ui-btn-icon-right ui-icon-caret-r ui-nodisc-icon ui-alt-icon ui-btn-inline ui-corner-all ui-mini">API</a></h1>
+        <h1>Collapsible</h1>
+
+		<a href="http://api.jquerymobile.com/collapsible/" class="jqm-api-docs-link ui-nodisc-icon ui-alt-icon" title="Visit the API Documentation" target="_blank">API Documentation <span class="ui-icon ui-icon-action"></span></a>
 
         <p>Collapsibles are simple widgets that allow you to expand or collapse content when tapped and are useful in mobile to provide a compact presentation of content.</p>
 
@@ -111,11 +113,30 @@
 
             <p>The default icon positioning of collapsible headings can be overridden by using the <code>data-iconpos</code> attribute. In the below case, <code>data-iconpos="right"</code>.</p>
 
-            <div data-role="collapsible" data-iconpos="right">
-                <h3>I'm a header</h3>
-                <p><code>data-iconpos="right"</code></p>
+            <div data-demo-html="true">
+                <div data-role="collapsible" data-iconpos="right">
+                    <h3>I'm a header</h3>
+                    <p><code>data-iconpos="right"</code></p>
+                </div>
             </div>
-
+            <div data-demo-html="true">
+                <div data-role="collapsible" data-iconpos="top">
+                    <h3>I'm a header</h3>
+                    <p><code>data-iconpos="right"</code></p>
+                </div>
+            </div>
+            <div data-demo-html="true">
+                <div data-role="collapsible" data-iconpos="bottom">
+                    <h3>I'm a header</h3>
+                    <p><code>data-iconpos="right"</code></p>
+                </div>
+            </div>
+            <div data-demo-html="true">
+                <div data-role="collapsible" data-iconpos="left">
+                    <h3>I'm a header</h3>
+                    <p><code>data-iconpos="right"</code></p>
+                </div>
+            </div>
         <h2>Legend</h2>
 
         <p>For forms, use a <code>fieldset</code> and <code>legend</code> for the collapsible.</p>
@@ -225,8 +246,9 @@
 				<div data-demo-html="true">
 					<div data-role="collapsible" data-enhanced="true" class="ui-collapsible ui-collapsible-inset ui-corner-all ui-collapsible-collapsed">
 						<h4 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
-							<a href="#" class="ui-collapsible-heading-toggle ui-btn ui-btn-icon-left ui-icon-plus">
-							Heading
+							<a href="#" class="ui-collapsible-heading-toggle ui-button">
+                            <span class="ui-icon ui-icon-plus"></span>
+							 Heading
 							<div class="ui-collapsible-heading-status"> click to expand contents</div>
 							</a>
 						</h4>
@@ -240,14 +262,18 @@
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 </body>
 </html>

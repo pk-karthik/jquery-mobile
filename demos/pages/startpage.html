@@ -15,16 +15,18 @@ $('#page1').on('pagecreate', function() {
     var trans = $(this).text() || 'none',
         rev = !!$('#cb1').attr('checked');
 
-    $.mobile.changePage('#page1', { transition: trans,
-                                    allowSamePageTransition: true,
-                                    reverse: rev } );
+    $( this ).closest( ".ui-pagecontainer" ).pagecontainer( "change", "#page1", {
+		transition: trans,
+        allowSamePageTransition: true,
+        reverse: rev
+	});
     $('#p1').text( 'last transition: ' + trans + ' - reverse: ' + rev );
   });
 });
 
 $('#page1').bind('pagehide', function(e) {
-  $('a.ui-btn').removeClass('ui-btn-active');
-  if ( !!$('#cb2').attr('checked') && !$(this).hasClass('ui-btn-active') ) { 
+  $('a.ui-button').removeClass('ui-button-active');
+  if ( !!$('#cb2').attr('checked') && !$(this).hasClass('ui-button-active') ) { 
     $(this).addClass('ui-page-active');
   }
 });    
@@ -37,7 +39,7 @@ $('#page1').bind('pagehide', function(e) {
 <body>
 <div data-role="page" id="startpage" data-theme="a">
   
-  <div data-role="header">
+  <div data-role="toolbar" data-type="header">
     <h1>same page transitions</h1>
   </div><!-- /header 1 -->
 

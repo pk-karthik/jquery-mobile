@@ -1,52 +1,70 @@
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: A handler for css transition & animation end events to ensure callback is executed
+/*!
+ * jQuery Mobile animationComplete @VERSION
+ * http://jquerymobile.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
 //>>label: Animation Complete
 //>>group: Core
-define( [
-	"jquery"
-], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, undefined ) {
-	var props = {
-			"animation": {},
-			"transition": {}
-		},
-		testElement = document.createElement( "a" ),
-		vendorPrefixes = [ "", "webkit-", "moz-", "o-" ];
+//>>description: A handler for css transition & animation end events to ensure callback is executed
 
-	$.each( [ "animation", "transition" ], function( i, test ) {
+( function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
 
-		// Get correct name for test
-		var testName = ( i === 0 ) ? test + "-" + "name" : test;
+		// AMD. Register as an anonymous module.
+		define( [ "jquery" ], factory );
+	} else {
 
-		$.each( vendorPrefixes, function( j, prefix ) {
-			if ( testElement.style[ $.camelCase( prefix + testName ) ] !== undefined ) {
-				props[ test ][ "prefix" ] = prefix;
-				return false;
-			}
-		});
+		// Browser globals
+		factory( jQuery );
+	}
+} )( function( $ ) {
 
-		// Set event and duration names for later use
-		props[ test ][ "duration" ] =
-			$.camelCase( props[ test ][ "prefix" ] + test + "-" + "duration" );
-		props[ test ][ "event" ] =
-			$.camelCase( props[ test ][ "prefix" ] + test + "-" + "end" );
+var props = {
+		"animation": {},
+		"transition": {}
+	},
+	testElement = document.createElement( "a" ),
+	vendorPrefixes = [ "", "webkit-", "moz-", "o-" ],
+	callbackLookupTable = {};
 
-		// All lower case if not a vendor prop
-		if ( props[ test ][ "prefix" ] === "" ) {
-			props[ test ][ "event" ] = props[ test ][ "event" ].toLowerCase();
+$.each( [ "animation", "transition" ], function( i, test ) {
+
+	// Get correct name for test
+	var testName = ( i === 0 ) ? test + "-" + "name" : test;
+
+	$.each( vendorPrefixes, function( j, prefix ) {
+		if ( testElement.style[ $.camelCase( prefix + testName ) ] !== undefined ) {
+			props[ test ][ "prefix" ] = prefix;
+			return false;
 		}
-	});
+	} );
 
-	// If a valid prefix was found then the it is supported by the browser
-	$.support.cssTransitions = ( props[ "transition" ][ "prefix" ] !== undefined );
-	$.support.cssAnimations = ( props[ "animation" ][ "prefix" ] !== undefined );
+	// Set event and duration names for later use
+	props[ test ][ "duration" ] =
+		$.camelCase( props[ test ][ "prefix" ] + test + "-" + "duration" );
+	props[ test ][ "event" ] =
+		$.camelCase( props[ test ][ "prefix" ] + test + "-" + "end" );
 
-	// Remove the testElement
-	$( testElement ).remove();
+	// All lower case if not a vendor prop
+	if ( props[ test ][ "prefix" ] === "" ) {
+		props[ test ][ "event" ] = props[ test ][ "event" ].toLowerCase();
+	}
+} );
 
-	// Animation complete callback
-	$.fn.animationComplete = function( callback, type, fallbackTime ) {
+// If a valid prefix was found then the it is supported by the browser
+$.support.cssTransitions = ( props[ "transition" ][ "prefix" ] !== undefined );
+$.support.cssAnimations = ( props[ "animation" ][ "prefix" ] !== undefined );
+
+// Remove the testElement
+$( testElement ).remove();
+
+// Animation complete callback
+$.fn.extend( {
+	animationComplete: function( callback, type, fallbackTime ) {
 		var timer, duration,
 			that = this,
 			eventBinding = function() {
@@ -63,7 +81,7 @@ define( [
 
 		// Make sure selected type is supported by browser
 		if ( ( $.support.cssTransitions && animationType === "transition" ) ||
-			( $.support.cssAnimations && animationType === "animation" ) ) {
+				( $.support.cssAnimations && animationType === "animation" ) ) {
 
 			// If a fallback time was not passed set one
 			if ( fallbackTime === undefined ) {
@@ -74,8 +92,8 @@ define( [
 					// Parse the durration since its in second multiple by 1000 for milliseconds
 					// Multiply by 3 to make sure we give the animation plenty of time.
 					duration = parseFloat(
-						this.css( props[ animationType ].duration )
-					) * 3000;
+							this.css( props[ animationType ].duration )
+						) * 3000;
 				}
 
 				// If we could not read a duration use the default
@@ -90,8 +108,15 @@ define( [
 					.off( props[ animationType ].event, eventBinding )
 					.each( function() {
 						callback.apply( this );
-					});
+					} );
 			}, duration );
+
+			// Update lookupTable
+			callbackLookupTable[ callback ] = {
+				event: props[ animationType ].event,
+				binding: eventBinding
+			};
+
 
 			// Bind the event
 			return this.one( props[ animationType ].event, eventBinding );
@@ -102,15 +127,22 @@ define( [
 			setTimeout( function() {
 				that.each( function() {
 					callback.apply( this );
-				});
+				} );
 			}, 0 );
 			return this;
 		}
-	};
+	},
 
-	// Allow default callback to be configured on mobileInit
-	$.fn.animationComplete.defaultDuration = 1000;
-})( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-});
-//>>excludeEnd("jqmBuildExclude");
+	removeAnimationComplete: function( callback ) {
+		var callbackInfoObject = callbackLookupTable[ callback ];
+
+		return callbackInfoObject ?
+		this.off( callbackInfoObject.event, callbackInfoObject.binding ) : this;
+	}
+} );
+
+// Allow default callback to be configured on mobileInit
+$.fn.animationComplete.defaultDuration = 1000;
+
+return $;
+} );

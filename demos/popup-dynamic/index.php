@@ -19,8 +19,8 @@
 					brand = target.find( "h2" ).html(),
 					model = target.find( "p" ).html(),
 					short = target.attr( "id" ),
-					closebtn = '<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>',
-					header = '<div data-role="header"><h2>' + brand + ' ' + model + '</h2></div>',
+					closebutton = '<a href="#" data-rel="back" class="ui-button ui-corner-all ui-button-a ui-button-icon-only ui-toolbar-header-button-right">Close <span class="ui-icon ui-icon-delete"></span></a>',
+					header = '<div data-role="toolbar" data-type="header"><h2>' + brand + ' ' + model + '</h2></div>',
 					img = '<img src="../_assets/img/' + short + '.jpg" alt="' + brand + '" class="photo">',
 					popup = '<div data-role="popup" id="popup-' + short + '" data-short="' + short +'" data-theme="none" data-overlay-theme="a" data-corners="false" data-tolerance="15"></div>';
 
@@ -30,7 +30,7 @@
 						.appendTo( $.mobile.activePage )
 						.popup() )
 					.toolbar()
-					.before( closebtn )
+					.before( closebutton )
 					.after( img );
 
 				// Wait with opening the popup until the popup image has been loaded in the DOM.
@@ -82,11 +82,11 @@
 <body>
 <div data-role="page" id="demo-intro" class="jqm-demos">
 
-	<div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	<div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+		<a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+		<a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
@@ -96,25 +96,29 @@
         <div data-demo-html="#demo-page" data-demo-js="true">
             <p>This demo shows how you can dynamically create a popup. The popup contains images which means we have to set the image width and height to make sure the popup gets the right size and position. At client side we can only get the size when the image has been loaded in the DOM. In this demo we use the <code>load</code> event, but with a fallback because it has some caveats (see <a href="http://api.jquery.com/load-event/" rel="external">.load() - jQuery API</a>).</p>
 
-            <p><a href="#demo-page" data-transition="fade" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-mini ui-icon-arrow-r ui-btn-icon-right">Open dynamic popup demo</a></p>
+            <p><a href="#demo-page" data-transition="fade" class="ui-button ui-corner-all ui-shadow ui-button-inline ui-mini">Open dynamic popup demo <span class="ui-icon ui-icon-arrow-r"></a></span></p>
         </div><!--/demo-html -->
 
 	</div><!-- /content -->
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
-
-<?php include( '../jqm-search.php' ); ?>
 
 </div><!-- /page -->
 
+<?php include( '../jqm-search.php' ); ?>
+
 <div data-role="page" id="demo-page" data-title="Cars">
 
-    <div data-role="header" data-theme="b">
+    <div data-role="toolbar" data-type="header" data-theme="b">
         <a href="#demo-intro" data-rel="back" data-icon="arrow-l" data-iconpos="notext" data-shadow="false" data-icon-shadow="false">Back</a>
         <h1>Cars</h1>
     </div><!-- /header -->

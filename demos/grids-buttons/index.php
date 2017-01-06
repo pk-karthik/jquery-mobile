@@ -26,11 +26,11 @@
 <body>
 <div data-role="page" class="jqm-demos" data-quicklinks="true">
 
-	<div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	<div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+		<a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+		<a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
@@ -45,8 +45,8 @@
 
         <div data-demo-html="true" data-demo-css="#wrap">
             <div class="ui-grid-b">
-                <div class="ui-block-a"><a href="#" class="ui-shadow ui-btn ui-corner-all">Anchor</a></div>
-                <div class="ui-block-b"><div class="button-wrap"><button class="ui-shadow ui-btn ui-corner-all">Button</button></div></div>
+                <div class="ui-block-a"><a href="#" class="ui-shadow ui-button ui-corner-all">Anchor</a></div>
+                <div class="ui-block-b"><div class="button-wrap"><button class="ui-shadow ui-button ui-corner-all">Button</button></div></div>
                 <div class="ui-block-c"><input type="button" value="Input"></div>
             </div>
 			<form class="ui-grid-b">
@@ -75,8 +75,8 @@
 
         <div data-demo-html="true" data-demo-css="#wrap">
             <div class="ui-grid-b">
-                <div class="ui-block-a"><a href="#" class="ui-shadow ui-btn ui-corner-all ui-mini">Anchor</a></div>
-                <div class="ui-block-b"><div class="button-wrap"><button class="ui-shadow ui-btn ui-corner-all ui-mini">Button</button></div></div>
+                <div class="ui-block-a"><a href="#" class="ui-shadow ui-button ui-corner-all ui-mini">Anchor</a></div>
+                <div class="ui-block-b"><div class="button-wrap"><button class="ui-shadow ui-button ui-corner-all ui-mini">Button</button></div></div>
                 <div class="ui-block-c"><input type="button" value="Input" data-mini="true"></div>
             </div>
 			<form class="ui-grid-b">
@@ -107,11 +107,11 @@
 
         <div data-demo-html="true" data-demo-css="#center">
             <div class="ui-grid-d center">
-                <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline">Button</a></div>
-                <div class="ui-block-b"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline">Button</a></div>
-                <div class="ui-block-c"><a class="ui-shadow ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext ui-btn-inline">Button</a></div>
-                <div class="ui-block-d"><a class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-notext ui-btn-inline">Button</a></div>
-                <div class="ui-block-e"><a class="ui-shadow ui-btn ui-corner-all ui-icon-gear ui-btn-icon-notext ui-btn-inline">Button</a></div>
+                <div class="ui-block-a"><a class="ui-shadow ui-button ui-corner-all ui-button-icon-only ui-button-inline">Button</a><span class="ui-icon ui-icon-home"></span></div>
+                <div class="ui-block-b"><a class="ui-shadow ui-button ui-corner-all ui-button-icon-only ui-button-inline">Button</a><span class="ui-icon ui-icon-arrow-l"></span></div>
+                <div class="ui-block-c"><a class="ui-shadow ui-button ui-corner-all ui-button-icon-only ui-button-inline">Button</a><span class="ui-icon ui-icon-grid"></span></div>
+                <div class="ui-block-d"><a class="ui-shadow ui-button ui-corner-all ui-button-icon-only ui-button-inline">Button</a><span class="ui-icon ui-icon-arrow-r"></span></div>
+                <div class="ui-block-e"><a class="ui-shadow ui-button ui-corner-all ui-button-icon-only ui-button-inline">Button</a><span class="ui-icon ui-icon-gear"></span></div>
             </div>
         </div><!--/demo-html -->
 
@@ -121,7 +121,7 @@
 
         <div data-demo-html="true">
             <div class="ui-grid-b ui-responsive">
-                <div class="ui-block-a"><a href="#" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back to order</a></div>
+                <div class="ui-block-a"><a href="#" class="ui-shadow ui-button ui-corner-all">Back to order</a><span class="ui-icon ui-icon-arrow-l"></span></div>
                 <div class="ui-block-b"><input type="button" data-icon="plus" value="Add products"></div>
                 <div class="ui-block-c"><input type="button" data-icon="check" data-iconpos="right" value="Confirm order"></div>
             </div>
@@ -133,33 +133,37 @@
 
         <div data-demo-html="true">
             <div class="ui-grid-b ui-responsive">
-                <div class="ui-block-a"><a href="#" class="ui-btn ui-shadow ui-corner-all">Grid B</a></div>
-                <div class="ui-block-b"><a href="#" class="ui-btn ui-shadow ui-corner-all">Grid B</a></div>
-                <div class="ui-block-c"><a href="#" class="ui-btn ui-shadow ui-corner-all">Grid B</a></div>
+                <div class="ui-block-a"><a href="#" class="ui-button ui-shadow ui-corner-all">Grid B</a></div>
+                <div class="ui-block-b"><a href="#" class="ui-button ui-shadow ui-corner-all">Grid B</a></div>
+                <div class="ui-block-c"><a href="#" class="ui-button ui-shadow ui-corner-all">Grid B</a></div>
             </div>
             <div class="ui-grid-a ui-responsive">
-                <div class="ui-block-a"><a href="#" class="ui-btn ui-shadow ui-corner-all">Grid A</a></div>
-                <div class="ui-block-b"><a href="#" class="ui-btn ui-shadow ui-corner-all">Grid A</a></div>
+                <div class="ui-block-a"><a href="#" class="ui-button ui-shadow ui-corner-all">Grid A</a></div>
+                <div class="ui-block-b"><a href="#" class="ui-button ui-shadow ui-corner-all">Grid A</a></div>
             </div>
             <div class="ui-grid-solo">
-                <div class="ui-block-a"><a href="#" class="ui-btn ui-shadow ui-corner-all">Grid Solo</a></div>
+                <div class="ui-block-a"><a href="#" class="ui-button ui-shadow ui-corner-all">Grid Solo</a></div>
             </div>
             <br>
-            <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-b">Outside the grid</a>
+            <a href="#" class="ui-button ui-corner-all ui-shadow ui-button-b">Outside the grid</a>
         </div><!--/demo-html -->
 
 	</div><!-- /content -->
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 </body>
 </html>

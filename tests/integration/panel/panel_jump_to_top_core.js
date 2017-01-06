@@ -1,16 +1,19 @@
-module( "Panel positioning", {
-	setup: function() {
+define( [ "qunit", "jquery" ], function( QUnit, $ ) {
+
+QUnit.module( "Panel positioning", {
+	beforeEach: function() {
 		$( "body" ).append( "<div id='body-extender' style='height: " + ( screen.height * 3 ) + "px'></div>" );
 	},
-	teardown: function() {
+	afterEach: function() {
 		$( "#body-extender" ).remove();
 	}
-});
+} );
 
-asyncTest( "Panel must not jump to top upon throttledresize", function() {
+QUnit.test( "Panel must not jump to top upon throttledresize", function( assert ) {
+	var ready = assert.async();
 	var eventNs = ".panelMustNotJumpToTop";
 
-	$.testHelper.detailedEventCascade([
+	$.testHelper.detailedEventCascade( [
 		function() {
 			$( "#scroll-to-top-test-link" ).click();
 		},
@@ -18,10 +21,10 @@ asyncTest( "Panel must not jump to top upon throttledresize", function() {
 			panelopen: { src: $( "#scroll-to-top-test" ), event: "panelopen" + eventNs + "1" }
 		},
 		function( result ) {
-			deepEqual( result.panelopen.timedOut, false, "Panel did open" );
+			assert.deepEqual( result.panelopen.timedOut, false, "Panel did open" );
 			window.scrollTo( 0, screen.height );
 			$( window ).trigger( "throttledresize" );
-			deepEqual( $( window ).scrollTop(), screen.height,
+			assert.deepEqual( $( window ).scrollTop(), screen.height,
 				"Triggering throttledresize on panel did not cause it to jump to top" );
 			$( "#scroll-to-top-test" ).panel( "close" );
 		},
@@ -29,8 +32,10 @@ asyncTest( "Panel must not jump to top upon throttledresize", function() {
 			panelclose: { src: $( "#scroll-to-top-test" ), event: "panelclose" + eventNs + "2" }
 		},
 		function( result ) {
-			deepEqual( result.panelclose.timedOut, false, "Panel did close" );
-			start();
+			assert.deepEqual( result.panelclose.timedOut, false, "Panel did close" );
+			ready();
 		}
-	]);
-});
+	] );
+} );
+
+} );

@@ -1,30 +1,34 @@
-asyncTest( "Weird characters in selectmenu ID", function() {
-	var native, nonNativeSmallPopup;
+define( [ "qunit", "jquery" ], function( QUnit, $ ) {
 
-	// It is part of the test that the following line not cause an exception
-	$( ".ui-page" ).enhanceWithin();
+QUnit.test( "Weird characters in selectmenu ID", function( assert ) {
+var nativeHandle, nonNativeSmallPopup;
 
-	native = $( "#the-select\\[\\'x\\'\\]-native" );
-	nonNativeSmallPopup = $( "#the-select\\[\\'x\\'\\]-non-native-small-listbox" );
+// It is part of the test that the following line not cause an exception
+$( ".ui-page" ).enhanceWithin();
+var ready = assert.async();
 
-	deepEqual( native.parent().attr( "id" ), "the-select['x']-native-button",
-		"Native select correctly assigns ID to generated anchor" );
+nativeHandle = $( "#the-select\\[\\'x\\'\\]-native" );
+nonNativeSmallPopup = $( "#the-select\\[\\'x\\'\\]-non-native-small-listbox" );
 
-	deepEqual( nonNativeSmallPopup.length, 1, "Small non-native popup is present" );
-	deepEqual( nonNativeSmallPopup.is( ":mobile-popup" ), true,
-		"Small non-native popup is popup widget" );
-	deepEqual( nonNativeSmallPopup.children( "ul" ).attr( "id" ),
-		"the-select['x']-non-native-small-menu", "Small non-native list has correct ID" );
+assert.deepEqual( nativeHandle.parent().attr( "id" ), "the-select['x']-native-button",
+	"Native select correctly assigns ID to generated anchor" );
 
-	$.testHelper.pageSequence([
-		function() {
-			$( "#the-select\\[\\'x\\'\\]-non-native-large-button" ).click();
-		},
-		function() {
-			deepEqual( $.mobile.activePage.attr( "id" ), "the-select['x']-non-native-large-dialog",
-				"The dialog generated for the large non-native selectmenu has the correct ID" );
-			$.mobile.back();
-		},
-		start
-	]);
-});
+assert.deepEqual( nonNativeSmallPopup.length, 1, "Small non-native popup is present" );
+assert.deepEqual( nonNativeSmallPopup.is( ":mobile-popup" ), true,
+	"Small non-native popup is popup widget" );
+assert.deepEqual( nonNativeSmallPopup.children( "ul" ).attr( "id" ),
+	"the-select['x']-non-native-small-menu", "Small non-native list has correct ID" );
+
+$.testHelper.pageSequence( [
+	function() {
+		$( "#the-select\\[\\'x\\'\\]-non-native-large-button" ).click();
+	},
+	function() {
+		assert.deepEqual( $.mobile.activePage.attr( "id" ), "the-select['x']-non-native-large-dialog",
+			"The dialog generated for the large non-native selectmenu has the correct ID" );
+		$.mobile.back();
+	},
+	ready
+] );
+} );
+} );

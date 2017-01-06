@@ -12,29 +12,29 @@
     <script src="../_assets/js/"></script>
     <script src="../../js/"></script>
     <style>
-    	.left {
-    		float: left;
-    		width: 78%;
-    		margin-right: 2%;
-    	}
-    	.right {
-    		float: right;
-    		width: 20%;
-    	}
-    	.ui-input-search {
-    		margin: 0;
-    	}
-    	button.ui-btn {
-    		margin: 0;
-    	}
+		.left {
+			float: left;
+			width: 78%;
+			margin-right: 2%;
+		}
+		.right {
+			float: right;
+			width: 20%;
+		}
+		.ui-textinput-search {
+			margin: 0;
+		}
+		button.ui-button {
+			margin: 0;
+		}
     </style>
 </head>
 <body>
 
 	<div data-role="page" class="jqm-demos">
 
-		<div data-role="header" data-position="fixed">
-			<a href="../toolbar/" data-rel="back" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-caret-l">Back</a>
+		<div data-role="toolbar" data-type="header" data-position="fixed">
+			<a href="../toolbar/" data-rel="back" class="ui-button ui-toolbar-header-button-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-button-icon-only">Back <span class="ui-icon ui-icon-caret-l"></span></a>
 			<h1>2,146 Songs</h1>
 			<div class="ui-bar ui-bar-b">
 				<form action="#" method="get">
@@ -43,7 +43,7 @@
 				        <input type="search" name="search" id="search" value="" placeholder="Search songs...">
 					</div>
 					<div class="right">
-						<button type="submit" class="ui-btn ui-btn-a ui-corner-all ui-mini">Go</button>
+						<button type="submit" class="ui-button ui-button-a ui-corner-all ui-mini">Go</button>
 					</div>
 				</form>
 			</div>
@@ -111,13 +111,13 @@
 			<div data-role="popup" id="purchase" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
 				<h3>Purchase Album?</h3>
 				<p>Your download will begin immediately on your mobile device when you purchase.</p>
-				<a href="#" class="ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check" data-rel="back">Buy: $10.99</a>
-				<a href="#" class="ui-btn ui-btn-inline ui-mini ui-corner-all ui-shadow" data-rel="back">Cancel</a>
+				<a href="#" class="ui-button ui-button-b ui-button-inline ui-mini ui-corner-all ui-shadow" data-rel="back">Buy: $10.99 <span class="ui-icon ui-icon-check"></span></a>
+				<a href="#" class="ui-button ui-button-inline ui-mini ui-corner-all ui-shadow" data-rel="back">Cancel</a>
 			</div>
 
 		</div><!-- /content -->
 
-		<div data-role="footer" data-theme="b" data-position="fixed">
+		<div data-role="toolbar" data-type="footer" data-theme="b" data-position="fixed">
 			<form action="#" method="get">
 				<div class="ui-bar">
 					<label for="slider">Volume:</label>

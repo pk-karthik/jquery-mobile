@@ -15,11 +15,11 @@
 <body>
 <div data-role="page" class="jqm-demos" data-quicklinks="true">
 
-	<div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	<div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+		<a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+		<a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
@@ -106,7 +106,6 @@
 			<li><p>Documents loaded via Ajax will select the first page in the DOM of that document to be loaded as a jQuery Mobile page element. As a result the developer must make sure to manage the <code>id</code> attributes of the loaded page and child elements to prevent confusion when manipulating the DOM.</p></li>
 			<li><p>If you link to a multipage document, you must use a <code>data-ajax="false"</code> attribute on the link to cause a full page refresh due to the limitation above where we only load the first page node in an Ajax request due to potential hash collisions. There is currently a <a href="https://github.com/ToddThomson/jQuery-Mobile-Subpage-Widget" rel="external">subpage plugin</a> that makes it possible to load in multipage documents. </p></li>
 			<li><p>While linking pages inside a multipage template, you should not use the <code>data-ajax="false"</code> attribute as it is of no use and will only interfere with the transition settings. </p></li>
-			<li><p>The <code>"ui-page"</code> key name used in sub-hash URL references can be set to any value you'd like, so as to blend into your URL structure. This value is stored in <code>jQuery.mobile.subPageUrlKey</code>.</p></li>
 			<li><p>When traveling back to a previously loaded jQuery Mobile document from an external <b>or</b> internal document with the push state plugin enabled, some browsers load and trigger the <code>popstate</code> event on the wrong document or for the wrong reasons (two edge cases recorded so far). If you are regularly linking to external documents and find the application behaving erratically try disabling pushstate support.</p></li>
 			<li><p>jQuery Mobile does not support query parameter passing to internal/embedded pages but there are two plugins that you can add to your project to support this feature. There is a lightweight <a href="https://github.com/jblas/jquery-mobile-plugins/tree/master/page-params" rel="external">page params plugin</a> and a more fully featured <a href="https://github.com/azicchetti/jquerymobile-router" rel="external">jQuery Mobile router plugin</a> for use with backbone.js or spine.js. A newer plugin called <a href="https://github.com/1Marc/jquery-mobile-routerlite" rel="external">routerlite</a> keeps it simple with just four methods: routeinit, routechange, pageinit and pagechange.</p></li>
 			<li><p>Some external applications (notably Facebook's OAuth implementation) modify their response URL in such a way that interferes with jQuery Mobile. In particular, Facebook appends <code>#_=_</code> to the end of the callback. Currently the best solution for this is to remove it from the location hash before jQuery Mobile loads using something like: <code>if (window.location.hash == "#_=_") window.location.hash = ""; </code>. jQuery Mobile can then process &amp; enhance the page properly.</p></li>
@@ -116,14 +115,18 @@
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 </body>
 </html>

@@ -15,11 +15,11 @@
 <body>
 <div data-role="page" class="jqm-demos">
 
-    <div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-        <a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-        <a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+    <div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+        <a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+        <a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
     </div><!-- /header -->
 
     <div role="main" class="ui-content jqm-content">
@@ -46,7 +46,7 @@
                 <div data-demo-html="true">
                     <div class="ui-field-contain">
                         <label for="select-custom-20">Long list:</label>
-                        <select name="select-custom-20" id="select-custom-20" data-native-menu="false">
+                        <select name="select-custom-20" id="select-custom-20" data-native-menu="false" tabindex="-1">
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
                             <option value="AZ">Arizona</option>
@@ -283,19 +283,19 @@
                 <div data-demo-html="true">
                     <fieldset data-role="controlgroup">
                         <legend>Vertical controlgroup:</legend>
-                        <label for="select-custom-5">Select A</label>
+                        <label for="select-custom-5" class="ui-hidden-accessible">Select A</label>
                         <select name="select-custom-5" id="select-custom-5" data-native-menu="false">
                             <option value="#">One</option>
                             <option value="#">Two</option>
                             <option value="#">Three</option>
                         </select>
-                        <label for="select-custom-6">Select B</label>
+                        <label for="select-custom-6" class="ui-hidden-accessible">Select B</label>
                         <select name="select-custom-6" id="select-custom-6" data-native-menu="false">
                             <option value="#">One</option>
                             <option value="#">Two</option>
                             <option value="#">Three</option>
                         </select>
-                        <label for="select-custom-7">Select C</label>
+                        <label for="select-custom-7" class="ui-hidden-accessible">Select C</label>
                         <select name="select-custom-7" id="select-custom-7" data-native-menu="false">
                             <option value="#">One</option>
                             <option value="#">Two</option>
@@ -307,19 +307,19 @@
                 <div data-demo-html="true">
                     <fieldset data-role="controlgroup" data-mini="true">
                         <legend>Vertical controlgroup, icon left, mini sized:</legend>
-                        <label for="select-custom-8">Select A</label>
+                        <label for="select-custom-8" class="ui-hidden-accessible">Select A</label>
                         <select name="select-custom-8" id="select-custom-8" data-native-menu="false" data-iconpos="left">
                             <option value="#">One</option>
                             <option value="#">Two</option>
                             <option value="#">Three</option>
                         </select>
-                        <label for="select-custom-9">Select B</label>
+                        <label for="select-custom-9" class="ui-hidden-accessible">Select B</label>
                         <select name="select-custom-9" id="select-custom-9" data-native-menu="false" data-iconpos="left">
                             <option value="#">One</option>
                             <option value="#">Two</option>
                             <option value="#">Three</option>
                         </select>
-                        <label for="select-custom-10">Select C</label>
+                        <label for="select-custom-10" class="ui-hidden-accessible">Select C</label>
                         <select name="select-custom-10" id="select-custom-10" data-native-menu="false" data-iconpos="left">
                             <option value="#">One</option>
                             <option value="#">Two</option>
@@ -331,19 +331,19 @@
                 <div data-demo-html="true">
                     <fieldset data-role="controlgroup" data-type="horizontal">
                         <legend>Horizontal controlgroup:</legend>
-                        <label for="select-custom-11">Select A</label>
+                        <label for="select-custom-11" class="ui-hidden-accessible">Select A</label>
                         <select name="select-custom-11" id="select-custom-11" data-native-menu="false">
                             <option value="#">One</option>
                             <option value="#">Two</option>
                             <option value="#">Three</option>
                         </select>
-                        <label for="select-custom-12">Select B</label>
+                        <label for="select-custom-12" class="ui-hidden-accessible">Select B</label>
                         <select name="select-custom-12" id="select-custom-12" data-native-menu="false">
                             <option value="#">One</option>
                             <option value="#">Two</option>
                             <option value="#">Three</option>
                         </select>
-                        <label for="select-custom-13">Select C</label>
+                        <label for="select-custom-13" class="ui-hidden-accessible">Select C</label>
                         <select name="select-custom-13" id="select-custom-13" data-native-menu="false">
                             <option value="#">One</option>
                             <option value="#">Two</option>
@@ -353,21 +353,21 @@
                 </div><!--/demo-html -->
 
                 <div data-demo-html="true">
-                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                    <fieldset data-role="controlgroup" data-mini="true" data-type="horizontal">
                         <legend>Horizontal controlgroup, mini sized:</legend>
-                        <label for="select-custom-14">Select A</label>
+                        <label for="select-custom-14" class="ui-hidden-accessible">Select A</label>
                         <select name="select-custom-14" id="select-custom-14" data-native-menu="false">
                             <option value="#">One</option>
                             <option value="#">Two</option>
                             <option value="#">Three</option>
                         </select>
-                        <label for="select-custom-15">Select B</label>
+                        <label for="select-custom-15" class="ui-hidden-accessible">Select B</label>
                         <select name="select-custom-15" id="select-custom-15" data-native-menu="false">
                             <option value="#">One</option>
                             <option value="#">Two</option>
                             <option value="#">Three</option>
                         </select>
-                        <label for="select-custom-16">Select C</label>
+                        <label for="select-custom-16" class="ui-hidden-accessible">Select C</label>
                         <select name="select-custom-16" id="select-custom-16" data-native-menu="false">
                             <option value="#">One</option>
                             <option value="#">Two</option>
@@ -380,14 +380,18 @@
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 </body>
 </html>

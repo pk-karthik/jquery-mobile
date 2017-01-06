@@ -1,168 +1,183 @@
 /*
- * mobile init tests
+ * Mobile init tests
  */
 
-define([
+define( [
+	"qunit",
 	"jquery",
 	"jquery.mobile",
-	"./shared",
-	"./prepare"
-], function( $, jqm, shared ){
-	require( [
-		"init"
-	], function() {
-		var libName = 'init',
-			coreLib = 'core',
-			extendFn = $.extend,
-			setGradeA = function(value) { $.mobile.gradeA = function(){ return value; }; },
-			reloadCoreNSandInit = function(){
-				$.testHelper.reloadLib("jquery.setNameSpace.js");
-				return $.when( $.testHelper.reloadModule( coreLib ), $.testHelper.reloadModule( libName ))
+	"tests/unit/init/shared",
+	"tests/unit/init/prepare"
+], function( QUnit, $, jqm, shared ) {
+
+require( [
+	"init"
+], function() {
+	var libName = "init",
+		coreLib = "core",
+		extendFn = $.extend,
+		setGradeA = function( value ) {
+			$.mobile.gradeA = function() {
+				return value;
 			};
+		},
+		reloadCoreNSandInit = function() {
+			$.testHelper.reloadLib( "../../jquery.setNameSpace.js" );
+			return $.when( $.testHelper.reloadModule( coreLib ), $.testHelper.reloadModule( libName ) );
+		};
 
+	QUnit.module( libName, {
+		setup: function() {
+			$.mobile.ns = shared.ns;
 
-		module(libName, {
-			setup: function(){
-				$.mobile.ns = shared.ns;
-				// NOTE reset for gradeA tests
-				$('html').removeClass('ui-mobile');
-			},
+			// NOTE reset for gradeA tests
+			$( "html" ).removeClass( "ui-mobile" );
+		},
 
-			teardown: function(){
-				$.extend = extendFn;
+		teardown: function() {
+			$.extend = extendFn;
 
-				// clear the classes added by reloading the init
-				$("html").attr('class', '');
-			}
-		});
+			// Clear the classes added by reloading the init
+			$( "html" ).attr( "class", "" );
+		}
+	} );
 
-		// NOTE for the following two tests see index html for the binding
-		test( "mobile.page is available when mobile init is fired", function(){
-			ok( shared.page !== undefined, "$.mobile.page is defined" );
-		});
+	// NOTE for the following two tests see index html for the binding
+	QUnit.test( "mobile.page is available when mobile init is fired", function( assert ) {
+		assert.ok( shared.page !== undefined, "$.mobile.page is defined" );
+	} );
 
-		$.testHelper.excludeFileProtocol(function(){
-			asyncTest( "loading the init library triggers mobilinit on the document", function(){
-				var initFired = false;
-				expect( 1 );
+	$.testHelper.excludeFileProtocol( function() {
+		QUnit.test( "loading the init library triggers mobilinit on the document", function( assert ) {
+			var done = assert.async();
+			var initFired = false;
+			assert.expect( 1 );
 
-				$(window.document).one('mobileinit', function(event){
-					initFired = true;
-				});
+			$( window.document ).one( "mobileinit", function() {
+				initFired = true;
+			} );
 
-				$.testHelper.reloadModule( libName ).then(function() {
-					ok(initFired, "init fired");
-				}).then( start );
-			});
+			$.testHelper.reloadModule( libName ).then( function() {
+				assert.ok( initFired, "init fired" );
+			} ).then( done );
+		} );
 
-			asyncTest( "enhancements are skipped when the browser is not grade A", function(){
-				setGradeA(false);
-				$.testHelper.reloadModule( libName ).then(function() {
-					//NOTE easiest way to check for enhancements, not the most obvious
-					ok( !$( "html" ).hasClass( "ui-mobile" ), "html elem doesn't have class ui-mobile" );
-				}).then( start );
+		QUnit.test( "enhancements are skipped when the browser is not grade A", function( assert ) {
+			var done = assert.async();
+			setGradeA( false );
+			$.testHelper.reloadModule( libName ).then( function() {
 
-			});
+				//NOTE easiest way to check for enhancements, not the most obvious
+				assert.ok( !$( "html" ).hasClass( "ui-mobile" ), "html elem doesn't have class ui-mobile" );
+			} ).then( done );
 
-			asyncTest( "enhancements are added when the browser is grade A", function(){
-				expect( 1 );
-				setGradeA(true);
-				$.testHelper.reloadModule( libName ).then(
-					function() {
-						ok( $("html").hasClass("ui-mobile"), "html elem has class mobile");
-					}
-				).then( start );
-			});
+		} );
 
-			var findFirstPage = function() {
-				return $( ":jqmData(role='page')" ).first();
-			};
+		QUnit.test( "enhancements are added when the browser is grade A", function( assert ) {
+			var done = assert.async();
+			assert.expect( 1 );
+			setGradeA( true );
+			$.testHelper.reloadModule( libName ).then(
+				function() {
+					assert.ok( $( "html" ).hasClass( "ui-mobile" ), "html elem has class mobile" );
+				}
+			).then( done );
+		} );
 
-			asyncTest( "active page and start page should be set to the fist page in the selected set", function(){
-				expect( 2 );
-				$.testHelper.reloadModule( libName ).then(
-					function() {
-						var firstPage = findFirstPage();
+		var findFirstPage = function() {
+			return $( ":jqmData(role='page')" ).first();
+		};
 
-						deepEqual($.mobile.firstPage[0], firstPage[0]);
-						deepEqual($.mobile.activePage[0], firstPage[0]);
-					}
-				).then( start );
-			});
+		QUnit.test( "active page and start page should be set to the fist page in the selected set", function( assert ) {
+			var done = assert.async();
+			assert.expect( 2 );
+			$.testHelper.reloadModule( libName ).then(
+				function() {
+					var firstPage = findFirstPage();
 
-			asyncTest( "mobile viewport class is defined on the first page's parent", function(){
-				expect( 1 );
-				$.testHelper.reloadModule( libName ).then(
-					function() {
-						var firstPage = findFirstPage();
+					assert.deepEqual( $.mobile.firstPage[ 0 ], firstPage[ 0 ] );
+					assert.deepEqual( $.mobile.activePage[ 0 ], firstPage[ 0 ] );
+				}
+			).then( done );
+		} );
 
-						ok(firstPage.parent().hasClass("ui-mobile-viewport"), "first page has viewport");
-					}
-				).then( start );
-			});
+		QUnit.test( "mobile viewport class is defined on the first page's parent", function( assert ) {
+			var done = assert.async();
+			assert.expect( 1 );
+			$.testHelper.reloadModule( libName ).then(
+				function() {
+					var firstPage = findFirstPage();
 
-			asyncTest( "mobile page container is the first page's parent", function(){
-				expect( 1 );
-				$.testHelper.reloadModule( libName ).then(
-					function() {
-						var firstPage = findFirstPage();
+					assert.ok( firstPage.parent().hasClass( "ui-mobile-viewport" ), "first page has viewport" );
+				}
+			).then( done );
+		} );
 
-						deepEqual($.mobile.pageContainer[0], firstPage.parent()[0]);
-					}
-				).then( start );
-			});
+		QUnit.test( "mobile page container is the first page's parent", function( assert ) {
+			var done = assert.async();
+			assert.expect( 1 );
+			$.testHelper.reloadModule( libName ).then(
+				function() {
+					var firstPage = findFirstPage();
 
-			test( "pages without a data-url attribute have it set to their id", function(){
-				deepEqual($("#foo").jqmData('url'), "foo");
-			});
+					assert.deepEqual( $( ".ui-pagecontainer" )[ 0 ], firstPage.parent()[ 0 ] );
+				}
+			).then( done );
+		} );
 
-			test( "pages with a data-url attribute are left with the original value", function(){
-				deepEqual($("#bar").jqmData('url'), "bak");
-			});
+		QUnit.test( "pages without a data-url attribute have it set to their id", function( assert ) {
+			assert.deepEqual( $( "#foo" ).jqmData( "url" ), "foo" );
+		} );
 
-			// NOTE the next two tests work on timeouts that assume a page will be
-			// created within 2 seconds it'd be great to get these using a more
-			// reliable callback or event
-			asyncTest( "page does auto-initialize at domready when autoinitialize option is true (default) ", function(){
+		QUnit.test( "pages with a data-url attribute are left with the original value", function( assert ) {
+			assert.deepEqual( $( "#bar" ).jqmData( "url" ), "bak" );
+		} );
 
-				$( "<div />", { "data-nstest-role": "page", "id": "autoinit-on" } ).prependTo( "body" );
+		// NOTE the next two tests work on timeouts that assume a page will be
+		// created within 2 seconds it'd be great to get these using a more
+		// reliable callback or event
+		QUnit.test( "page does auto-initialize at domready when autoinitialize option is true (default) ", function( assert ) {
+			var done = assert.async();
 
-				$(document).one("mobileinit", function(){
-					$.mobile.autoInitializePage = true;
-				});
+			$( "<div />", { "data-nstest-role": "page", "id": "autoinit-on" } ).prependTo( "body" );
 
-				location.hash = "";
+			$( document ).one( "mobileinit", function() {
+				$.mobile.autoInitializePage = true;
+			} );
 
-				reloadCoreNSandInit().then(
-					function() {
-						deepEqual( $( "#autoinit-on.ui-page" ).length, 1 );
-					}
-				).then( start );
-			});
+			location.hash = "";
 
+			reloadCoreNSandInit().then(
+				function() {
+					assert.deepEqual( $( "#autoinit-on.ui-page" ).length, 1 );
+				}
+			).then( done );
+		} );
 
-			asyncTest( "page does not initialize at domready when autoinitialize option is false ", function(){
-				$(document).one("mobileinit", function(){
-					$.mobile.autoInitializePage = false;
-				});
+		QUnit.test( "page does not initialize at domready when autoinitialize option is false ", function( assert ) {
+			var done = assert.async();
+			$( document ).one( "mobileinit", function() {
+				$.mobile.autoInitializePage = false;
+			} );
 
-				$( "<div />", { "data-nstest-role": "page", "id": "autoinit-off" } ).prependTo( "body" );
+			$( "<div />", { "data-nstest-role": "page", "id": "autoinit-off" } ).prependTo( "body" );
 
-				location.hash = "";
+			location.hash = "";
 
+			reloadCoreNSandInit().then(
+				function() {
+					assert.deepEqual( $( "#autoinit-off.ui-page" ).length, 0 );
 
-				reloadCoreNSandInit().then(
-					function() {
-						deepEqual( $( "#autoinit-off.ui-page" ).length, 0 );
+					$( document ).bind( "mobileinit", function() {
+						$.mobile.autoInitializePage = true;
+					} );
 
-						$(document).bind("mobileinit", function(){
-							$.mobile.autoInitializePage = true;
-						});
+					return reloadCoreNSandInit();
+				}
+			).then( done );
+		} );
+	} );
 
-						return reloadCoreNSandInit();
-					}
-				).then( start );
-			});
-		});
-	});
-});
+	QUnit.start();
+} );
+} );

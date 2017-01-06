@@ -1,9 +1,12 @@
-asyncTest( "Form submission from popup works", function() {
-	expect( 4 );
+define( [ "qunit", "jquery" ], function( QUnit, $ ) {
+
+QUnit.test( "Form submission from popup works", function( assert ) {
+	var ready = assert.async();
+	assert.expect( 4 );
 
 	var eventNs = ".formSubmissionFromPopupWorks";
 
-	$.testHelper.detailedEventCascade([
+	$.testHelper.detailedEventCascade( [
 		function() {
 			$( "#open-popup-link" ).click();
 		},
@@ -11,7 +14,7 @@ asyncTest( "Form submission from popup works", function() {
 			popupafteropen: { src: $( "#popup" ), event: "popupafteropen" + eventNs + "1" }
 		},
 		function( result ) {
-			deepEqual( result.popupafteropen.timedOut, false, "Popup did open" );
+			assert.deepEqual( result.popupafteropen.timedOut, false, "Popup did open" );
 			$( "#popup button" ).click();
 		},
 		{
@@ -23,10 +26,12 @@ asyncTest( "Form submission from popup works", function() {
 			}
 		},
 		function( result ) {
-			deepEqual( result.submit.timedOut, false, "Submit event was triggered" );
-			deepEqual( result.popupafterclose.timedOut, false, "Popup did close" );
-			deepEqual( result.pagecontainerchange.timedOut, false, "Page did change" );
-			start();
+			assert.deepEqual( result.submit.timedOut, false, "Submit event was triggered" );
+			assert.deepEqual( result.popupafterclose.timedOut, false, "Popup did close" );
+			assert.deepEqual( result.pagecontainerchange.timedOut, false, "Page did change" );
+			ready();
 		}
-	]);
-});
+	] );
+} );
+
+} );

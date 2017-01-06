@@ -1,39 +1,43 @@
-test( "Unbinding swipeleft leaves swiperight handler alone", function() {
-	var	dummy = function() {},
-		swipeLength = function() {
-			var swipe = $._data( document, "events" ).swipe;
+define( [ "qunit", "jquery" ], function( QUnit, $ ) {
 
-			return swipe ? swipe.length : 0;
-		},
-		initialSwipeLength = swipeLength();
+QUnit.test( "Unbinding swipeleft leaves swiperight handler alone", function( assert ) {
+var dummy = function() {},
+	swipeLength = function() {
+		var swipe = $._data( document, "events" ).swipe;
 
-	$( document ).on( "swipeleft swiperight", ".ui-page", dummy );
+		return swipe ? swipe.length : 0;
+	},
+	initialSwipeLength = swipeLength();
 
-	deepEqual( swipeLength(), initialSwipeLength + 2,
-		"Two swipe handlers are present after attaching swipeleft and swiperight" );
+$( document ).on( "swipeleft swiperight", ".ui-page", dummy );
 
-	$( document ).off( "swipeleft", ".ui-page", dummy );
+assert.deepEqual( swipeLength(), initialSwipeLength + 2,
+	"Two swipe handlers are present after attaching swipeleft and swiperight" );
 
-	deepEqual( swipeLength(), initialSwipeLength + 1,
-		"One swipe handler is present after detaching swipeleft" );
+$( document ).off( "swipeleft", ".ui-page", dummy );
 
-	$( document ).on( "swipeleft", ".ui-page", dummy );
+assert.deepEqual( swipeLength(), initialSwipeLength + 1,
+	"One swipe handler is present after detaching swipeleft" );
 
-	deepEqual( swipeLength(), initialSwipeLength + 2,
-		"Two swipe handlers are present after reattaching swipeleft" );
+$( document ).on( "swipeleft", ".ui-page", dummy );
 
-	$( document ).off( "swiperight", ".ui-page", dummy );
+assert.deepEqual( swipeLength(), initialSwipeLength + 2,
+	"Two swipe handlers are present after reattaching swipeleft" );
 
-	deepEqual( swipeLength(), initialSwipeLength + 1,
-		"One swipe handler is present after detaching swiperight" );
+$( document ).off( "swiperight", ".ui-page", dummy );
 
-	$( document ).on( "swiperight", ".ui-page", dummy );
+assert.deepEqual( swipeLength(), initialSwipeLength + 1,
+	"One swipe handler is present after detaching swiperight" );
 
-	deepEqual( swipeLength(), initialSwipeLength + 2,
-		"Two swipe handlers are present after reattaching swiperight" );
+$( document ).on( "swiperight", ".ui-page", dummy );
 
-	$( document ).off( "swipeleft swiperight", ".ui-page", dummy );
+assert.deepEqual( swipeLength(), initialSwipeLength + 2,
+	"Two swipe handlers are present after reattaching swiperight" );
 
-	deepEqual( swipeLength(), initialSwipeLength,
-		"No swipe handlers are present after detaching both swipeleft and swiperight" );
-});
+$( document ).off( "swipeleft swiperight", ".ui-page", dummy );
+
+assert.deepEqual( swipeLength(), initialSwipeLength,
+	"No swipe handlers are present after detaching both swipeleft and swiperight" );
+} );
+
+} );

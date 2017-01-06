@@ -6,7 +6,7 @@
 	height: 64px;
 	font-size: 36px;
 	padding-top: 14px;
-	opacity: 0.8;
+	opacity: .8;
 }
 
 .ui-slider-popup {
@@ -15,7 +15,7 @@
 	z-index: 100;
 }
 
-.ui-slider-track .ui-btn.ui-slider-handle {
+.ui-slider-track .ui-button.ui-slider-handle {
 	font-size: .9em;
 	line-height: 30px;
 }

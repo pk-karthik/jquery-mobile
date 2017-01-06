@@ -1,42 +1,60 @@
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: Animated page change handlers for integrating with Navigation
+/*!
+ * jQuery Mobile Transition Handlers @VERSION
+ * http://jquerymobile.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
 //>>label: Transition Handlers
 //>>group: Transitions
+//>>description: Animated page change handlers for integrating with Navigation
+//>>demos: http://demos.jquerymobile.com/@VERSION/transitions/
 
-define( ["jquery", "../core", "./serial", "./concurrent"], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
+( function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
 
-(function( $ ) {
+		// AMD. Register as an anonymous module.
+		define( [
+			"jquery",
+			"../core",
+			"./serial",
+			"./concurrent" ], factory );
+	} else {
 
-	// generate the handlers from the above
-	var defaultGetMaxScrollForTransition = function() {
-		return $.mobile.getScreenHeight() * 3;
-	};
+		// Browser globals
+		factory( jQuery );
+	}
+} )( function( $ ) {
 
-	//transition handler dictionary for 3rd party transitions
-	$.mobile.transitionHandlers = {
-		"sequential": $.mobile.SerialTransition,
-		"simultaneous": $.mobile.ConcurrentTransition
-	};
+// generate the handlers from the above
+var defaultGetMaxScrollForTransition = function() {
+	return $( window ).height() * 3;
+};
 
-	// Make our transition handler the public default.
-	$.mobile.defaultTransitionHandler = $.mobile.transitionHandlers.sequential;
+//transition handler dictionary for 3rd party transitions
+$.mobile.transitionHandlers = {
+	"sequential": $.mobile.SerialTransition,
+	"simultaneous": $.mobile.ConcurrentTransition
+};
 
-	$.mobile.transitionFallbacks = {};
+// Make our transition handler the public default.
+$.mobile.defaultTransitionHandler = $.mobile.transitionHandlers.sequential;
 
-	// If transition is defined, check if css 3D transforms are supported, and if not, if a fallback is specified
-	$.mobile._maybeDegradeTransition = function( transition ) {
-		if ( transition && !$.support.cssTransform3d && $.mobile.transitionFallbacks[ transition ] ) {
-			transition = $.mobile.transitionFallbacks[ transition ];
-		}
+$.mobile.transitionFallbacks = {};
 
-		return transition;
-	};
+// If transition is defined, check if css 3D transforms are supported, and if not, if a fallback is specified
+$.mobile._maybeDegradeTransition = function( transition ) {
+	if ( transition && !$.support.cssTransform3d && $.mobile.transitionFallbacks[ transition ] ) {
+		transition = $.mobile.transitionFallbacks[ transition ];
+	}
 
-	// Set the getMaxScrollForTransition to default if no implementation was set by user
-	$.mobile.getMaxScrollForTransition = $.mobile.getMaxScrollForTransition || defaultGetMaxScrollForTransition;
+	return transition;
+};
 
-})( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-});
-//>>excludeEnd("jqmBuildExclude");
+// Set the getMaxScrollForTransition to default if no implementation was set by user
+$.mobile.getMaxScrollForTransition = $.mobile.getMaxScrollForTransition || defaultGetMaxScrollForTransition;
+
+return $.mobile.transitionHandlers;
+} );

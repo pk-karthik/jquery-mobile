@@ -1,14 +1,21 @@
-module( "Click handler" );
+define( [
+	"qunit",
+	"jquery"
+	], function( QUnit, $ ) {
 
-asyncTest( "Active class is removed from reset button", function() {
+QUnit.module( "Click handler" );
+
+QUnit.test( "Active class is removed from reset button", function( assert ) {
+	var ready = assert.async();
 	var button = $( "#reset-button" ).click();
 
-	expect( 2 );
+	assert.expect( 2 );
 
-	deepEqual( button.parent().hasClass( $.mobile.activeBtnClass ), true, "When clicked, reset button gets active class" );
+	assert.deepEqual( button.hasClass( "ui-button-active" ), true, "When clicked, reset button gets active class" );
 
 	setTimeout( function() {
-		deepEqual( button.parent().hasClass( $.mobile.activeBtnClass ), false, "Active class is removed after a while" );
-		start();
+		assert.deepEqual( button.hasClass( "ui-button-active" ), false, "Active class is removed after a while" );
+		ready();
 	}, 700 );
-});
+} );
+} );

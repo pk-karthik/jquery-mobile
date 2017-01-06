@@ -15,18 +15,20 @@
 <body>
 <div data-role="page" class="jqm-demos" data-quicklinks="true">
 
-	<div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	<div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+		<a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+		<a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
 
-		<h1>Checkbox <a href="http://api.jquerymobile.com/checkboxradio/" class="jqm-api-docs-link ui-btn ui-btn-icon-right ui-icon-caret-r ui-nodisc-icon ui-alt-icon ui-btn-inline ui-corner-all ui-mini">API</a></h1>
+		<h1>Checkbox</h1>
 
-		<p>Checkbox inputs are used to provide a list of options where more than one can be selected. Checkbox buttons are enhanced by the checkboxradio widget.</p>
+		<a href="http://api.jquerymobile.com/checkboxradio/" class="jqm-api-docs-link ui-nodisc-icon ui-alt-icon" title="Visit the API Documentation" target="_blank">API Documentation <span class="ui-icon ui-icon-action"></span></a>
+
+		<p>Checkbox inputs are used to provide a list of options where more than one can be selected. Checkbox buttons are enhanced by the Checkboxradio widget.</p>
 
 		<h2>Basic markup</h2>
 
@@ -51,13 +53,31 @@
 			</form>
 		</div><!--/demo-html -->
 
-		<h2>Vertical group</h2>
+		<h2>Horizontal group</h2>
 
-		<p>Typically, there are multiple checkboxes listed under a question title. To visually integrate multiple checkboxes into a grouped button set, the framework will automatically remove all margins between buttons and round only the top and bottom corners of the set if there is a <code> data-role="controlgroup"</code> attribute on the <code>fieldset</code>.</p>
+		<p>Checkboxes can be used for grouped button sets where more than one button can be selected at once, such as the bold, italic and underline button group seen in word processors. To visually integrate multiple checkboxes into a grouped button set, the framework will automatically remove all margins between buttons and round only the top and bottom corners of the set if there is a <code> data-role="controlgroup"</code> attribute on the <code>fieldset</code>.</p>
 
 		<div data-demo-html="true">
 			<form>
 				<fieldset data-role="controlgroup">
+					<legend>Horizontal:</legend>
+					<input type="checkbox" name="checkbox-h-2a" id="checkbox-h-2a">
+					<label for="checkbox-h-2a">B</label>
+					<input type="checkbox" name="checkbox-h-2b" id="checkbox-h-2b">
+					<label for="checkbox-h-2b"><span style="font-style:italic;font-weight:normal;">I</span></label>
+					<input type="checkbox" name="checkbox-h-2c" id="checkbox-h-2c">
+					<label for="checkbox-h-2c"><span style="text-decoration:underline;font-weight:normal;">U</span></label>
+				</fieldset>
+			</form>
+		</div><!--/demo-html -->
+
+		<h2>Vertical group</h2>
+
+		<p>To make a vertical button set, add <code>data-direction="vertical"</code> to the <code>fieldset</code>.</p>
+
+		<div data-demo-html="true">
+			<form>
+				<fieldset data-role="controlgroup" data-direction="vertical">
 					<legend>Vertical:</legend>
 					<input type="checkbox" name="checkbox-v-2a" id="checkbox-v-2a">
 					<label for="checkbox-v-2a">One</label>
@@ -69,45 +89,9 @@
 			</form>
 		</div><!--/demo-html -->
 
-		<h2>Horizontal group</h2>
-
-		<p>Checkboxes can also be used for grouped button sets where more than one button can be selected at once, such as the bold, italic and underline button group seen in word processors. To make a horizontal button set, add the <code> data-type="horizontal"</code> to the <code>fieldset</code>.</p>
-
-		<div data-demo-html="true">
-			<form>
-				<fieldset data-role="controlgroup" data-type="horizontal">
-					<legend>Horizontal:</legend>
-					<input type="checkbox" name="checkbox-h-2a" id="checkbox-h-2a">
-					<label for="checkbox-h-2a">One</label>
-					<input type="checkbox" name="checkbox-h-2b" id="checkbox-h-2b">
-					<label for="checkbox-h-2b">Two</label>
-					<input type="checkbox" name="checkbox-h-2c" id="checkbox-h-2c">
-					<label for="checkbox-h-2c">Three</label>
-				</fieldset>
-			</form>
-		</div><!--/demo-html -->
-
-		<h2>Icon position</h2>
-
-		<p>To swap the position of the check icon from the default position on the left, add the <code>data-iconpos="right"</code> attribute to the fieldset.</p>
-
-		<div data-demo-html="true">
-			<form>
-				<fieldset data-role="controlgroup" data-iconpos="right">
-					<legend>Icon right:</legend>
-					<input type="checkbox" name="checkbox-h-6a" id="checkbox-h-6a">
-					<label for="checkbox-h-6a">One</label>
-					<input type="checkbox" name="checkbox-h-6b" id="checkbox-h-6b">
-					<label for="checkbox-h-6b">Two</label>
-					<input type="checkbox" name="checkbox-h-6c" id="checkbox-h-6c">
-					<label for="checkbox-h-6c">Three</label>
-				</fieldset>
-			</form>
-		</div><!--/demo-html -->
-
 		<h2>Theme</h2>
 
-		<p>To set the theme, add the <code>data-theme</code> attribute on the <code>fieldset</code> to the individual checkbox inputs.</p>
+		<p>To set the theme, add the <code>data-theme</code> attribute to the <code>fieldset</code> or to the individual checkbox inputs.</p>
 
 		<div data-demo-html="true">
 			<form>
@@ -135,24 +119,31 @@
 		<h2>Enhanced</h2>
 
 		<div data-demo-html="true">
-			<div class="ui-checkbox">
-				<label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">I agree</label>
-				<input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true">
-			</div>
+			<form>
+				<label class="ui-checkboxradio-label ui-corner-all ui-button ui-widget ui-button-inherit">
+					<span class="ui-checkboxradio-icon ui-corner-all ui-icon ui-icon-background ui-icon-blank"></span>
+					<span class="ui-checkboxradio-icon-space"> </span>
+					<input type="checkbox" data-enhanced="true" name="checkbox-enhanced" class="ui-checkboxradio ui-helper-hidden-accessible">I agree
+				</label>
+			</form>
 		</div><!--/demo-html -->
 
 	</div><!-- /content -->
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 </body>
 </html>

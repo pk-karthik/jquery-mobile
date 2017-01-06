@@ -18,13 +18,10 @@
 .ui-mobile fieldset {
 	min-width: 0;
 }
-@-moz-document url-prefix() {
-	.ui-mobile fieldset {
-		display: table-column;
-		vertical-align: middle;
-	}
+.ui-mobile fieldset {
+	display: table-column;
+	vertical-align: middle;
 }
-
 /* Viewport */
 .ui-mobile-viewport {
 	margin: 0;
@@ -41,24 +38,43 @@ div.ui-mobile-viewport {
 /* "page" containers - full-screen views, one should always be in view post-pageload */
 .ui-mobile [data-role=page],
 .ui-mobile [data-role=dialog],
+.ui-mobile [data-ui-role=page],
+.ui-mobile [data-ui-role=dialog],
 .ui-page {
 	top: 0;
 	left: 0;
 	width: 100%;
 	min-height: 100%;
 	position: absolute;
-	display: none;
+	visibility: hidden;
 	border: 0;
 }
+
 /* On ios4, setting focus on the page element causes flashing during transitions when there is an outline, so we turn off outlines */
+
 .ui-page {
 	outline: none;
 }
+
+.ui-page:not(.ui-page-active),
+[data-role=page]:not(.ui-page-active) {
+	bottom: 0;
+	max-height: 100%;
+	overflow: hidden;
+}
+
+/* Use !important to override "visibility: visible" for any element inside a non-active page */
+
+.ui-page:not(.ui-page-active) * {
+    visibility: hidden !important;
+}
+
 .ui-mobile .ui-page-active {
-	display: block;
+	visibility: visible;
 	overflow: visible;
 	overflow-x: hidden;
 }
+
 @media screen and (orientation: portrait) {
 	.ui-mobile .ui-page {
 		min-height: 420px;
@@ -94,7 +110,7 @@ div.ui-mobile-viewport {
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	border:0;
+	border-width: 0;
 }
 .ui-loader-default {
 	background: none;
@@ -148,10 +164,6 @@ div.ui-mobile-viewport {
 .ui-loader-textonly .ui-icon-loading {
 	display: none;
 }
-.ui-loader-fakefix {
-	position: absolute;
-}
-
 /* Headers, content panels */
 .ui-bar,
 .ui-body {
@@ -172,32 +184,6 @@ div.ui-mobile-viewport {
 	font-size: 1em;
 	display: inline-block;
 }
-.ui-header,
-.ui-footer {
-	border-width: 1px 0;
-	border-style: solid;
-	position: relative;
-}
-.ui-header:empty,
-.ui-footer:empty {
-	min-height: 2.6875em;
-}
-.ui-header .ui-title,
-.ui-footer .ui-title {
-	font-size: 1em;
-	min-height: 1.1em;
-	text-align: center;
-	display: block;
-	margin: 0 30%;
-	padding: .7em 0;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
-	outline: 0 !important;
-}
-.ui-footer .ui-title {
-	margin: 0 1em;
-}
 .ui-content {
 	border-width: 0;
 	overflow: visible;
@@ -205,17 +191,17 @@ div.ui-mobile-viewport {
 	padding: 1em;
 }
 /* Corner styling for dialogs and popups */
-.ui-corner-all > .ui-header:first-child,
+.ui-corner-all > .ui-toolbar-header:first-child,
 .ui-corner-all > .ui-content:first-child,
-.ui-corner-all > .ui-footer:first-child {
+.ui-corner-all > .ui-toolbar-footer:first-child {
 	-webkit-border-top-left-radius: inherit;
 	border-top-left-radius: inherit;
 	-webkit-border-top-right-radius: inherit;
 	border-top-right-radius: inherit;
 }
-.ui-corner-all > .ui-header:last-child,
+.ui-corner-all > .ui-toolbar-header:last-child,
 .ui-corner-all > .ui-content:last-child,
-.ui-corner-all > .ui-footer:last-child {
+.ui-corner-all > .ui-toolbar-footer:last-child {
 	-webkit-border-bottom-left-radius: inherit;
 	border-bottom-left-radius: inherit;
 	-webkit-border-bottom-right-radius: inherit;
@@ -223,10 +209,11 @@ div.ui-mobile-viewport {
 }
 
 /* Buttons and icons */
-.ui-btn {
+.ui-button {
 	font-size: 16px;
 	margin: .5em 0;
 	padding: .7em 1em;
+	line-height: 1.5;
 	display: block;
 	position: relative;
 	text-align: center;
@@ -239,147 +226,100 @@ div.ui-mobile-viewport {
 	-ms-user-select: none;
 	user-select: none;
 }
-.ui-btn-icon-notext,
-.ui-header button.ui-btn.ui-btn-icon-notext,
-.ui-footer button.ui-btn.ui-btn-icon-notext {
+.ui-button-icon-only,
+.ui-toolbar button.ui-button.ui-button-icon-only,
+.ui-toolbar-header button.ui-button.ui-button-icon-only,
+.ui-toolbar-footer button.ui-button.ui-button-icon-only {
 	padding: 0;
 	width: 1.75em;
 	height: 1.75em;
 	text-indent: -9999px;
 	white-space: nowrap !important;
 }
-.ui-mini {
-	font-size: 12.5px;
+.ui-mini .ui-button,
+.ui-mini.ui-button,
+.ui-mini .ui-controlgroup .ui-button-icon-only,
+.ui-mini.ui-controlgroup .ui-button-icon-only,
+.ui-controlgroup .ui-button-icon-only.ui-mini {
+	padding: .365em 1em;
 }
-.ui-mini .ui-btn {
+.ui-mini .ui-button {
 	font-size: inherit;
+	line-height: inherit;
 }
 /* Make buttons in toolbars default to mini and inline. */
-.ui-header .ui-btn,
-.ui-footer .ui-btn {
-	font-size: 12.5px;
+.ui-toolbar .ui-button,
+.ui-toolbar-header .ui-button,
+.ui-toolbar-footer .ui-button {
 	display: inline-block;
 	vertical-align: middle;
 }
-.ui-header .ui-controlgroup .ui-btn-icon-notext,
-.ui-footer .ui-controlgroup .ui-btn-icon-notext {
-    font-size: 12.5px;
+.ui-mini,
+.ui-toolbar .ui-button,
+.ui-toolbar-header .ui-button,
+.ui-toolbar-footer .ui-button,
+.ui-toolbar .ui-controlgroup .ui-button-icon-only,
+.ui-toolbar-header .ui-controlgroup .ui-button-icon-only,
+.ui-toolbar-footer .ui-controlgroup .ui-button-icon-only,
+.ui-toolbar-header .ui-toolbar-header-button-left,
+.ui-toolbar-header .ui-toolbar-header-button-right {
+	font-size: 13px;
+	line-height: 1.8462;
 }
-
-/* To ensure same top and left/right position when ui-btn-left/right are added to something other than buttons. */
-.ui-header .ui-btn-left,
-.ui-header .ui-btn-right {
-	font-size: 12.5px;
-}
-.ui-mini.ui-btn-icon-notext,
-.ui-mini .ui-btn-icon-notext,
-.ui-header .ui-btn-icon-notext,
-.ui-footer .ui-btn-icon-notext {
-	font-size: 16px;	
+.ui-mini.ui-button-icon-only,
+.ui-mini .ui-button-icon-only,
+.ui-toolbar .ui-button-icon-only,
+.ui-toolbar-header .ui-button-icon-only,
+.ui-toolbar-footer .ui-button-icon-only {
+	font-size: 16px;
 	padding: 0;
 }
-.ui-btn-inline {
+.ui-button-inline {
 	display: inline-block;
 	vertical-align: middle;
 	margin-right: .625em;
 }
-.ui-btn-icon-left {
-	padding-left: 2.5em;
-}
-.ui-btn-icon-right {
-	padding-right: 2.5em;
-}
-.ui-btn-icon-top {
-	padding-top: 2.5em;
-}
-.ui-btn-icon-bottom {
-	padding-bottom: 2.5em;
-}
-.ui-header .ui-btn-icon-top,
-.ui-footer .ui-btn-icon-top,
-.ui-header .ui-btn-icon-bottom,
-.ui-footer .ui-btn-icon-bottom {
-	padding-left: .3125em;
-	padding-right: .3125em;
-}
-.ui-btn-icon-left:after,
-.ui-btn-icon-right:after,
-.ui-btn-icon-top:after,
-.ui-btn-icon-bottom:after,
-.ui-btn-icon-notext:after {
-	content: "";
-	position: absolute;
-	display: block;
+.ui-icon {
+	display: inline-block;
 	width: 22px;
 	height: 22px;
+	line-height: inherit;
+	vertical-align: middle;
+	margin-top: -2px;
 }
-.ui-btn-icon-notext:after,
-.ui-btn-icon-left:after,
-.ui-btn-icon-right:after {
+.ui-widget-icon-block {
+	display: block;
+	margin: 0 auto;
+	top: 0;
+}
+.ui-button-icon-only .ui-icon {
+	position: absolute;
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
 	top: 50%;
-	margin-top: -11px;
-}
-.ui-btn-icon-left:after {
-	left: .5625em;
-}
-.ui-btn-icon-right:after {
-	right: .5625em;
-}
-.ui-mini.ui-btn-icon-left:after,
-.ui-mini .ui-btn-icon-left:after,
-.ui-header .ui-btn-icon-left:after,
-.ui-footer .ui-btn-icon-left:after {
-	left: .37em;
-}
-.ui-mini.ui-btn-icon-right:after,
-.ui-mini .ui-btn-icon-right:after,
-.ui-header .ui-btn-icon-right:after,
-.ui-footer .ui-btn-icon-right:after {
-	right: .37em;
-}
-.ui-btn-icon-notext:after,
-.ui-btn-icon-top:after,
-.ui-btn-icon-bottom:after {
 	left: 50%;
+}
+.ui-button-icon-only .ui-icon,
+.ui-button-icon-only.ui-toolbar-header-button-left > .ui-icon,
+.ui-button-icon-only.ui-toolbar-header-button-right > .ui-icon {
+	margin-top: -11px;
 	margin-left: -11px;
 }
-.ui-btn-icon-top:after {
-	top: .5625em;
+
+/* Float icons helper classes */
+.ui-widget-icon-floatbeginning {
+	float: left;
+	margin: 1px 1em 0 0;
 }
-.ui-btn-icon-bottom:after {
-	top: auto;
-	bottom: .5625em;
-}
-/* Buttons in header position classes */
-.ui-header .ui-btn-left,
-.ui-header .ui-btn-right,
-.ui-btn-left > [class*="ui-"],
-.ui-btn-right > [class*="ui-"] {
-	margin: 0;
-}
-.ui-btn-left,
-.ui-btn-right {
-	position: absolute;
-	top: .24em;
-}
-.ui-btn-left {
-	left: .4em;
-}
-.ui-btn-right {
-	right: .4em;
-}
-.ui-btn-icon-notext.ui-btn-left {
-	top: .3125em;
-	left: .3125em;
-}
-.ui-btn-icon-notext.ui-btn-right {
-	top: .3125em;
-	right: .3125em;
+.ui-widget-icon-floatend {
+	float: right;
+	margin: 1px 0 0 1em;
 }
 
-/* Button elements */
-button.ui-btn,
-.ui-controlgroup-controls button.ui-btn-icon-notext {
+/* Button elements and input buttons */
+button.ui-button,
+input.ui-button {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -387,17 +327,20 @@ button.ui-btn,
 	-moz-appearance: none;
 	width: 100%;
 }
-button.ui-btn-inline,
-.ui-header button.ui-btn,
-.ui-footer button.ui-btn {
+button.ui-button-inline,
+input.ui-button-inline,
+.ui-toolbar button.ui-button,
+.ui-toolbar-header button.ui-button,
+.ui-toolbar-footer button.ui-button {
 	width: auto;
 }
 /* Firefox adds a 1px border in a button element. We negate this to make sure they have the same height as other buttons in controlgroups. */
-button.ui-btn::-moz-focus-inner {
+button.ui-button::-moz-focus-inner,
+input.ui-button::-moz-focus-inner {
 	border: 0;
 }
-button.ui-btn-icon-notext,
-.ui-controlgroup-horizontal .ui-controlgroup-controls button.ui-btn {
+button.ui-button-icon-only,
+input.ui-button-icon-only {
 	-webkit-box-sizing: content-box;
 	-moz-box-sizing: content-box;
 	box-sizing: content-box;
@@ -406,17 +349,14 @@ button.ui-btn-icon-notext,
 
 /* Form labels */
 .ui-mobile label,
-.ui-controlgroup-label {
+.ui-mobile legend {
 	display: block;
 	margin: 0 0 .4em;
 }
 
 /* Accessible content hiding */
-/* ui-hide-label deprecated in 1.4. TODO: Remove in 1.5 */
-.ui-hide-label > label,
-.ui-hide-label .ui-controlgroup-label,
-.ui-hide-label .ui-rangeslider label,
-.ui-hidden-accessible {
+.ui-hidden-accessible,
+.ui-helper-hidden-accessible {
 	position: absolute !important;
 	height: 1px;
 	width: 1px;

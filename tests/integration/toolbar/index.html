@@ -6,34 +6,23 @@
 	<title>jQuery Mobile Toolbar Test Suite</title>
 
 	<script src="../../../external/requirejs/require.js"></script>
-	<script src="../../../js/requirejs.config.js"></script>
-	<script src="../../../js/jquery.tag.inserter.js"></script>
-	<script src="../../jquery.setNameSpace.js"></script>
-	<script src="../../../tests/jquery.testHelper.js"></script>
-	<script src="../../../external/qunit/qunit.js"></script>
-	<script>
-		$.testHelper.asyncLoad([
-			[
-				"widgets/toolbar",
-				"buttonMarkup"
-			],
-			[ "init" ],
-			[ "toolbar_core.js" ]
-		]);
-	</script>
 
 	<link rel="stylesheet" href="../../../css/themes/default/jquery.mobile.css"/>
 	<link rel="stylesheet" href="../../../external/qunit/qunit.css"/>
 	<link rel="stylesheet" href="../../jqm-tests.css"/>
 
-	<script src="../../swarminject.js"></script>
+	<script src="../../lib/bootstrap.js"
+			data-deps="toolbar"
+			data-init="true"
+			data-modules="toolbar_core">
+	</script>
 </head>
 <body>
 
 	<div id="qunit"></div>
 
 	<div data-nstest-role="page">
-		<div data-nstest-role="header" id="start-page-header">
+		<div data-nstest-role="toolbar" data-nstest-type="header" id="start-page-header">
 			<a href="#">Left Link</a>
 			<a href="#" data-nstest-role="none">Right Link</a>
 		</div>
@@ -42,7 +31,7 @@
 		</div>
 	</div>
 	<div data-nstest-role="page" id="page2">
-		<div id="header" data-nstest-role="header" data-nstest-add-back-btn="true">
+		<div id="header" data-nstest-role="toolbar" data-nstest-type="header" data-nstest-add-back-btn="true">
 			<h1>Header</h1>
 		</div>
 		<div data-nstest-role="content">

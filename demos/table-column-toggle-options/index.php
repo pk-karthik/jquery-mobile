@@ -11,15 +11,20 @@
 	<script src="../../external/jquery/jquery.js"></script>
 	<script src="../_assets/js/"></script>
 	<script src="../../js/"></script>
+	<style id="financial-table-style">
+.financial-table-columns-button {
+	margin: 0;
+}
+	</style>
 </head>
 <body>
 <div data-role="page" class="jqm-demos">
 
-    <div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-        <a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-        <a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+    <div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+        <a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+        <a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
     </div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
@@ -34,7 +39,7 @@
 
 		<div data-demo-html="true">
 
-			<table data-role="table" id="table-custom-2" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Columns to display..." data-column-popup-theme="a">
+			<table data-role="table" id="table-custom-2" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-button-theme="b" data-column-button-text="Columns to display..." data-column-popup-theme="a">
 
                 <thead>
                   <tr class="ui-bar-d">
@@ -48,70 +53,70 @@
                 <tbody>
                   <tr>
                     <th>1</th>
-                    <td><a href="http://en.wikipedia.org/wiki/Citizen_Kane" data-rel="external">Citizen Kane</a></td>
+                    <td><a href="https://en.wikipedia.org/wiki/Citizen_Kane" data-rel="external">Citizen Kane</a></td>
                     <td>1941</td>
                     <td>100%</td>
                     <td>74</td>
                   </tr>
                   <tr>
                     <th>2</th>
-                    <td><a href="http://en.wikipedia.org/wiki/Casablanca_(film)" data-rel="external">Casablanca</a></td>
+                    <td><a href="https://en.wikipedia.org/wiki/Casablanca_(film)" data-rel="external">Casablanca</a></td>
                     <td>1942</td>
                     <td>97%</td>
                     <td>64</td>
                   </tr>
                   <tr>
                     <th>3</th>
-                    <td><a href="http://en.wikipedia.org/wiki/The_Godfather" data-rel="external">The Godfather</a></td>
+                    <td><a href="https://en.wikipedia.org/wiki/The_Godfather" data-rel="external">The Godfather</a></td>
                     <td>1972</td>
                     <td>97%</td>
                     <td>87</td>
                   </tr>
                   <tr>
                     <th>4</th>
-                    <td><a href="http://en.wikipedia.org/wiki/Gone_with_the_Wind_(film)" data-rel="external">Gone with the Wind</a></td>
+                    <td><a href="https://en.wikipedia.org/wiki/Gone_with_the_Wind_(film)" data-rel="external">Gone with the Wind</a></td>
                     <td>1939</td>
                     <td>96%</td>
                     <td>87</td>
                   </tr>
                   <tr>
                     <th>5</th>
-                    <td><a href="http://en.wikipedia.org/wiki/Lawrence_of_Arabia_(film)" data-rel="external">Lawrence of Arabia</a></td>
+                    <td><a href="https://en.wikipedia.org/wiki/Lawrence_of_Arabia_(film)" data-rel="external">Lawrence of Arabia</a></td>
                     <td>1962</td>
                     <td>94%</td>
                     <td>87</td>
                   </tr>
                   <tr>
                     <th>6</th>
-                    <td><a href="http://en.wikipedia.org/wiki/Dr._Strangelove" data-rel="external">Dr. Strangelove Or How I Learned to Stop Worrying and Love the Bomb</a></td>
+                    <td><a href="https://en.wikipedia.org/wiki/Dr._Strangelove" data-rel="external">Dr. Strangelove Or How I Learned to Stop Worrying and Love the Bomb</a></td>
                     <td>1964</td>
                     <td>92%</td>
                     <td>74</td>
                   </tr>
                   <tr>
                     <th>7</th>
-                    <td><a href="http://en.wikipedia.org/wiki/The_Graduate" data-rel="external">The Graduate</a></td>
+                    <td><a href="https://en.wikipedia.org/wiki/The_Graduate" data-rel="external">The Graduate</a></td>
                     <td>1967</td>
                     <td>91%</td>
                     <td>122</td>
                   </tr>
                   <tr>
                     <th>8</th>
-                    <td><a href="http://en.wikipedia.org/wiki/The_Wizard_of_Oz_(1939_film)" data-rel="external">The Wizard of Oz</a></td>
+                    <td><a href="https://en.wikipedia.org/wiki/The_Wizard_of_Oz_(1939_film)" data-rel="external">The Wizard of Oz</a></td>
                     <td>1939</td>
                     <td>90%</td>
                     <td>72</td>
                   </tr>
                   <tr>
                     <th>9</th>
-                    <td><a href="http://en.wikipedia.org/wiki/Singin%27_in_the_Rain" data-rel="external">Singin' in the Rain</a></td>
+                    <td><a href="https://en.wikipedia.org/wiki/Singin%27_in_the_Rain" data-rel="external">Singin' in the Rain</a></td>
                     <td>1952</td>
                     <td>89%</td>
                     <td>85</td>
                   </tr>
                   <tr>
                     <th>10</th>
-                    <td class="title"><a href="http://en.wikipedia.org/wiki/Inception" data-rel="external">Inception</a></td>
+                    <td class="title"><a href="https://en.wikipedia.org/wiki/Inception" data-rel="external">Inception</a></td>
                     <td>2010</td>
                     <td>84%</td>
                     <td>78</td>
@@ -121,18 +126,135 @@
 
 		</div><!-- /data-demo -->
 
+		<h2>No Button</h2>
+		<p>You can prevent the table widget from generating a button by adding the <code>data-column-button="false"</code> attribute to the table element. The popup will still be created, and it will have an ID that is equal to the ID of the table plus the suffix <code>"-popup"</code>, so you can manually add an anchor that will open the popup.</p>
+
+		<div data-demo-html="true" data-demo-css="#financial-table-style">
+			<table data-role="table" id="financial-table" data-mode="columntoggle" class="ui-responsive" data-column-button="false">
+				<thead>
+					<tr class="th-groups">
+						<td><a href="#financial-table-popup" data-rel="popup" class="financial-table-columns-button ui-btn ui-corner-all">Quarters</a></td>
+						<th colspan="3" data-priority="6">Q1 2012</th>
+						<th colspan="3" data-priority="5">Q2 2012</th>
+						<th colspan="3" data-priority="4">Q3 2012</th>
+						<th colspan="3" data-priority="3">Q4 2012</th>
+						<th colspan="3" data-priority="1" class="totals">YTD Totals</th>
+					</tr>
+					<tr>
+						<th>Store</th>
+
+						<th>Income</th>
+						<th>Profit</th>
+						<th>Change</th>
+
+						<th>Income</th>
+						<th>Profit</th>
+						<th>Change</th>
+
+						<th>Income</th>
+						<th>Profit</th>
+						<th>Change</th>
+
+						<th>Income</th>
+						<th>Profit</th>
+						<th>Change</th>
+
+						<th>Income</th>
+						<th>Profit</th>
+						<th>Change</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+						<th>Boston</th>
+
+						<td>2,898</td>
+						<td>739</td>
+						<td>-5.8%</td>
+
+						<td>3,647</td>
+						<td>1,354</td>
+						<td>+5.8%</td>
+
+						<td>4,981</td>
+						<td>2,246</td>
+						<td>+13.4%</td>
+
+						<td>3,457</td>
+						<td>1,259</td>
+						<td>-3.9%</td>
+
+						<td>12,463</td>
+						<td>6,234</td>
+						<td>+5.9%</td>
+					</tr>
+
+					<tr>
+						<th>Chicago</th>
+
+						<td>2,898</td>
+						<td>739</td>
+						<td>-5.8%</td>
+
+						<td>3,647</td>
+						<td>1,354</td>
+						<td>+5.8%</td>
+
+						<td>4,981</td>
+						<td>2,246</td>
+						<td>+13.4%</td>
+
+						<td>3,457</td>
+						<td>1,259</td>
+						<td>-3.9%</td>
+
+						<td>12,463</td>
+						<td>6,234</td>
+						<td>+5.9%</td>
+					</tr>
+					<tr>
+						<th>NYC</th>
+
+						<td>2,898</td>
+						<td>739</td>
+						<td>-5.8%</td>
+
+						<td>3,647</td>
+						<td>1,354</td>
+						<td>+5.8%</td>
+
+						<td>4,981</td>
+						<td>2,246</td>
+						<td>+13.4%</td>
+
+						<td>3,457</td>
+						<td>1,259</td>
+						<td>-3.9%</td>
+
+						<td>12,463</td>
+						<td>6,234</td>
+						<td>+5.9%</td>
+					</tr>
+				</tbody>
+			</table>
+		  </div>
 	</div><!-- /content -->
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 </body>
 </html>

@@ -15,11 +15,11 @@
 <body>
 <div data-role="page" class="jqm-demos" data-quicklinks="true">
 
-	<div data-role="header" class="jqm-header">
-        <h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	<div data-role="toolbar" data-type="header" class="jqm-header">
+        <h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+		<a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+		<a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
@@ -34,7 +34,7 @@
 
 		<h2>Pages & Dialogs</h2>
 
-		<p>A <a href="../pages/">page</a> in jQuery Mobile consists of an element with a <code> data-role="page"</code> attribute. Within the "page" container, any valid HTML markup can be used, but for typical pages in jQuery Mobile, the immediate children of a "page" are divs with <code>data-role="header"</code>, <code>class="ui-content"</code>, and <code>data-role="footer"</code>. The baseline requirement for a page is only the page wrapper to support the navigation system, the rest is optional.</p>
+		<p>A <a href="../pages/">page</a> in jQuery Mobile consists of an element with a <code> data-role="page"</code> attribute. Within the "page" container, any valid HTML markup can be used, but for typical pages in jQuery Mobile, the immediate children of a "page" are divs with <code>data-role="toolbar" data-type="header"</code>, <code>class="ui-content"</code>, and <code>data-role="toolbar" data-type="footer"</code>. The baseline requirement for a page is only the page wrapper to support the navigation system, the rest is optional.</p>
 
 		<p>A page can be styled as a <a href="../pages-dialog/">dialog</a> that makes the page look like it's a modal style overlay. To give a standard page the appearance of a modal dialog, add the <strong>data-dialog="true"</strong> attribute to the page. Transitions can also be set on dialog links.</p>
 
@@ -85,7 +85,7 @@
 		<div data-demo-html="true">
 		<form>
 			<label for="textinput-s">Text Input:</label>
-			<input type="text" name="textinput-s" id="textinput-s" placeholder="Text input" value="" data-clear-btn="true">
+			<input type="text" name="textinput-s" id="textinput-s" placeholder="Text input" value="" data-clear-button="true">
 
 			<label for="select-native-s">Select:</label>
 			<select name="select-native-s" id="select-native-s">
@@ -111,20 +111,24 @@
 		<p>jQuery Mobile has a robust <a href="../theme-default/" data-ajax="false">theme framework</a> that supports up to 26 sets of toolbar, content and button colors, called a "swatch". Just add a <code>data-theme="b"</code> attribute to any of the widgets on this page to turn it black.</p>
 		<p>Cool party trick: add the theme swatch to the page and see how all the widgets inside the content will automatically inherit the theme.</p>
 
-		<p>When you're ready to build a custom theme, use <a href="http://www.jquerymobile.com/themeroller" rel="external">ThemeRoller</a> to drag and drop, then download a custom theme.</p>
+		<p>When you're ready to build a custom theme, use <a href="http://jquerymobile.com/themeroller" rel="external">ThemeRoller</a> to drag and drop, then download a custom theme.</p>
 
 	</div><!-- /content -->
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 </body>
 </html>

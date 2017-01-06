@@ -1,11 +1,29 @@
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: A behavioral mixin that forces a widget to react to a form reset
+/*!
+ * jQuery Mobile Form Reset @VERSION
+ * http://jquerymobile.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
 //>>label: Form Reset
 //>>group: Forms
+//>>description: A behavioral mixin that forces a widget to react to a form reset
 
-define( [ "jquery", "../../core" ], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, undefined ) {
+( function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
+
+		// AMD. Register as an anonymous module.
+		define( [
+			"jquery",
+			"../../core" ], factory );
+	} else {
+
+		// Browser globals
+		factory( jQuery );
+	}
+} )( function( $ ) {
 
 $.mobile.behaviors.formReset = {
 	_handleFormReset: function() {
@@ -13,11 +31,10 @@ $.mobile.behaviors.formReset = {
 			reset: function() {
 				this._delay( "_reset" );
 			}
-		});
+		} );
 	}
 };
 
-})( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-});
-//>>excludeEnd("jqmBuildExclude");
+return $.mobile.behaviors.formReset;
+
+} );

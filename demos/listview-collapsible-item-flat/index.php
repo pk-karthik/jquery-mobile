@@ -12,20 +12,20 @@
 	<script src="../_assets/js/"></script>
 	<script src="../../js/"></script>
 	<style id="collapsible-list-item-style-flat">
-		.ui-li-static.ui-collapsible > .ui-collapsible-heading {
+		.ui-listview-item-static.ui-collapsible > .ui-collapsible-heading {
 			margin: 0;
 		}
 
-		.ui-li-static.ui-collapsible {
+		.ui-listview-item-static.ui-collapsible {
 			padding: 0;
 		}
 
-		.ui-li-static.ui-collapsible > .ui-collapsible-heading > .ui-btn {
+		.ui-listview-item-static.ui-collapsible > .ui-collapsible-heading > .ui-button {
 			border-top-width: 0;
 		}
 
-		.ui-li-static.ui-collapsible > .ui-collapsible-heading.ui-collapsible-heading-collapsed > .ui-btn,
-		.ui-li-static.ui-collapsible > .ui-collapsible-content {
+		.ui-listview-item-static.ui-collapsible > .ui-collapsible-heading.ui-collapsible-heading-collapsed > .ui-button,
+		.ui-listview-item-static.ui-collapsible > .ui-collapsible-content {
 			border-bottom-width: 0;
 		}
 	</style>
@@ -34,11 +34,11 @@
 <body>
 <div data-role="page" class="jqm-demos" data-quicklinks="true">
 
-	<div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-		<a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-		<a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+	<div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+		<a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+		<a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
@@ -71,7 +71,7 @@
       <li data-role="collapsible" data-iconpos="right" data-inset="false">
         <h2>Choose your preference</h2>
         <form>
-          <fieldset data-role="controlgroup" data-type="horizontal">
+          <fieldset data-role="controlgroup">
             <label>Birds<input type="checkbox" id="choose-birds-regular"></label>
             <label>Humans<input type="checkbox" id="choose-humans-regular"></label>
             <label>Fish<input type="checkbox" id="choose-fish-regular"></label>
@@ -105,7 +105,7 @@
       <li data-role="collapsible" data-iconpos="right" data-inset="false">
         <h2>Choose your preference</h2>
         <form>
-          <fieldset data-role="controlgroup" data-type="horizontal">
+          <fieldset data-role="controlgroup">
             <label>Birds<input type="checkbox" id="choose-birds-inset"></label>
             <label>Humans<input type="checkbox" id="choose-humans-inset"></label>
             <label>Fish<input type="checkbox" id="choose-fish-inset"></label>
@@ -119,14 +119,18 @@
 
 	<?php include( '../jqm-navmenu.php' ); ?>
 
-	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
-		<p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-		<p>Copyright 2014 The jQuery Foundation</p>
+	<div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+		<h6>jQuery Mobile Version <span class="jqm-version"></span> Demos</h6>
+		<ul>
+			<li><a href="http://jquerymobile.com/" title="Visit the jQuery Mobile web site">jquerymobile.com</a></li>
+			<li><a href="https://github.com/jquery/jquery-mobile" title="Visit the jQuery Mobile GitHub repository">GitHub repository</a></li>
+		</ul>
+		<p>Copyright jQuery Foundation</p>
 	</div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 </body>
 </html>

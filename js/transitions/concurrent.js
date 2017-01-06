@@ -1,32 +1,48 @@
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: Animated page change with concurrent transition style application
+/*!
+ * jQuery Mobile Concurrent Transition @VERSION
+ * http://jquerymobile.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
 //>>label: Transition Concurrent
 //>>group: Transitions
+//>>description: Animated page change with concurrent transition style application
+//>>demos: http://demos.jquerymobile.com/@VERSION/transitions/
 
-define( [ "jquery", "./transition" ], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
+( function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
 
-(function( $ ) {
+		// AMD. Register as an anonymous module.
+		define( [
+			"jquery",
+			"./transition" ], factory );
+	} else {
 
-	$.mobile.ConcurrentTransition = function() {
-		this.init.apply(this, arguments);
-	};
+		// Browser globals
+		factory( jQuery );
+	}
+} )( function( $ ) {
 
-	$.extend($.mobile.ConcurrentTransition.prototype, $.mobile.Transition.prototype, {
-		sequential: false,
+$.mobile.ConcurrentTransition = function() {
+	this.init.apply( this, arguments );
+};
 
-		beforeDoneIn: function() {
-			if ( this.$from ) {
-				this.cleanFrom();
-			}
-		},
+$.extend( $.mobile.ConcurrentTransition.prototype, $.mobile.Transition.prototype, {
+	sequential: false,
 
-		beforeStartOut: function( screenHeight, reverseClass, none ) {
-			this.doneOut( screenHeight, reverseClass, none );
+	beforeDoneIn: function() {
+		if ( this.$from ) {
+			this.cleanFrom();
 		}
-	});
+	},
 
-})( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-});
-//>>excludeEnd("jqmBuildExclude");
+	beforeStartOut: function( screenHeight, reverseClass, none ) {
+		this.doneOut( screenHeight, reverseClass, none );
+	}
+} );
+
+return $.mobile.ConcurrentTransition;
+} );

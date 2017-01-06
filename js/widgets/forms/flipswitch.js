@@ -1,94 +1,110 @@
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: Consistent styling for native select menus. Tapping opens a native select menu.
+/*!
+ * jQuery Mobile Flipswitch @VERSION
+ * http://jquerymobile.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
 //>>label: Flip Switch
 //>>group: Forms
+//>>description: Consistent styling for native select menus. Tapping opens a native select menu.
+//>>docs: http://api.jquerymobile.com/flipswitch/
+//>>demos: http://demos.jquerymobile.com/@VERSION/flipswitch/
 //>>css.structure: ../css/structure/jquery.mobile.forms.flipswitch.css
 //>>css.theme: ../css/themes/default/jquery.mobile.theme.css
 
-define( [
-	"jquery",
-	"../../core",
-	"../../widget",
-	"../../zoom",
-	"./reset" ], function( jQuery ) {
-//>>excludeEnd("jqmBuildExclude");
-(function( $, undefined ) {
+( function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
+
+		// AMD. Register as an anonymous module.
+		define( [
+			"jquery",
+			"../../core",
+			"../../widget",
+			"../../zoom",
+			"./reset" ], factory );
+	} else {
+
+		// Browser globals
+		factory( jQuery );
+	}
+} )( function( $ ) {
 
 var selectorEscapeRegex = /([!"#$%&'()*+,./:;<=>?@[\]^`{|}~])/g;
 
-$.widget( "mobile.flipswitch", $.extend({
+return $.widget( "mobile.flipswitch", $.extend( {
+	version: "@VERSION",
 
 	options: {
 		onText: "On",
 		offText: "Off",
 		theme: null,
 		enhanced: false,
-		wrapperClass: null,
-		corners: true,
-		mini: false
+		classes: {
+			"ui-flipswitch": "ui-shadow-inset ui-corner-all",
+			"ui-flipswitch-on": "ui-shadow"
+		}
 	},
 
 	_create: function() {
-			var labels;
+		var labels;
 
-			this.type = this.element[ 0 ].nodeName.toLowerCase();
+		this._originalTabIndex = this.element.attr( "tabindex" );
+		this.type = this.element[ 0 ].nodeName.toLowerCase();
 
-			if ( !this.options.enhanced ) {
-				this._enhance();
-			} else {
-				$.extend( this, {
-					flipswitch: this.element.parent(),
-					on: this.element.find( ".ui-flipswitch-on" ).eq( 0 ),
-					off: this.element.find( ".ui-flipswitch-off" ).eq( 0 )
-				});
+		if ( !this.options.enhanced ) {
+			this._enhance();
+		} else {
+			$.extend( this, {
+				flipswitch: this.element.parent(),
+				on: this.element.find( ".ui-flipswitch-on" ).eq( 0 ),
+				off: this.element.find( ".ui-flipswitch-off" ).eq( 0 )
+			} );
+		}
+
+		this._handleFormReset();
+
+		this.element.attr( "tabindex", "-1" );
+		this._on( {
+			"focus": "_handleInputFocus"
+		} );
+
+		if ( this.element.is( ":disabled" ) ) {
+			this._setOptions( {
+				"disabled": true
+			} );
+		}
+
+		this._on( this.flipswitch, {
+			"click": "_toggle",
+			"swipeleft": "_left",
+			"swiperight": "_right"
+		} );
+
+		this._on( this.on, {
+			"keydown": "_keydown"
+		} );
+
+		this._on( {
+			"change": "refresh"
+		} );
+
+		// On iOS we need to prevent default when the label is clicked, otherwise it drops down
+		// the native select menu. We nevertheless pass the click onto the element like the
+		// native code would.
+		if ( this.element[ 0 ].nodeName.toLowerCase() === "select" ) {
+			labels = this._findLabels();
+			if ( labels.length ) {
+				this._on( labels, {
+					"click": function( event ) {
+						this.element.click();
+						event.preventDefault();
+					}
+				} );
 			}
-
-			this._handleFormReset();
-
-			// Transfer tabindex to "on" element and make input unfocusable
-			this._originalTabIndex = this.element.attr( "tabindex" );
-			if ( this._originalTabIndex != null ) {
-				this.on.attr( "tabindex", this._originalTabIndex );
-			}
-			this.element.attr( "tabindex", "-1" );
-			this._on({
-				"focus" : "_handleInputFocus"
-			});
-
-			if ( this.element.is( ":disabled" ) ) {
-				this._setOptions({
-					"disabled": true
-				});
-			}
-
-			this._on( this.flipswitch, {
-				"click": "_toggle",
-				"swipeleft": "_left",
-				"swiperight": "_right"
-			});
-
-			this._on( this.on, {
-				"keydown": "_keydown"
-			});
-
-			this._on( {
-				"change": "refresh"
-			});
-
-			// On iOS we need to prevent default when the label is clicked, otherwise it drops down
-			// the native select menu. We nevertheless pass the click onto the element like the
-			// native code would.
-			if ( this.element[ 0 ].nodeName.toLowerCase() === "select" ) {
-				labels = this._findLabels();
-				if ( labels.length ) {
-					this._on( labels, {
-						"click": function( event ) {
-							this.element.click();
-							event.preventDefault();
-						}
-					});
-				}
-			}
+		}
 	},
 
 	_handleInputFocus: function() {
@@ -110,7 +126,7 @@ $.widget( "mobile.flipswitch", $.extend({
 	},
 
 	_right: function() {
-		this.flipswitch.addClass( "ui-flipswitch-active" );
+		this._addClass( this.flipswitch, "ui-flipswitch-active" );
 		if ( this.type === "select" ) {
 			this.element.get( 0 ).selectedIndex = 1;
 		} else {
@@ -123,49 +139,40 @@ $.widget( "mobile.flipswitch", $.extend({
 		var flipswitch = $( "<div>" ),
 			options = this.options,
 			element = this.element,
+			tabindex = this._originalTabIndex || 0,
 			theme = options.theme ? options.theme : "inherit",
 
 			// The "on" button is an anchor so it's focusable
-			on = $( "<a></a>", {
-				"href": "#"
-			}),
+			on = $( "<span tabindex='" + tabindex + "'></span>" ),
 			off = $( "<span></span>" ),
 			onText = ( this.type === "input" ) ?
 				options.onText : element.find( "option" ).eq( 1 ).text(),
 			offText = ( this.type === "input" ) ?
 				options.offText : element.find( "option" ).eq( 0 ).text();
 
-			on
-				.addClass( "ui-flipswitch-on ui-btn ui-shadow ui-btn-inherit" )
-				.text( onText );
-			off
-				.addClass( "ui-flipswitch-off" )
-				.text( offText );
+		this._addClass( on, "ui-flipswitch-on", "ui-button ui-button-inherit" );
+		on.text( onText );
+		this._addClass( off, "ui-flipswitch-off" );
+		off.text( offText );
 
-			flipswitch
-				.addClass( "ui-flipswitch ui-shadow-inset " +
-					"ui-bar-" + theme + " " +
-					( options.wrapperClass ? options.wrapperClass : "" ) + " " +
-					( ( element.is( ":checked" ) ||
-						element
-							.find( "option" )
-							.eq( 1 )
-							.is( ":selected" ) ) ? "ui-flipswitch-active" : "" ) +
-					( element.is(":disabled") ? " ui-state-disabled": "") +
-					( options.corners ? " ui-corner-all": "" ) +
-					( options.mini ? " ui-mini": "" ) )
-				.append( on, off );
+		this._addClass( flipswitch, "ui-flipswitch", "ui-bar-" + theme + " " +
+				( ( element.is( ":checked" ) ||
+				element
+					.find( "option" )
+						.eq( 1 )
+						.is( ":selected" ) ) ? "ui-flipswitch-active" : "" ) +
+				( element.is( ":disabled" ) ? " ui-state-disabled" : "" ) );
 
-			element
-				.addClass( "ui-flipswitch-input" )
-				.after( flipswitch )
-				.appendTo( flipswitch );
+		flipswitch.append( on, off );
+
+		this._addClass( "ui-flipswitch-input" );
+		element.after( flipswitch ).appendTo( flipswitch );
 
 		$.extend( this, {
 			flipswitch: flipswitch,
 			on: on,
 			off: off
-		});
+		} );
 	},
 
 	_reset: function() {
@@ -174,12 +181,13 @@ $.widget( "mobile.flipswitch", $.extend({
 
 	refresh: function() {
 		var direction,
-			existingDirection = this.flipswitch.hasClass( "ui-flipswitch-active" ) ? "_right" : "_left";
+			existingDirection = this.flipswitch
+				.hasClass( "ui-flipswitch-active" ) ? "_right" : "_left";
 
 		if ( this.type === "select" ) {
-			direction = ( this.element.get( 0 ).selectedIndex > 0 ) ? "_right": "_left";
+			direction = ( this.element.get( 0 ).selectedIndex > 0 ) ? "_right" : "_left";
 		} else {
-			direction = this.element.prop( "checked" ) ? "_right": "_left";
+			direction = this.element.prop( "checked" ) ? "_right" : "_left";
 		}
 
 		if ( direction !== existingDirection ) {
@@ -229,12 +237,11 @@ $.widget( "mobile.flipswitch", $.extend({
 
 	_setOptions: function( options ) {
 		if ( options.theme !== undefined ) {
-			var currentTheme = options.theme ? options.theme : "inherit",
+			var currentTheme = this.options.theme ? this.options.theme : "inherit",
 				newTheme = options.theme ? options.theme : "inherit";
 
-			this.widget()
-				.removeClass( "ui-bar-" + currentTheme )
-				.addClass( "ui-bar-" + newTheme );
+			this._removeClass( this.flipswitch, null,  "ui-bar-" + currentTheme );
+			this._addClass( this.flipswitch, null,  "ui-bar-" + newTheme );
 		}
 		if ( options.onText !== undefined ) {
 			this.on.text( options.onText );
@@ -243,13 +250,7 @@ $.widget( "mobile.flipswitch", $.extend({
 			this.off.text( options.offText );
 		}
 		if ( options.disabled !== undefined ) {
-			this.widget().toggleClass( "ui-state-disabled", options.disabled );
-		}
-		if ( options.mini !== undefined ) {
-			this.widget().toggleClass( "ui-mini", options.mini );
-		}
-		if ( options.corners !== undefined ) {
-			this.widget().toggleClass( "ui-corner-all", options.corners );
+			this._toggleClass( this.flipswitch, null, "ui-state-disabled", options.disabled );
 		}
 
 		this._super( options );
@@ -267,13 +268,10 @@ $.widget( "mobile.flipswitch", $.extend({
 		this.on.remove();
 		this.off.remove();
 		this.element.unwrap();
+		this.element.removeClass( "ui-flipswitch-input" );
 		this.flipswitch.remove();
-		this.removeClass( "ui-flipswitch-input" );
 	}
 
 }, $.mobile.behaviors.formReset ) );
 
-})( jQuery );
-//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-});
-//>>excludeEnd("jqmBuildExclude");
+} );

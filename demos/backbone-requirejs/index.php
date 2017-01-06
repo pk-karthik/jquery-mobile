@@ -16,11 +16,11 @@
 <body>
 <div data-role="page" class="jqm-demos" data-quicklinks="true">
 
-    <div data-role="header" class="jqm-header">
-		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquery-logo.png" alt="jQuery Mobile"></a></h2>
-		<p><span class="jqm-version"></span> Demos</p>
-        <a href="#" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">Menu</a>
-        <a href="#" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-search ui-nodisc-icon ui-alt-icon ui-btn-right">Search</a>
+    <div data-role="toolbar" data-type="header" class="jqm-header">
+		<h2><a href="../" title="jQuery Mobile Demos home"><img src="../_assets/img/jquerymobile-logo.png" alt="jQuery Mobile"></a></h2>
+        <a href="#" class="jqm-navmenu-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-left">Menu<span class="ui-icon ui-icon-bars"></span></a>
+        <a href="#" class="jqm-search-link ui-button ui-button-icon-only ui-corner-all ui-nodisc-icon ui-alt-icon ui-toolbar-header-button-right">Search<span class="ui-icon ui-icon-search"></span></a>
+		<div class="jqm-banner"><h3>Version <span class="jqm-version"></span> Demos</h3></div>
     </div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
@@ -38,11 +38,11 @@
       </p>
       <p>Although there is a high amount of developer interest with using jQuery Mobile, Backbone.js, and Require.js together, there is a high barrier of entry.  Many users are confused about how to use the Backbone.js Router class object with the jQuery Mobile routing system.</p>
 
-	   <a href="backbone-require.html" rel="external" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ui-btn-icon-right ui-icon-caret-r">View example page</a>
+	   <a href="backbone-require.html" rel="external" class="ui-button ui-button-inline ui-corner-all ui-shadow">View example page <span class="ui-icon ui-icon-caret-r"></span></a>
 
       <h2>jQuery Mobile configuration</h2>
 
-      <p>The technique used in this <a href="backbone-require.html" rel="external">example page</a> is by no means the only technique available, but it is one of the most elegant.  The Backbone.js router is used exclusively to handle all hashchange events, and the jQuery Mobile <code>$.mobile.changePage()</code> method is used to programmatically change the page.</p>
+      <p>The technique used in this <a href="backbone-require.html" rel="external">example page</a> is by no means the only technique available, but it is one of the most elegant.  The Backbone.js router is used exclusively to handle all hashchange events, and the jQuery Mobile <code>.pagecontainer( "change", url, options )</code> method is used to programmatically change the page.</p>
 
       <p>Below are two internal jQuery Mobile properties that are turned off to allow this to happen:</p>
 
@@ -115,7 +115,7 @@
       } );
 </code>
 </pre>
-<p>Next, inside of the Backbone.js Router class object, we can respond to haschange events and manually call the jQuery Mobile <code>changePage()</code> method.  Below is a small snippet of <strong>mobileRouter.js</strong>.</p>
+<p>Next, inside of the Backbone.js Router class object, we can respond to haschange events and manually call the <code>.pagecontainer( "change" )</code> method.  Below is a small snippet of <strong>mobileRouter.js</strong>.</p>
 <pre>
 <code>
         // Backbone.js Routes
@@ -133,7 +133,10 @@
         home: function() {
 
             // Programatically changes to the categories page
-            $.mobile.changePage( "#categories" , { reverse: false, changeHash: false } );
+            $( ".ui-pagecontainer" ).pagecontainer( "change", "#categories" , {
+				reverse: false,
+				changeHash: false
+			});
 
         }
 </code>
@@ -145,14 +148,14 @@
 
     <?php include( '../jqm-navmenu.php' ); ?>
 
-    <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
+    <div data-role="toolbar" data-type="footer" data-position="fixed" data-tap-toggle="false" class="jqm-footer">
         <p>jQuery Mobile Demos version <span class="jqm-version"></span></p>
-        <p>Copyright 2014 The jQuery Foundation</p>
+        <p>Copyright jQuery Foundation</p>
     </div><!-- /footer -->
 
-<?php include( '../jqm-search.php' ); ?>
-
 </div><!-- /page -->
+
+<?php include( '../jqm-search.php' ); ?>
 
 </body>
 </html>
